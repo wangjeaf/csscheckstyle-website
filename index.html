@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="codemirror/lib/codemirror.css"/>
+		<link rel="stylesheet" href="css/layout.css"/>
+	</head>
+	<body>
+		<div class="header clearfix mt20 mb20">
+			<div class="logo fl">
+				<a href="#nogo"><span class="CK">CK</span><span class="style">style</span></a>
+			</div>
+			<ul class="unstyled menu fr mt30 fs16">
+				<li><a href="#nogo">首页</a></li>
+				<li><a href="#nogo">关于</a></li>
+				<li><a href="#nogo">文档</a></li>
+				<li><a href="#nogo">安装</a></li>
+				<li><a href="#nogo">修改记录</a></li>
+			</ul>
+		</div>
+		<p class="block">
+			CKstyle(CSSCheckStyle)是一个插件式的CSS工具集，通过CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>与<strong>压缩</strong>，确保<a href="http://fed.renren.com/archives/1212" class="guideline-tooltip" target="_blank" data-original-title="人人FED CSS编码规范" data-container="body">CSS编码规范</a>的完整实施。
+			<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" class="fork-mask" data-original-title="点击进入GitHub工程" data-container="body"><img src="img/github.png"/></a>
+		</p>
+		<div class="main">
+			<div class="editor-container">
+				<textarea id="editor">/*请在此编辑您的CSS代码*/</textarea>
+			</div>
+			<div>
+				<input type="button" class="btn btn-info btn-large expand" value="CKstyle"/>
+				<input type="button" class="btn btn-info btn-large expand" value="FixStyle"/>
+				<input type="button" class="btn btn-info btn-large expand" value="CssCompress"/>
+				<input type="button" class="btn btn-info btn-large expand" value="vs YUICompressor"/>
+				<a href="javascript:;" class="btn btn-link btn-large fr options-trigger">选项设置<i class="icon-chevron-down ml5"></i></a>
+			</div>
+		</div>
+		<div class="options-container hide">
+			<ul class="unstyled clearfix options">
+			</ul>
+		</div>
+
+		<div class="footer">
+			<p>此工具目前由 <a href="https://github.com/wangjeaf/">wangjeaf</a> 维护，欢迎加入，也欢迎大家在 <a href="https://github.com/wangjeaf/csscheckstyle">GitHub</a> 上交流探讨</p>
+			<p>Copyright 2012 @ <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>.</p>
+		</div>
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
+		<script type="text/javascript" src="codemirror/mode/css/css.js"></script>
+		<script type="text/javascript" src="js/mustache.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<!--[if lte IE 8]>
+		<script type="text/javascript" data-main="./js/old-browser.js" src="js/sea-debug.js"></script>
+		<!--<![endif]-->
+	</body>
+</html>
