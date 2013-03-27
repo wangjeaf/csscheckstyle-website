@@ -2,20 +2,21 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="codemirror/lib/codemirror.css"/>
+		<link rel="stylesheet" href="tools/bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="tools/codemirror/lib/codemirror.css"/>
 		<link rel="stylesheet" href="css/layout.css"/>
+		<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	</head>
 	<body>
 		<div class="header clearfix mt20 mb20">
 			<div class="logo fl">
-				<a href="#nogo"><span class="CK">CK</span><span class="style">style</span></a>
+				<a href="javascript:;"><span class="CK">CK</span><span class="style">style</span></a>
 			</div>
 			<ul class="unstyled menu fr mt30 fs16">
-				<li><a href="#nogo">首页</a></li>
-				<li><a href="#nogo">关于</a></li>
-				<li><a href="#nogo">文档</a></li>
+				<li><a href="#nogo">介绍</a></li>
+				<li><a href="#nogo">使用</a></li>
 				<li><a href="#nogo">安装</a></li>
+				<li><a href="#nogo">扩展</a></li>
 				<li><a href="#nogo">修改记录</a></li>
 			</ul>
 		</div>
@@ -23,35 +24,72 @@
 			CKstyle(CSSCheckStyle)是一个插件式的CSS工具集，通过CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>与<strong>压缩</strong>，确保<a href="http://fed.renren.com/archives/1212" class="guideline-tooltip" target="_blank" data-original-title="人人FED CSS编码规范" data-container="body">CSS编码规范</a>的完整实施。
 			<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" class="fork-mask" data-original-title="点击进入GitHub工程" data-container="body"><img src="img/github.png"/></a>
 		</p>
-		<div class="main">
-			<div class="editor-container">
-				<textarea id="editor">/*请在此编辑您的CSS代码*/</textarea>
+		<form method="post" onsubmit="return false;">
+			<div class="main">
+				<div class="editor-container">
+					<textarea id="editor" name="csscode">/*请在此编辑您的CSS代码*/
+.test {padding:0;padding-top:10px;padding-bottom:20px;}</textarea>
+				</div>
+				<div>
+					<input type="submit" data-type="ckstyle" class="btn btn-info btn-large expand" value="CKstyle"/>
+					<input type="submit" data-type="fixstyle" class="btn btn-info btn-large expand" value="FixStyle"/>
+					<input type="submit" data-type="csscompress" class="btn btn-info btn-large expand" value="CssCompress"/>
+					<input type="submit" data-type="yuicompressor" class="btn btn-info btn-large expand" value="vs YUICompressor"/>
+					<a href="javascript:;" class="btn btn-link btn-large fr options-trigger">选项设置<i class="icon-chevron-down ml5"></i></a>
+				</div>
 			</div>
-			<div>
-				<input type="button" class="btn btn-info btn-large expand" value="CKstyle"/>
-				<input type="button" class="btn btn-info btn-large expand" value="FixStyle"/>
-				<input type="button" class="btn btn-info btn-large expand" value="CssCompress"/>
-				<input type="button" class="btn btn-info btn-large expand" value="vs YUICompressor"/>
-				<a href="javascript:;" class="btn btn-link btn-large fr options-trigger">选项设置<i class="icon-chevron-down ml5"></i></a>
+			<div class="options-container hide pr">
+				<ul class="unstyled clearfix options">
+					<li id="select-all-item">
+						<label class="checkbox" id="select-all-wrapper">
+							<input type="checkbox" id="select-all"/>全选
+						</label>
+					</li>
+				</ul>
+			</div>
+		</form>
+		<div class="result-container">
+			<div class="result ckstyle-result hide">
+				<h3 class="title">CKstyle
+					<button type="button" class="close">×</button>
+				</h3>
+				<div class="content">321321</div>
+			</div>
+			<div class="result fixstyle-result hide">
+				<h3 class="title">FixStyle
+					<button type="button" class="close">×</button>
+				</h3>
+				<div class="content"></div>
+			</div>
+			<div class="result csscompress-result hide">
+				<h3 class="title">CssCompress
+					<button type="button" class="close">×</button>
+				</h3>
+				<div class="content"></div>
+			</div>
+			<div class="result yuicompressor-result hide">
+				<h3 class="title">CKstyle vs YUICompressor
+					<button type="button" class="close">×</button>
+				</h3>
+				<div class="content"></div>
 			</div>
 		</div>
-		<div class="options-container hide">
-			<ul class="unstyled clearfix options">
-			</ul>
-		</div>
-
 		<div class="footer">
 			<p>此工具目前由 <a href="https://github.com/wangjeaf/">wangjeaf</a> 维护，欢迎加入，也欢迎大家在 <a href="https://github.com/wangjeaf/csscheckstyle">GitHub</a> 上交流探讨</p>
 			<p>Copyright 2012 @ <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>.</p>
+			<!-- <p>License @ MIT.</p> -->
 		</div>
-		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
-		<script type="text/javascript" src="codemirror/mode/css/css.js"></script>
-		<script type="text/javascript" src="js/mustache.js"></script>
+		<script type="text/javascript" src="js/lib/jquery.js"></script>
+		<script type="text/javascript" src="tools/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="tools/codemirror/lib/codemirror.js"></script>
+		<script type="text/javascript" src="tools/codemirror/mode/css/css.js"></script>
+		<script type="text/javascript" src="js/lib/mustache.js"></script>
+		<script type="text/javascript" src="js/lib/json2.js"></script>
+		<script type="text/javascript" src="js/lib/modernizr-2.0.6.js"></script>
+		<script type="text/javascript" src="js/rules.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<!--[if lte IE 8]>
-		<script type="text/javascript" data-main="./js/old-browser.js" src="js/sea-debug.js"></script>
+		<script type="text/javascript" data-main="./js/old-browser.js" src="js/lib/sea-debug.js"></script>
 		<!--<![endif]-->
 	</body>
 </html>

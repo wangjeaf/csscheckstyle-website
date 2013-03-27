@@ -102,6 +102,7 @@ body {
 
 .CodeMirror {
 	font-size: 14px;
+	height: 400px;
 }
 .CodeMirror-lines {
 	font-family: 'Microsoft Yahei',tahoma,serif;
@@ -112,4 +113,47 @@ body {
 	position: absolute;
 	right: 0;
 	top: 0;
+}
+
+#select-all-item {
+	position:absolute;
+	right:-80px;
+	top:0;
+	width:70px;
+}
+
+.result {
+	background-color: #EEE;
+	border-radius: 5px;
+	padding: 5px;
+	font-family: 'Microsoft Yahei',tahoma,serif;
+	margin-bottom: 20px;
+}
+
+.result .title {
+	border-bottom: 1px solid #FFF;
+	margin: 0;
+	padding-left: 5px;
+	font-size: 20px;
+	color: #df482b;
+	text-shadow: 2px 2px 3px rgba(0,0,0,.4);
+	position: relative;
+	text-transform: uppercase;
+	text-decoration: underline;
+}
+
+.result .title .name {
+}
+.result .title .close {
+	margin-right: 10px;
+	margin-top: 8px;
+	font-size: 26px;
+}
+.result .content {
+	border-top: 1px solid #DDD;
+	padding: 5px;
+}
+
+.stumb {
+	margin-left: 80px;
 }
