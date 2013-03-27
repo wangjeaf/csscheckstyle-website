@@ -2,7 +2,7 @@
 $.errorMsg = function(msg, title) {
 	var con = $('#error-msg-container');
 	if (con.length == 0) {
-		con = $('<div class="modal hide fade" id="error-msg-container">\
+		con = $('<div class="modal hide" id="error-msg-container">\
 		  <div class="modal-header">\
 		    <h3 style="font-size:16px;" class="title"></h3>\
 		  </div>\
@@ -17,15 +17,8 @@ $.errorMsg = function(msg, title) {
 	con.find('.msg').html(msg).end().find('.title').html(title || '对不起，貌似出了点小问题~~').end().modal('show');
 };
 
-$.hideErrorMsg = function(fade) {
-	var ele = $('#error-msg-container');
-	if (fade === false) {
-		ele.removeClass('fade');
-	}
+$.hideErrorMsg = function() {
 	$('#error-msg-container').modal('hide');
-	if (fade === false) {
-		ele.addClass('fade');
-	}
 };
 
 // init tooltip
@@ -133,6 +126,7 @@ $(function() {
 			scrollTop = $(window).scrollTop();
 		$.errorMsg('<div><div class="progress progress-striped active"><div class="bar" style="width: 100%;">正在处理中，请稍后~~</div>\
 			</div></div>', 'CKstyling~~~');
+		$("html, body").scrollTop(0);
 		$.ajax({
 			type: 'post',
 			url: './test/request.php', 
