@@ -62,7 +62,7 @@ $(function() {
 		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[压缩率: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%]</h4>\
 						<textarea>{{compressed}}</textarea>\
 						<hr style="margin:10px 0;">\
-					    <h4>by YUICompressor [压缩率: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
+					    <h4>by <a href="http://yui.github.com/yuicompressor/" target="_blank">YUICompressor</a> [压缩率: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
 					    <textarea>{{yuimin}}</textarea>'
 	};
 
