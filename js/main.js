@@ -67,13 +67,13 @@ $(function() {
 		fixstyle: '<textarea class="compressed">{{fixed}}</textarea>',
 		csscompress: '<h4>CssCompress [压缩率: {{after}}/{{before}}=<span class="CK">{{rate}}</span>%]</h4>\
 					  <textarea>{{compressed}}</textarea>',
-		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[压缩率: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%]</h4>\
+		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[压缩率: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%，比YUICompressor高 <span class="CK">{{delta}}</span>%]</h4>\
 						<textarea>{{compressed}}</textarea>\
 						<hr style="margin:10px 0;">\
 					    <h4>by <a href="http://yui.github.com/yuicompressor/" target="_blank">YUICompressor</a> [压缩率: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
 					    <textarea>{{yuimin}}</textarea>\
 					    <hr style="margin:10px 0;">\
-					    <div id="highchart-container" style="width: 600px; height: 300px; margin: 0 auto"></div>'
+					    <div id="highchart-container" style="width: 600px; height: 300px; margin: 0 auto;box-shadow: 1px 1px 2px #ccc;"></div>'
 	};
 
 	function improve(type, before, result) {
