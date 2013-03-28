@@ -71,7 +71,9 @@ $(function() {
 						<textarea>{{compressed}}</textarea>\
 						<hr style="margin:10px 0;">\
 					    <h4>by <a href="http://yui.github.com/yuicompressor/" target="_blank">YUICompressor</a> [压缩率: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
-					    <textarea>{{yuimin}}</textarea>'
+					    <textarea>{{yuimin}}</textarea>\
+					    <hr style="margin:10px 0;">\
+					    <div id="highchart-container" style="width: 600px; height: 300px; margin: 0 auto"></div>'
 	};
 
 	function improve(type, before, result) {
@@ -112,6 +114,7 @@ $(function() {
 			result.after2 = result.yuimin.length;
 			result.rate1 = (result.after1 / result.before1 * 100).toFixed(4);
 			result.rate2 = (result.after2 / result.before2 * 100).toFixed(4);
+			result.delta = result.rate2 - result.rate1;
 		} else if (type == 'fixstyle') {
 			result.fixed = result.fixed.replace(/\\n/g, '\n');
 		}
@@ -129,6 +132,65 @@ $(function() {
 		cut && $(textarea).next('.CodeMirror').css('height', '50px');
 	}
 
+	function highChart(result) {
+		$(function () {
+	        $('#highchart-container').highcharts({
+	            chart: {
+	                type: 'column',
+	                margin: [ 50, 50, 100, 80]
+	            },
+	            title: {
+	                text: 'CKstyle和YUICompressor压缩后字节数对比'
+	            },
+	            xAxis: {
+	                categories: [
+	                    'CKstyle',
+	                    'YUICompressor',
+	                    '压缩前'
+	                ],
+	                labels: {
+	                    align: 'center',
+	                    style: {
+	                        fontSize: '14px',
+	                        fontFamily: '\'Microsoft Yahei\', serif, Verdana, sans-serif'
+	                    }
+	                }
+	            },
+	            yAxis: {
+	                min: 0,
+	                title: {
+	                    text: '代码字节数'
+	                }
+	            },
+	            legend: {
+	                enabled: false
+	            },
+	            tooltip: {
+	                formatter: function() {
+	                    return '<b>'+ this.x +'</b><br/>'+
+	                        '代码长度: '+ this.y +
+	                        ' 字节';
+	                }
+	            },
+	            series: [{
+	                name: 'Population',
+	                data: [result.after1, result.after2, result.before1],
+	                dataLabels: {
+	                    enabled: true,
+	                    color: '#333',
+	                    align: 'center',
+	                    x: 4,
+	                    y: -2,
+	                    style: {
+	                        fontSize: '13px',
+	                        fontFamily: 'Verdana, sans-serif'
+	                    }
+	                }
+	            }]
+	        });
+	    });
+	}
+
 	function handleResponse(e, opType) {
 		if (!$('.options-container').is(':hidden')) {
 			$('.options-trigger').trigger('click');
@@ -144,6 +206,7 @@ $(function() {
 			return;
 		}
 		makeMirror(textareas[1], true);
+		highChart(e.result);
 	}
 	$('form input[type=submit]').click(function() {
 		var jqThis = $(this),
