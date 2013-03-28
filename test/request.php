@@ -35,7 +35,7 @@
 		}
 	}
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
-	$filename = '__ckstyle_web_tmp.css';
+	$filename = '__ckstyle_web_tmp_'.time().'.css';
 	$file = fopen($filename, 'w+');
 
 	fwrite($file, $csscode);
@@ -48,11 +48,10 @@
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'ckstyle') {
-		echo('{"status":"ok", "result":{
-			"errors": ["fda321321321fdasfda", "fdasfdsafdas", "fdafdasfdasfdsa"], 
-			"warnings": ["fdafdasfdas", "fdafdasfdas", "fdafdasfdas"], 
-			"logs":["fdafdasfdas", "fdafdas", "fdafdasfdasfdas"]
-		}}');
+		$result = exec_command('ckstyle -p --json '.$filename);
+		$result = str_replace('\n', '', $result);
+		$result = str_replace($filename, 'THE CSS FILE', $result);
+		echo('{"status":"ok","result":'.$result.'}');
 	} else if ($optype == 'csscompress') {
 		$result = exec_command('csscompress -p '.$filename);
 		$json = array("status" => "ok", "result" => array(

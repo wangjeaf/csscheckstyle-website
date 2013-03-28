@@ -49,15 +49,23 @@ $(function() {
 // handle ajax requests
 $(function() {
 	var templates = {
-		ckstyle: '{{#hasError}}<h4 class="text-error">errors</h4>{{/hasError}}\
-				  {{#errors}}<p class="text-error">{{.}}</p>{{/errors}}\
-				  {{#hasWarning}}<hr style="margin:10px 0;"><h4 class="text-warning">warnings</h4>{{/hasWarning}}\
-				  {{#warnings}}<p class="text-warning">{{.}}</p>{{/warnings}}\
-				  {{#hasLog}}<hr style="margin:10px 0;"><h4 class="muted">logs</h4>{{/hasLog}}\
-				  {{#logs}}<p class="muted">{{.}}</p>{{/logs}}',
+		ckstyle: '{{#hasError}}<h4 class="text-error">{{totalError}} error{{#manyErrors}}s{{/manyErrors}}</h4>{{/hasError}}\
+			      {{#hasError}}<ol>{{/hasError}}\
+				  	  {{#errors}}<li class="text-error">{{.}}</li>{{/errors}}\
+				  {{#hasError}}</ol>{{/hasError}}\
+				  {{#hasWarning}}<hr style="margin:10px 0;">\
+				  	  <h4 class="text-warning">{{totalWarning}} warning{{#manyWarnings}}s{{/manyWarnings}}</h4>{{/hasWarning}}\
+				  {{#hasWarning}}<ol>{{/hasWarning}}\
+				  	  {{#warnings}}<li class="text-warning">{{.}}</li>{{/warnings}}\
+				  {{#hasWarning}}</ol>{{/hasWarning}}\
+				  {{#hasLog}}<hr style="margin:10px 0;">\
+				  	  <h4 class="muted">{{totalLog}} log{{#manyLogs}}s{{/manyLogs}}</h4>{{/hasLog}}\
+				  {{#hasLog}}<ol>{{/hasLog}}\
+				      {{#logs}}<li class="muted">{{.}}</li>{{/logs}}\
+				  {{#hasLog}}</ol>{{/hasLog}}',
 		ckstyle_noerror: '<p class="text-success">CKstyle没有找到问题，牛逼！</p>',
 		fixstyle: '<textarea class="compressed">{{fixed}}</textarea>',
-		csscompress: '<h4>CssCompress [{{after}}/{{before}}=<span class="CK">{{rate}}</span>%]</h4>\
+		csscompress: '<h4>CssCompress [压缩率: {{after}}/{{before}}=<span class="CK">{{rate}}</span>%]</h4>\
 					  <textarea>{{compressed}}</textarea>',
 		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[压缩率: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%]</h4>\
 						<textarea>{{compressed}}</textarea>\
@@ -71,9 +79,27 @@ $(function() {
 			if (!result.errors && !result.warnings && !result.logs) {
 				type = 'ckstyle_noerror';
 			} else {
-				result.errors && (result.hasError = true);
-				result.warnings && (result.hasWarning = true);
-				result.logs && (result.hasLog = true);
+				if (result.errors) {
+					result.hasError = true;
+					result.totalError = result.errors.length;
+					if (result.totalError > 1) {
+						result.manyErrors = true;
+					}
+				}
+				if (result.warnings) {
+					result.hasWarning = true;
+					result.totalWarning = result.warnings.length;
+					if (result.totalWarning > 1) {
+						result.manyWarnings = true;
+					}
+				}
+				if (result.logs) {
+					result.hasLog = true;
+					result.totalLog = result.logs.length;
+					if (result.totalLog > 1) {
+						result.manyLogs = true;
+					}
+				}
 			}
 		} else if (type == 'csscompress') {
 			result.before = before.length;
@@ -133,7 +159,6 @@ $(function() {
 			data: form.serialize() + '&optype=' + opType,
 			dataType: 'json'
 		}).success(function(e) {
-			$.hideErrorMsg(false);
 			if (e.status == 'ok') {
 				handleResponse(e, opType);
 				var top = $('.result-container').position().top;
@@ -141,6 +166,7 @@ $(function() {
 			} else {
 				$.errorMsg(e.responseText, '对不起，网络出了点小问题~');
 			}
+			$.hideErrorMsg(false);
 		}).error(function(e) {
 			$.hideErrorMsg();
 			$.errorMsg(e.responseText, '对不起，网络出了点小问题~');
@@ -167,7 +193,7 @@ $(function() {
 		$(this).find('i').toggleClass('icon-chevron-down').toggleClass('icon-chevron-up');
 	});
 
-	$(Mustache.to_html(ruleTemplate, {rules:rules})).appendTo('.options-container .options');
+	$(Mustache.to_html(CKSTYLE_RULES.template, {rules:CKSTYLE_RULES.rules})).appendTo('.options-container .options');
 
 	options = $('.options .checkbox');
 	options.popover({

@@ -10,6 +10,7 @@ body {
 
 .fl {float: left}
 .fr {float: right}
+.mt10 {margin-top: 10px;}
 .mt20 {margin-top: 20px;}
 .mt30 {margin-top: 30px;}
 .mb20 {margin-bottom: 20px;}
@@ -18,18 +19,31 @@ body {
 .ml20 {margin-left: 20px;}
 .fs16 {font-size:16px;}
 .fs12 {font-size:12px;}
+.fwb {font-weight: bold;}
+.fsi {font-style: italic;}
 .tac {text-align: center;}
 .ml5 {margin-left: 5px;}
 .vam {vertical-align: middle;}
 .pa {position: absolute;}
 .pr {position: relative;*zoom:1;}
 .tsn {text-shadow: none;}
+.tac {text-align: center;}
 .logo {
 	font: 60px 'Cooper Black', 'Microsoft Yahei', serif;
 	text-shadow: 2px 2px 3px rgba(0,0,0,.3);
 }
 .logo a {
 	text-decoration: none;
+}
+.ver {
+	font-family: Calibri, 'Bauhaus 93', serif;
+	font-size: 36px;
+	font-style: italic;
+	font-weight: bold;
+	margin-top: 10px;
+	margin-left: 5px;
+	color: #bbb;
+	text-shadow: 1px 1px 2px rgba(255,255,255,.9);
 }
 .CK {
 	color: #df482b;
@@ -49,6 +63,25 @@ body {
 .menu li a {
 	padding: 10px;
 	color: #888;
+}
+.menu .current {
+	background-color: #EEE;
+	border-radius: 5px;
+	box-shadow: 1px 1px 3px rgba(0,0,0,.3);
+	background-image: linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
+	background-image: -o-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
+	background-image: -moz-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
+	background-image: -webkit-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
+	background-image: -ms-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.27, rgb(221,221,221)),
+		color-stop(1, rgb(204,204,204)),
+		color-stop(0.75, rgb(238,238,238))
+	);
 }
 .block {
 	font-size: 16px;
@@ -95,6 +128,15 @@ body {
 	box-shadow: 1px 1px 1px rgba(0,0,0,.2);
 	border-radius: 5px;
 }
+.options .option-error {
+	color: #bd362f;
+}
+.options .option-warning {
+	color: #c09853;
+}
+.options .option-log {
+	color: #999;
+}
 .options .checkbox {
 	margin-bottom: 0;
 	padding: 10px;
@@ -116,7 +158,7 @@ body {
 	top: 0;
 }
 
-#select-all-item {
+#option-tools {
 	position:absolute;
 	right:-80px;
 	top:0;
