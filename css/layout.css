@@ -23,11 +23,15 @@ body {
 .fsi {font-style: italic;}
 .tac {text-align: center;}
 .ml5 {margin-left: 5px;}
+.mt5 {margin-top: 5px;}
+.mr5 {margin-right: 5px;}
 .vam {vertical-align: middle;}
 .pa {position: absolute;}
 .pr {position: relative;*zoom:1;}
 .tsn {text-shadow: none;}
 .tac {text-align: center;}
+.tal {text-align: left;}
+.p10 {padding: 10px;}
 .logo {
 	font: 60px 'Cooper Black', 'Microsoft Yahei', serif;
 	text-shadow: 2px 2px 3px rgba(0,0,0,.3);
@@ -71,7 +75,6 @@ body {
 }
 .block {
 	font-size: 16px;
-	text-align: center;
 	padding: 10px;
 	line-height: 30px;
 	font-family: 'Microsoft Yahei',tahoma,serif;
@@ -169,7 +172,13 @@ body {
 	text-transform: uppercase;
 	text-decoration: underline;
 }
-
+.result .relax {
+	color: #444;
+	text-transform: none;
+	text-decoration: none;
+	text-shadow: none;
+	font-size: 18px;
+}
 .result .title .name {
 }
 .result .title .close {
@@ -181,7 +190,12 @@ body {
 	border-top: 1px solid #DDD;
 	padding: 5px;
 }
-
+.result .content .large li {
+	padding: 5px;
+}
+.result .content .large {
+	font-size: 16px;
+}
 .stumb {
 	margin-left: 80px;
 }
