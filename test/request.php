@@ -34,7 +34,15 @@
 			$ruleIds = $ruleIds . $key . ',';
 		}
 	}
+	$ruleIds = str_replace('"', '', $ruleIds);
+	$ruleIds = str_replace('\\', '', $ruleIds);
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
+	$include = '';
+	if (strlen($ruleIds) != 0) {
+		$include = '--include '.$ruleIds;
+	} else {
+		$include = '--include none ';
+	}
 	$filename = '__ckstyle_web_tmp_'.time().'.css';
 	$file = fopen($filename, 'w+');
 
@@ -42,25 +50,25 @@
 	fclose($file);
 
 	if ($optype == 'fixstyle') {
-		$result = exec_command('fixstyle -p '.$filename);
+		$result = exec_command('fixstyle -p '.$include.' '.$filename);
 		$json = array("status" => "ok", "result" => array(
 			"fixed" => $result
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'ckstyle') {
-		$result = exec_command('ckstyle -p --json '.$filename);
+		$result = exec_command('ckstyle -p --json '.$include.' '.$filename);
 		$result = str_replace('\n', '', $result);
-		$result = str_replace($filename, 'THE CSS FILE', $result);
+		$result = str_replace($filename, 'THIS FILE', $result);
 		echo('{"status":"ok","result":'.$result.'}');
 	} else if ($optype == 'csscompress') {
-		$result = exec_command('csscompress -p '.$filename);
+		$result = exec_command('csscompress -p '.$include.' '.$filename);
 		$json = array("status" => "ok", "result" => array(
 			"compressed" => $result
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'yuicompressor') {
 		$yui_output = $filename.'.min.css';
-		$result_ckstyle = exec_command('csscompress -p '.$filename);
+		$result_ckstyle = exec_command('csscompress -p '.$include.' '.$filename);
 		exec_command('java -jar yuicompressor-2.4.7.jar '.$filename.' -o '.$yui_output.' --charset utf-8 ');
 
 		$file = fopen($yui_output, 'r');

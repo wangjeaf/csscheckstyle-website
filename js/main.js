@@ -59,7 +59,7 @@ $(function() {
 				  	  {{#warnings}}<li class="text-warning">{{.}}</li>{{/warnings}}\
 				  {{#hasWarning}}</ol>{{/hasWarning}}\
 				  {{#hasLog}}<hr style="margin:10px 0;">\
-				  	  <h4 class="muted">{{totalLog}} log{{#manyLogs}}s{{/manyLogs}}</h4>{{/hasLog}}\
+				  	  <h4 class="muted">{{totalLog}} suggest{{#manyLogs}}s{{/manyLogs}}</h4>{{/hasLog}}\
 				  {{#hasLog}}<ol>{{/hasLog}}\
 				      {{#logs}}<li class="muted">{{.}}</li>{{/logs}}\
 				  {{#hasLog}}</ol>{{/hasLog}}',

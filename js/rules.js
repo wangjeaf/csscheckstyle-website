@@ -10,7 +10,7 @@
 		</li>{{/rules}}',
 
 rules : [
-	{checked:true, priority:0, id:'hexadecimal-color',summary:'16进制颜色大写缩写',desc:
+	{checked:true, priority:0, id:'hexadecimal-color',summary:'16进制颜色大写&缩写',desc:
 		'<p>浏览器会先将小写的颜色值转换成大写，' + 
 		'所以写成大写格式可以省略这部分的开销，并且尽量省略，例如：' + 
 		'</br><code>color:#ffffff; </code><br/><code>==></code><br/><code>color:#FFF;</code></p>'},

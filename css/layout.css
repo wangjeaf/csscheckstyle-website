@@ -68,20 +68,6 @@ body {
 	background-color: #EEE;
 	border-radius: 5px;
 	box-shadow: 1px 1px 3px rgba(0,0,0,.3);
-	background-image: linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
-	background-image: -o-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
-	background-image: -moz-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
-	background-image: -webkit-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
-	background-image: -ms-linear-gradient(bottom, rgb(221,221,221) 27%, rgb(204,204,204) 100%, rgb(238,238,238) 75%);
-
-	background-image: -webkit-gradient(
-		linear,
-		left bottom,
-		left top,
-		color-stop(0.27, rgb(221,221,221)),
-		color-stop(1, rgb(204,204,204)),
-		color-stop(0.75, rgb(238,238,238))
-	);
 }
 .block {
 	font-size: 16px;
@@ -164,7 +150,6 @@ body {
 	top:0;
 	width:70px;
 }
-
 .result {
 	background-color: #EEE;
 	border-radius: 5px;
