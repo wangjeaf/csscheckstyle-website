@@ -144,9 +144,9 @@ $(function() {
 	            },
 	            xAxis: {
 	                categories: [
-	                    'CKstyle',
+	                    '压缩前',
 	                    'YUICompressor',
-	                    '压缩前'
+	                    'CKstyle'
 	                ],
 	                labels: {
 	                    align: 'center',
@@ -173,8 +173,8 @@ $(function() {
 	                }
 	            },
 	            series: [{
-	                name: 'Population',
-	                data: [result.after1, result.after2, result.before1],
+	                name: '代码字节数',
+	                data: [result.before1, result.after2, result.after1],
 	                dataLabels: {
 	                    enabled: true,
 	                    color: '#333',
