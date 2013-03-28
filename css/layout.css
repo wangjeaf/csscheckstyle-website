@@ -18,12 +18,14 @@ body {
 .mr3 {margin-right: 3px;}
 .ml20 {margin-left: 20px;}
 .fs16 {font-size:16px;}
+.fs14 {font-size:14px;}
 .fs12 {font-size:12px;}
 .fwb {font-weight: bold;}
 .fsi {font-style: italic;}
 .tac {text-align: center;}
 .ml5 {margin-left: 5px;}
 .mt5 {margin-top: 5px;}
+.mt4 {margin-top: 4px;}
 .mr5 {margin-right: 5px;}
 .vam {vertical-align: middle;}
 .pa {position: absolute;}
@@ -87,6 +89,7 @@ body {
 .block strong {
 	color: #df482b;
 }
+
 .expand {
 	padding-left: 30px;
 	padding-right: 30px;

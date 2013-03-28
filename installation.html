@@ -22,16 +22,56 @@
 				<li><a href="/report-bug.html"><i class="mr3 icon-eye-open"></i>报bug</a></li>
 			</ul>
 		</div>
-		<div class="content">
-			usage
+		<p class="block tac">
+			CKstyle 利用 Python 的 easy_install，<strong class="text-success">一键安装</strong>，方便快捷。<i class="icon-thumbs-up mt4"></i>
+		</p>
+		<div class="result">
+			<h3 class="title relax">详细的安装流程</h3>
+			<div class="content clearfix">
+				<ol class="large">
+					<li>下载并安装 <a href="http://www.activestate.com/activepython/downloads" target="_blank">ActivePython</a></li>
+					<li>执行 <code class="fs14">easy_install</code>，确认 easy_install 命令存在 </li>
+					<li>运行 <code class="fs14">easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code> 自动安装</li>
+					<li>运行 <code class="fs14">fixstyle --help</code> 确认安装是否成功</li>
+				</ol>
+				<hr>
+				<p class="fs16 fwb">在我电脑上 (windows XP PowerShell) 的安装输出如下：</p>
+				<pre>
+PS D:\ckstyle> easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz
+
+Downloading https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz
+Processing master.tar.gz
+Running CSSCheckStyle-master\setup.py -q bdist_egg --dist-dir c:\docume~1\admini~1\locals~1\temp\easy_install-zpebt
+e\CSSCheckStyle-master\egg-dist-tmp-iy1yot
+zip_safe flag not set; analyzing archive contents...
+ckstyle.doCssCheck: module references __file__
+ckstyle.doCssCompress: module references __file__
+ckstyle.doCssFix: module references __file__
+csscheckstyle 1.0.0 is already the active version in easy-install.pth
+Installing fixstyle-script.py script to D:\Python26\Scripts
+Installing fixstyle.exe script to D:\Python26\Scripts
+Installing csscompress-script.py script to D:\Python26\Scripts
+Installing csscompress.exe script to D:\Python26\Scripts
+Installing compress-script.py script to D:\Python26\Scripts
+Installing compress.exe script to D:\Python26\Scripts
+Installing ckstyle-script.py script to D:\Python26\Scripts
+Installing ckstyle.exe script to D:\Python26\Scripts
+
+Installed d:\python26\lib\site-packages\csscheckstyle-1.0.0-py2.6.egg
+Processing dependencies for csscheckstyle==1.0.0
+Finished processing dependencies for csscheckstyle==1.0.0
+
+PS D:\ckstyle> _
+</pre>
+<hr>
+<div class="fs16 fr"><a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank" class="btn btn-success p10"><i class="icon-heart icon-white mt4 mr5"></i>欢天喜地上 github 看看去咯~~~</a></div>
+			</div>
+			
 		</div>
 		<div class="footer">
 			<p>此工具目前由 <a href="https://github.com/wangjeaf/">wangjeaf</a> 维护，欢迎加入，也欢迎大家在 <a href="https://github.com/wangjeaf/csscheckstyle">GitHub</a> 上交流探讨</p>
 			<p>Copyright 2012 @ <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>.</p>
 			<!-- <p>License @ MIT.</p> -->
 		</div>
-		<!--[if lte IE 8]>
-		<script type="text/javascript" data-main="./js/old-browser.js" src="js/lib/sea-debug.js"></script>
-		<!--<![endif]-->
 	</body>
 </html>
