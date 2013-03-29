@@ -65,12 +65,15 @@ $(function() {
 				  {{#hasLog}}</ol>{{/hasLog}}',
 		ckstyle_noerror: '<p class="text-success">CKstyle没有找到问题，牛逼！</p>',
 		fixstyle: '<textarea class="compressed">{{fixed}}</textarea>',
-		csscompress: '<h4>CssCompress [压缩率: {{after}}/{{before}}=<span class="CK">{{rate}}</span>%]</h4>\
+		csscompress: '<h4>CssCompress [节省空间: {{after}}/{{before}}=<span class="CK">{{rate}}</span>%]</h4>\
 					  <textarea>{{compressed}}</textarea>',
-		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[压缩率: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%，比YUICompressor牛逼 <span class="CK">{{delta}}</span>%]</h4>\
+		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[节省空间: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%\
+						{{#greater}}，比YUICompressor多节省 <span class="CK">{{delta}}</span>%]{{/greater}}\
+						{{#nogreater}}，与YUICompressor<span class="muted">持平</span>{{/nogreater}}\
+						</h4>\
 						<textarea>{{compressed}}</textarea>\
 						<hr style="margin:10px 0;">\
-					    <h4>by <a href="http://yui.github.com/yuicompressor/" target="_blank">YUICompressor</a> [压缩率: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
+					    <h4>by <a href="http://yui.github.com/yuicompressor/" target="_blank">YUICompressor</a> [节省空间: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
 					    <textarea>{{yuimin}}</textarea>\
 					    <hr style="margin:10px 0;">\
 					    <div id="highchart-container" style="width: 600px; height: 300px; margin: 0 auto;box-shadow: 1px 1px 2px #ccc;"></div>'
@@ -105,16 +108,18 @@ $(function() {
 			}
 		} else if (type == 'csscompress') {
 			result.before = before.length;
-			result.after = result.compressed.length;
+			result.after = before.length - result.compressed.length;
 			result.rate = (result.after / result.before * 100).toFixed(4);
 		} else if (type == 'yuicompressor') {
 			result.before1 = before.length;
 			result.before2 = before.length;
-			result.after1 = result.compressed.length;
-			result.after2 = result.yuimin.length;
+			result.after1 = before.length - result.compressed.length;
+			result.after2 = before.length - result.yuimin.length;
 			result.rate1 = (result.after1 / result.before1 * 100).toFixed(4);
 			result.rate2 = (result.after2 / result.before2 * 100).toFixed(4);
-			result.delta = (result.rate2 - result.rate1).toFixed(4);
+			result.delta = (result.rate1 - result.rate2).toFixed(4);
+			result.greater = result.delta > 0;
+			result.nogreater = !result.greater;
 		} else if (type == 'fixstyle') {
 			result.fixed = result.fixed.replace(/\\n/g, '\n');
 		}
@@ -174,7 +179,7 @@ $(function() {
 	            },
 	            series: [{
 	                name: '代码字节数',
-	                data: [result.before1, result.after2, result.after1],
+	                data: [result.before1, result.before1 - result.after2, result.before1 - result.after1],
 	                dataLabels: {
 	                    enabled: true,
 	                    color: '#333',

@@ -54,6 +54,7 @@ rules : [
 	{checked:true, priority:2, id:'lowercase-selector',summary:'选择器用小写字母'},
 	{checked:true, priority:2, id:'single-quotation',summary:'使用单引号'},
 	{checked:true, priority:2, id:'z-index-in-range',summary:'z-index取值符合范围要求'},
+	{checked:true, priority:2, id:'outline-zero',summary:'outline:none替换为outline:0',desc:'用更少的字节实现相同的效果'},
 	{checked:true, priority:2, id:'remove-duplicated-attr',summary:'删除重复的属性设置'}
 ]};
 	rules = CKSTYLE_RULES.rules;
