@@ -23,7 +23,7 @@
 			</ul>
 		</div>
 		<p class="block tac">
-			CKstyle 利用 Python 的 easy_install，<strong class="text-success">一键安装</strong>，方便快捷。<i class="icon-thumbs-up mt4"></i>
+			<i class="icon-thumbs-up mt4 mr5"></i>CKstyle 利用 Python 的 <code class="fs14">easy_install</code>，<strong class="text-success">一键安装与更新</strong>，方便快捷<i class="icon-thumbs-up mt4 ml7"></i>
 		</p>
 		<div class="result">
 			<h3 class="title relax">详细的安装流程</h3>
@@ -33,38 +33,40 @@
 					<li>执行 <code class="fs14">easy_install</code>，确认 easy_install 命令存在 </li>
 					<li>运行 <code class="fs14">easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code> 自动安装</li>
 					<li>运行 <code class="fs14">fixstyle --help</code> 确认安装是否成功</li>
+					<li>再次运行 <code class="fs14">easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code> 即可自动更新</li>
 				</ol>
 				<hr>
-				<p class="fs16 fwb">在我电脑上 (windows XP PowerShell) 的安装输出如下：</p>
+<div class="fs16 fr"><a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank" class="btn btn-success p10"><i class="icon-zoom-in icon-white mt4 mr5"></i>欢天喜地上 github 一探究竟</a></div>
+			</div>
+
+		</div>
+		<div class="result">
+			<h3 class="title relax">在测试电脑 (Ubuntu 11.04 Shell) 的安装输出如下：</h3>
+			<div class="content clearfix">
 				<pre>
-PS D:\ckstyle> easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz
+zhifu.wang@fed:~$ sudo easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz
 
 Downloading https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz
 Processing master.tar.gz
-Running CSSCheckStyle-master\setup.py -q bdist_egg --dist-dir c:\docume~1\admini~1\locals~1\temp\easy_install-zpebt
-e\CSSCheckStyle-master\egg-dist-tmp-iy1yot
+Running CSSCheckStyle-master/setup.py -q bdist_egg --dist-dir /tmp/easy_install-ZIqZuX/CSSCheckStyle-master/egg-dist-tmp-xZ7AxA
 zip_safe flag not set; analyzing archive contents...
-ckstyle.doCssCheck: module references __file__
 ckstyle.doCssCompress: module references __file__
 ckstyle.doCssFix: module references __file__
-csscheckstyle 1.0.0 is already the active version in easy-install.pth
-Installing fixstyle-script.py script to D:\Python26\Scripts
-Installing fixstyle.exe script to D:\Python26\Scripts
-Installing csscompress-script.py script to D:\Python26\Scripts
-Installing csscompress.exe script to D:\Python26\Scripts
-Installing compress-script.py script to D:\Python26\Scripts
-Installing compress.exe script to D:\Python26\Scripts
-Installing ckstyle-script.py script to D:\Python26\Scripts
-Installing ckstyle.exe script to D:\Python26\Scripts
+ckstyle.doCssCheck: module references __file__
+CSSCheckStyle 1.0.0 is already the active version in easy-install.pth
+Installing fixstyle script to /usr/local/bin
+Installing csscompress script to /usr/local/bin
+Installing compress script to /usr/local/bin
+Installing ckstyle script to /usr/local/bin
 
-Installed d:\python26\lib\site-packages\csscheckstyle-1.0.0-py2.6.egg
-Processing dependencies for csscheckstyle==1.0.0
-Finished processing dependencies for csscheckstyle==1.0.0
+Installed /usr/local/lib/python2.7/dist-packages/CSSCheckStyle-1.0.0-py2.7.egg
+Processing dependencies for CSSCheckStyle==1.0.0
+Finished processing dependencies for CSSCheckStyle==1.0.0
 
-PS D:\ckstyle> _
+zhifu.wang@fed:~$ _
 </pre>
 <hr>
-<div class="fs16 fr"><a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank" class="btn btn-success p10"><i class="icon-heart icon-white mt4 mr5"></i>欢天喜地上 github 看看去咯~~~</a></div>
+<div class="fs16 fr"><a href="https://github.com/wangjeaf/CSSCheckStyle/issues/new" target="_blank" class="btn btn-danger p10 mr5"><i class="icon-screenshot icon-white mt5 mr5"></i>欢天喜地上 github 报安装过程中出现的 bug 去咯~~~</a><!--<a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank" class="btn btn-success p10"><i class="icon-heart icon-white mt4 mr5"></i>欢天喜地上 github 看看去咯~~~</a>--></div>
 			</div>
 			
 		</div>

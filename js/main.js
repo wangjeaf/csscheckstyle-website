@@ -67,7 +67,7 @@ $(function() {
 		fixstyle: '<textarea class="compressed">{{fixed}}</textarea>',
 		csscompress: '<h4>CssCompress [压缩率: {{after}}/{{before}}=<span class="CK">{{rate}}</span>%]</h4>\
 					  <textarea>{{compressed}}</textarea>',
-		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[压缩率: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%，比YUICompressor高 <span class="CK">{{delta}}</span>%]</h4>\
+		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[压缩率: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%，比YUICompressor牛逼 <span class="CK">{{delta}}</span>%]</h4>\
 						<textarea>{{compressed}}</textarea>\
 						<hr style="margin:10px 0;">\
 					    <h4>by <a href="http://yui.github.com/yuicompressor/" target="_blank">YUICompressor</a> [压缩率: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
@@ -114,7 +114,7 @@ $(function() {
 			result.after2 = result.yuimin.length;
 			result.rate1 = (result.after1 / result.before1 * 100).toFixed(4);
 			result.rate2 = (result.after2 / result.before2 * 100).toFixed(4);
-			result.delta = result.rate2 - result.rate1;
+			result.delta = (result.rate2 - result.rate1).toFixed(4);
 		} else if (type == 'fixstyle') {
 			result.fixed = result.fixed.replace(/\\n/g, '\n');
 		}
@@ -192,11 +192,13 @@ $(function() {
 	}
 
 	function handleResponse(e, opType) {
+		var resultContainer = $('.' + opType + '-result');
 		if (!$('.options-container').is(':hidden')) {
 			$('.options-trigger').trigger('click');
 		}
 		$('.result').hide();
-		$('.' + opType + '-result').find('.content').html(improve(opType, $('#editor').val(), e.result)).end().show();
+		resultContainer.find('.content').html(improve(opType, $('#editor').val(), e.result)).end().show();
+		resultContainer.find('.download').attr('href', '/handler/' + e.result.download)
 		if (opType == 'ckstyle') {
 			return;
 		}
@@ -205,6 +207,7 @@ $(function() {
 		if (opType != 'yuicompressor') {
 			return;
 		}
+		resultContainer.find('.download.extra').attr('href', '/handler/' + e.result.downloadYui)
 		makeMirror(textareas[1], true);
 		highChart(e.result);
 	}
@@ -218,14 +221,14 @@ $(function() {
 		$("html, body").scrollTop(0);
 		$.ajax({
 			type: 'post',
-			url: './test/request.php', 
+			url: './handler/request.php', 
 			data: form.serialize() + '&optype=' + opType,
 			dataType: 'json'
 		}).success(function(e) {
 			if (e.status == 'ok') {
 				handleResponse(e, opType);
 				var top = $('.result-container').position().top;
-				$("html, body").animate({scrollTop: top + "px" }, 1000);
+				$("html, body").animate({scrollTop: top - 10 + "px" }, 1000);
 			} else {
 				$.errorMsg(e.responseText, '对不起，网络出了点小问题~');
 			}

@@ -11,6 +11,7 @@ body {
 .fl {float: left}
 .fr {float: right}
 .mt10 {margin-top: 10px;}
+.mr10 {margin-right: 10px;}
 .mt20 {margin-top: 20px;}
 .mt30 {margin-top: 30px;}
 .mb20 {margin-bottom: 20px;}
@@ -24,6 +25,7 @@ body {
 .fsi {font-style: italic;}
 .tac {text-align: center;}
 .ml5 {margin-left: 5px;}
+.ml7 {margin-left: 7px;}
 .mt5 {margin-top: 5px;}
 .mt4 {margin-top: 4px;}
 .mr5 {margin-right: 5px;}
@@ -34,6 +36,9 @@ body {
 .tac {text-align: center;}
 .tal {text-align: left;}
 .p10 {padding: 10px;}
+.ts {
+	text-shadow: 1px 1px 1px rgab(0,0,0,.4);
+}
 .logo {
 	font: 60px 'Cooper Black', 'Microsoft Yahei', serif;
 	text-shadow: 2px 2px 3px rgba(0,0,0,.3);
@@ -188,6 +193,17 @@ body {
 	margin-right: 10px;
 	margin-top: 8px;
 	font-size: 26px;
+}
+.result .download {
+	float: right;
+	margin-right: -80px;
+	margin-top: 47px;
+	background-color: #EEE;
+	border-radius: 3px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.2);
+}
+.result .download.extra {
+	margin-top: 155px;
 }
 .result .content {
 	border-top: 1px solid #DDD;
