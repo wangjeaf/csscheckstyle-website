@@ -69,8 +69,8 @@ $(function() {
 					  <textarea>{{compressed}}</textarea>',
 		yuicompressor: '<h4>by CKStyle<span class="stumb"></span>[节省空间: {{after1}}/{{before1}}=<span class="CK">{{rate1}}</span>%\
 						{{#greater}}，比YUICompressor多节省 <span class="CK">{{delta}}</span>%] <span class="ml10">;-)</span> {{/greater}}\
-						{{#equal}}，与YUICompressor<span class="ok">持平 :-(</span>{{/equal}}\
-						{{#worse}}，比YUICompressor<span class="muted">还低 :-( ，<a href="https://github.com/wangjeaf/CSSCheckStyle/issues/new" target="_blank">报bug去了~</a></span>{{/worse}}\
+						{{#equal}}，与YUICompressor<span class="ok">持平] :-o</span>{{/equal}}\
+						{{#worse}}，比YUICompressor<span class="muted">还低</span>] :-( ，<a href="https://github.com/wangjeaf/CSSCheckStyle/issues/new" target="_blank">报bug去</a>{{/worse}}\
 						</h4>\
 						<textarea>{{compressed}}</textarea>\
 						<hr style="margin:10px 0;">\
@@ -120,7 +120,7 @@ $(function() {
 			result.rate2 = (result.after2 / result.before2 * 100).toFixed(4);
 			result.delta = (result.rate1 - result.rate2).toFixed(4);
 			result.greater = result.delta > 0;
-			result.equal = result.data == 0;
+			result.equal = result.delta == 0;
 			result.worse = result.delta < 0;
 		} else if (type == 'fixstyle') {
 			result.fixed = result.fixed.replace(/\\n/g, '\n');
