@@ -173,7 +173,7 @@ $(function() {
 	                margin: [ 50, 50, 100, 80]
 	            },
 	            title: {
-	                text: 'CKstyle和YUICompressor压缩后字节数对比'
+	                text: 'CKstyle和YUICompressor压缩后字符数对比'
 	            },
 	            xAxis: {
 	                categories: [
@@ -192,7 +192,7 @@ $(function() {
 	            yAxis: {
 	                min: 0,
 	                title: {
-	                    text: '代码字节数'
+	                    text: '代码字符数'
 	                }
 	            },
 	            legend: {
@@ -202,11 +202,11 @@ $(function() {
 	                formatter: function() {
 	                    return '<b>'+ this.x +'</b><br/>'+
 	                        '代码长度: '+ this.y +
-	                        ' 字节';
+	                        ' 字符';
 	                }
 	            },
 	            series: [{
-	                name: '代码字节数',
+	                name: '代码字符数',
 	                data: [result.before1, result.before1 - result.after2, result.before1 - result.after1],
 	                dataLabels: {
 	                    enabled: true,
