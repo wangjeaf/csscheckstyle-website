@@ -225,7 +225,7 @@ $(function() {
 			form = jqThis.parents('form'),
 			opType = jqThis.data('type'),
 			scrollTop = $(window).scrollTop();
-		$.errorMsg('<div><div class="progress progress-striped active"><div class="bar" style="width: 100%;">正在处理中，请稍后~~</div>\
+		$.errorMsg('<div><div class="progress progress-striped active"><div class="bar" style="width: 100%;font-size:14px;">正在处理中，请稍候~~</div>\
 			</div></div>', 'CKstyling~~~');
 		$("html, body").scrollTop(0);
 		$.ajax({
@@ -241,7 +241,7 @@ $(function() {
 			} else {
 				$.errorMsg(e.responseText, '对不起，网络出了点小问题~');
 			}
-			$.hideErrorMsg(false);
+			$.hideErrorMsg();
 		}).error(function(e) {
 			$.hideErrorMsg();
 			$.errorMsg(e.responseText, '对不起，网络出了点小问题~');
