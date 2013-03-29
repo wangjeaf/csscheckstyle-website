@@ -1,12 +1,11 @@
 <?php
+	// referer
 	function is_from_ckstyle_blog($referer) {
-		if (preg_match('/^http:\/\/\w*csscheckstyle\.com/', $referer)) {
-			return true;
-		} else {
-			return false;
-		}
+		return preg_match('/^http:\/\/.*csscheckstyle\.com/', $referer) 
+			|| preg_match('/^http:\/\/fed\.d\.xiaonei\.com/', $referer);
 	}
 
+	// get remote ip, for download dir
 	function get_ip(){ 
 		if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")) {
 			$ip = getenv("HTTP_CLIENT_IP"); 
@@ -30,6 +29,15 @@
 		return join('\n', $output_array);
 	}
 
+
+	function write_to_file($filename, $content) {
+		$file = fopen($filename, 'w+');
+
+		fwrite($file, $content);
+		fclose($file);
+	}
+
+	// referer
 	if (!isset($_SERVER['HTTP_REFERER'])) {
 		echo('{"status":"error", "旁门已关，请走正门~ :-)"}');
 		return;
@@ -41,21 +49,19 @@
 		return;
 	}
 
-	function write_to_file($filename, $content) {
-		$file = fopen($filename, 'w+');
-
-		fwrite($file, $content);
-		fclose($file);
-	}
-
+	// params
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];
+
+	// rule included
 	$ruleIds = '';
 	foreach($_POST as $key => $value) {
 		if ($value == 'on') {
 			$ruleIds = $ruleIds . $key . ',';
 		}
 	}
+
+	// hack??
 	$ruleIds = str_replace('"', '', $ruleIds);
 	$ruleIds = str_replace('\\', '', $ruleIds);
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
@@ -65,8 +71,12 @@
 	} else {
 		$include = '--include none ';
 	}
+
+	// temp css file
 	$filename = '__ckstyle_web_tmp_'.time().'.css';
 	write_to_file($filename, $csscode);
+
+	// make download dir 
 	$ip = md5(get_ip());
 	$dir = 'download/'.$ip;
 
@@ -78,36 +88,54 @@
 	}
 
 	if ($optype == 'fixstyle') {
+		// fixstyle
 		$result = exec_command('fixstyle -p '.$include.' '.$filename);
+		
+		// make download file
 		$result_file = $dir.'/fixstyle-result.css';
 		write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
+
+		// return json
 		$json = array("status" => "ok", "result" => array(
 			"fixed" => $result,
 			"download" => $result_file
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'ckstyle') {
+		// ckstyle
 		$result = exec_command('ckstyle -p --json '.$include.' '.$filename);
 		$result = str_replace('\n', '', $result);
 		$result = str_replace($filename, 'THIS FILE', $result);
+
+		// return json
 		echo('{"status":"ok","result":'.$result.'}');
 	} else if ($optype == 'csscompress') {
+		// csscompress
 		$result = exec_command('csscompress -p '.$include.' '.$filename);
+
+		// make download file
 		$result_file = $dir.'/compress-ckstyle.min.css';
 		write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
+
+		// return json
 		$json = array("status" => "ok", "result" => array(
 			"compressed" => $result,
 			"download" => $result_file
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'yuicompressor') {
-		$yui_output = $filename.'.min.css';
+		// csscompress
 		$result_ckstyle = exec_command('csscompress -p '.$include.' '.$filename);
+
+		// make csscompress download file
 		$result_file = $dir.'/compress-ckstyle.min.css';
 		write_to_file($result_file, str_replace('\n', PHP_EOL, $result_ckstyle));
 
+		// yuicompressor
+		$yui_output = $filename.'.min.css';
 		exec_command('java -jar yuicompressor-2.4.7.jar '.$filename.' -o '.$yui_output.' --charset utf-8 ');
 
+		// get yui output
 		$file = fopen($yui_output, 'r');
 		$result_yui = '';
 		while(!feof($file)) {
@@ -116,8 +144,11 @@
 		fclose($file);
 		unlink($yui_output);
 
+		// make yui download file
 		$yui_result_file = $dir.'/compress-yui.min.css';
 		write_to_file($yui_result_file, str_replace('\n', PHP_EOL, $result_yui));
+
+		// return json
 		$json = array("status" => "ok", "result" => array(
 			"compressed" => $result_ckstyle,
 			"yuimin" => $result_yui,
@@ -129,17 +160,6 @@
 		echo ('错误的optype类型~');
 	}
 	
+	// remove temp file
 	unlink($filename);
-	//echo "$csscode";
-	
-	/*
-	echo('{"status":"ok", "result":{
-		"errors": ["fda321321321fdasfda", "fdasfdsafdas", "fdafdasfdasfdsa"], 
-		"warnings": ["fdafdasfdas", "fdafdasfdas", "fdafdasfdas"], 
-		"logs":["fdafdasfdas", "fdafdas", "fdafdasfdasfdas"],
-		"fixed": "fdafdsafdas\n    fda",
-		"compressed": "fdafdsafdasfdafdafdsafdasfdafdafdsafdasfdafdsfdafdafdsafdasfda",
-		"yuimin": "fdafdasfdasfdas"
-	}}');
-	*/
 ?>

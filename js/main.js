@@ -211,6 +211,7 @@ $(function() {
 		makeMirror(textareas[1], true);
 		highChart(e.result);
 	}
+	
 	$('form input[type=submit]').click(function() {
 		var jqThis = $(this),
 			form = jqThis.parents('form'),
