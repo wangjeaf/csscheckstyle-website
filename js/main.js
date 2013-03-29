@@ -21,6 +21,32 @@ $.hideErrorMsg = function() {
 	$('#error-msg-container').modal('hide');
 };
 
+(function(global) {
+	var CKSTYLE_RULES = {
+		template:  
+		'{{#rules}}<li>\
+			<label class="checkbox option-{{priority}}" \
+				data-content="{{desc}}" title="" \
+				data-original-title="{{summary}}">\
+				<input type="checkbox" id="{{id}}" name="{{id}}" {{#checked}}checked=checked{{/checked}}/>{{summary}}\
+			</label>\
+		</li>{{/rules}}',
+		rules: RULES};
+
+	rules = CKSTYLE_RULES.rules;
+	rules.sort(function(e1, e2) {
+		return e1.priority - e2.priority;
+	});
+
+	var i, rule, l, prioritys = ['error', 'warning', 'log'];
+	
+	for(i = 0, rule, l = rules.length; i < l; i ++) {
+		rule = rules[i];
+		rule.priority = prioritys[rule.priority] || 'log';
+	}
+	global.CKSTYLE_RULES = CKSTYLE_RULES;
+})(this);
+
 // init tooltip
 $(function() {
 	$('.fork-mask').tooltip({
@@ -256,6 +282,7 @@ $(function() {
 // init options
 $(function() {
 	var optionsContainer = $('.options-container'),
+		toolsContainer = $('.tools-container'),
 		supportLocalStorage = Modernizr.localstorage,
 		selectedOptions, options,
 		i, current, l,
@@ -267,6 +294,12 @@ $(function() {
 		optionsContainer.toggle();
 		$(this).find('i').toggleClass('icon-chevron-down').toggleClass('icon-chevron-up');
 	});
+
+	$('.tools-trigger').click(function() {
+		toolsContainer.toggle();
+		$(this).find('i').toggleClass('icon-chevron-down').toggleClass('icon-chevron-up');
+	});
+
 
 	$(Mustache.to_html(CKSTYLE_RULES.template, {rules:CKSTYLE_RULES.rules})).appendTo('.options-container .options');
 
