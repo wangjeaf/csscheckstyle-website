@@ -191,6 +191,7 @@ $(function() {
 	    });
 	}
 
+	var prefix = document.location.href.toLowerCase().indexOf('fed.d.xiaonei.com') != -1 ? '/ckstyle' : '';
 	function handleResponse(e, opType) {
 		var resultContainer = $('.' + opType + '-result');
 		if (!$('.options-container').is(':hidden')) {
@@ -198,7 +199,7 @@ $(function() {
 		}
 		$('.result').hide();
 		resultContainer.find('.content').html(improve(opType, $('#editor').val(), e.result)).end().show();
-		resultContainer.find('.download').attr('href', '/handler/' + e.result.download)
+		resultContainer.find('.download').attr('href', prefix + '/handler/' + e.result.download)
 		if (opType == 'ckstyle') {
 			return;
 		}
@@ -207,11 +208,11 @@ $(function() {
 		if (opType != 'yuicompressor') {
 			return;
 		}
-		resultContainer.find('.download.extra').attr('href', '/handler/' + e.result.downloadYui)
+		resultContainer.find('.download.extra').attr('href', prefix + '/handler/' + e.result.downloadYui)
 		makeMirror(textareas[1], true);
 		highChart(e.result);
 	}
-	
+
 	$('form input[type=submit]').click(function() {
 		var jqThis = $(this),
 			form = jqThis.parents('form'),

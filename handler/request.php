@@ -64,6 +64,8 @@
 	// hack??
 	$ruleIds = str_replace('"', '', $ruleIds);
 	$ruleIds = str_replace('\\', '', $ruleIds);
+
+	// format as commandline option
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
 	$include = '';
 	if (strlen($ruleIds) != 0) {
