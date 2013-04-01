@@ -53,6 +53,7 @@
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];
 
+	
 	// rule included
 	$ruleIds = '';
 	foreach($_POST as $key => $value) {
@@ -76,7 +77,23 @@
 
 	// temp css file
 	$filename = '__ckstyle_web_tmp_'.time().'.css';
-	write_to_file($filename, $csscode);
+
+	$remote_css = '';
+	if (preg_match('/^http(s)?:/', $csscode)) {
+		if (!preg_match('/.css$/', $csscode)) {
+			echo '<p>对不起，<code>CSS</code> 文件必须以 <code>.css</code> 结尾</p>';
+			return;
+		} else {
+			$csspath = $csscode;
+			$remote = fopen($csspath, "r");
+	        $csscode = fread($remote, 2*1024*1024);
+	        fclose($remote);
+	        write_to_file($filename, $csscode);
+	        $remote_css = '/* CSS FROM: '.$csspath.' */'.PHP_EOL.$csscode;
+		}
+	} else {
+		write_to_file($filename, $csscode);
+	}
 
 	// make download dir 
 	$ip = md5(get_ip());
@@ -97,10 +114,12 @@
 		$result_file = $dir.'/fixstyle-result.css';
 		write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
 
+		$returned_css = 
 		// return json
 		$json = array("status" => "ok", "result" => array(
 			"fixed" => $result,
-			"download" => $result_file
+			"download" => $result_file,
+			"css" => $remote_css
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'ckstyle') {
@@ -110,7 +129,11 @@
 		$result = str_replace($filename, 'THIS FILE', $result);
 
 		// return json
-		echo('{"status":"ok","result":'.$result.'}');
+		$json = array("status" => "ok", "result" => array(
+			"checkresult" => json_decode($result),
+			"css" => $remote_css
+		));
+		echo(json_encode($json));
 	} else if ($optype == 'csscompress') {
 		// csscompress
 		$result = exec_command('csscompress -p '.$include.' '.$filename);
@@ -122,7 +145,8 @@
 		// return json
 		$json = array("status" => "ok", "result" => array(
 			"compressed" => $result,
-			"download" => $result_file
+			"download" => $result_file,
+			"css" => $remote_css
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'yuicompressor') {
@@ -155,7 +179,8 @@
 			"compressed" => $result_ckstyle,
 			"yuimin" => $result_yui,
 			"download" => $result_file,
-			"downloadYui" => $yui_result_file
+			"downloadYui" => $yui_result_file,
+			"css" => $remote_css
 		));
 		echo(json_encode($json));
 	} else {

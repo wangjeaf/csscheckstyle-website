@@ -1,0 +1,362 @@
+/* CSS FROM: http://csscheckstyle.com/css/layout.css */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #DDD;
+}
+
+body {
+    width: 900px;
+    margin: 0 auto;
+}
+
+.fl,
+.menu li {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.mt20,
+.tools,
+.options {
+    margin-top: 20px;
+}
+
+.mt30 {
+    margin-top: 30px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mr80 {
+    margin-right: 80px;
+}
+
+.mr3 {
+    margin-right: 3px;
+}
+
+.ml20 {
+    margin-left: 20px;
+}
+
+.fs16,
+.result .content .large {
+    font-size: 16px;
+}
+
+.fs14 {
+    font-size: 14px;
+}
+
+.fs12 {
+    font-size: 12px;
+}
+
+.fwb {
+    font-weight: bold;
+}
+
+.fsi {
+    font-style: italic;
+}
+
+.tac {
+    text-align: center;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.ml7 {
+    margin-left: 7px;
+}
+
+.mt5 {
+    margin-top: 5px;
+}
+
+.mt4 {
+    margin-top: 4px;
+}
+
+.mr5 {
+    margin-right: 5px;
+}
+
+.vam {
+    vertical-align: middle;
+}
+
+.pa {
+    position: absolute;
+}
+
+.pr {
+    position: relative;
+    *zoom: 1;
+}
+
+.tsn {
+    text-shadow: none;
+}
+
+.tal {
+    text-align: left;
+}
+
+.p10 {
+    padding: 10px;
+}
+
+.ts {
+    text-shadow: 1px 1px 1px rgab(0,0,0,.4);
+}
+
+.logo {
+    font: 60px 'Cooper Black','Microsoft Yahei',serif;
+    text-shadow: 2px 2px 3px rgba(0,0,0,.3);
+}
+
+.logo a {
+    text-decoration: none;
+}
+
+.ver {
+    margin-top: 10px;
+    margin-left: 5px;
+    color: #BBB;
+    font-family: Calibri,'Bauhaus 93',serif;
+    font-size: 36px;
+    font-style: italic;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(255,255,255,.9);
+}
+
+.CK,
+.block strong {
+    color: #DF482B;
+}
+
+.style {
+    color: #20B7D4;
+}
+
+.fork-mask {
+    float: left;
+    margin-left: -37px;
+    margin-top: -7px;
+}
+
+.menu li a {
+    padding: 10px;
+    color: #888;
+}
+
+.menu .current {
+    background-color: #EEE;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.3);
+}
+
+.block {
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: #EEE;
+    line-height: 30px;
+    font-size: 16px;
+    font-family: 'Microsoft Yahei',tahoma,serif;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #888;
+    text-shadow: 2px 2px 1px #FFF;
+}
+
+.expand {
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 20px;
+}
+
+.editor-container {
+    margin-bottom: 10px;
+}
+
+#editor {
+    width: 99%;
+    height: 390px;
+}
+
+.footer {
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid #EEE;
+    color: #888;
+    text-align: center;
+}
+
+.options-trigger,
+.tools-trigger {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.tools li {
+    float: left;
+    width: 220px;
+    margin: 2px;
+}
+
+.options li {
+    float: left;
+    width: 220px;
+    margin: 2px;
+    background-color: #EEE;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.2);
+}
+
+.options .option-error {
+    color: #BD362F;
+}
+
+.options .option-warning {
+    color: #C09853;
+}
+
+.options .option-log {
+    color: #999;
+}
+
+.options .checkbox {
+    margin-bottom: 0;
+    padding: 10px 10px 10px 34px;
+}
+
+.tools-container {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #EEE;
+    border-radius: 5px;
+}
+
+.tools-container ul {
+    margin: 0;
+}
+
+.tools .checkbox.nopl {
+    padding-left: 0;
+}
+
+.CodeMirror {
+    height: 400px;
+    font-size: 14px;
+}
+
+.CodeMirror-lines {
+    line-height: 20px;
+    font-family: 'Microsoft Yahei',tahoma,serif;
+}
+
+.tip {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#option-tools {
+    position: absolute;
+    top: 0;
+    right: -80px;
+    width: 70px;
+}
+
+.result {
+    margin-bottom: 20px;
+    padding: 5px;
+    background-color: #EEE;
+    font-family: 'Microsoft Yahei',tahoma,serif;
+    border-radius: 5px;
+}
+
+.result .title {
+    position: relative;
+    margin: 0;
+    padding-left: 5px;
+    border-bottom: 1px solid #FFF;
+    color: #DF482B;
+    font-size: 20px;
+    text-decoration: underline;
+    text-shadow: 2px 2px 3px rgba(0,0,0,.4);
+    text-transform: uppercase;
+}
+
+.result .relax {
+    color: #444;
+    font-size: 18px;
+    text-decoration: none;
+    text-transform: none;
+    text-shadow: none;
+}
+
+.result .title .close {
+    margin-right: 10px;
+    margin-top: 8px;
+    font-size: 26px;
+}
+
+.result .download {
+    float: right;
+    margin-right: -80px;
+    margin-top: 47px;
+    background-color: #EEE;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.2);
+}
+
+.result .download.extra {
+    margin-top: 158px;
+}
+
+.result .content {
+    padding: 5px;
+    border-top: 1px solid #DDD;
+}
+
+.result .content .large li {
+    padding: 5px;
+}
+
+.stumb {
+    margin-left: 80px;
+}
+
+.ckstyle-result li {
+    cursor: pointer;
+}
+
+.ckstyle-result li:hover {
+    text-decoration: underline;
+}

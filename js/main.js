@@ -81,8 +81,11 @@ $(function() {
 		if (matched) {
 			index = matched.index;
 			lineNo = css.substring(0, index).split('\n').length;
-			Editor.setSelection({ line: lineNo, ch: 0 }, { line: lineNo, ch:selector.length});
+			Editor.setSelection({ line: lineNo, ch: 0 }, { line: lineNo, ch:100});
 			scrollTo(0, top);
+			Editor.scrollIntoView({line: lineNo, ch:0}, 90);
+		} else {
+
 		}
 	}
 
@@ -95,10 +98,8 @@ $(function() {
 		}
 		focusToLine(pos);
 	});
-});
 
-// handle ajax requests
-$(function() {
+
 	var templates = {
 		ckstyle: '{{#hasError}}<h4 class="text-error">{{totalError}} error{{#manyErrors}}s{{/manyErrors}}</h4>{{/hasError}}\
 			      {{#hasError}}<ol>{{/hasError}}\
@@ -133,6 +134,7 @@ $(function() {
 
 	function improve(type, before, result) {
 		if (type == 'ckstyle') {
+			result = result.checkresult;
 			if (!result.errors && !result.warnings && !result.logs) {
 				type = 'ckstyle_noerror';
 			} else {
@@ -188,6 +190,7 @@ $(function() {
 		    readOnly: true
 		});
 		cut && $(textarea).next('.CodeMirror').css('height', '50px');
+		return mirror;
 	}
 
 	function highChart(result) {
@@ -251,6 +254,9 @@ $(function() {
 
 	var prefix = document.location.href.toLowerCase().indexOf('fed.d.xiaonei.com') != -1 ? '/ckstyle' : '';
 	function handleResponse(e, opType) {
+		if (e.result.css) {
+			Editor.setValue(e.result.css);
+		}
 		var resultContainer = $('.' + opType + '-result');
 		if ($('.options-container').is(':visible')) {
 			$('.options-trigger').trigger('click');
@@ -265,20 +271,32 @@ $(function() {
 			return;
 		}
 		var textareas = $('.' + opType + '-result').find('textarea');
-		makeMirror(textareas[0], opType != 'fixstyle');
+		var mirror1 = makeMirror(textareas[0], opType != 'fixstyle');
+
 		if (opType != 'yuicompressor') {
 			return;
 		}
 		resultContainer.find('.download.extra').attr('href', prefix + '/handler/' + e.result.downloadYui)
-		makeMirror(textareas[1], true);
+		var mirror2 = makeMirror(textareas[1], true);
+		// you scroll, i scroll
+		mirror1.on('scroll', function(e) {
+			mirror2.scrollTo(e.getScrollInfo().left, 0);
+		})
 		highChart(e.result);
 	}
 
+	function trim(str) {
+		return str.replace('/^\s+|\s+$/g', '');
+	}
+	
 	$('form input[type=submit]').click(function() {
 		var jqThis = $(this),
 			form = jqThis.parents('form'),
 			opType = jqThis.data('type'),
 			scrollTop = $(window).scrollTop();
+		if (trim(textarea.value) == '') {
+			return;
+		}
 		$.errorMsg('<div><div class="progress progress-striped active"><div class="bar" style="width: 100%;font-size:14px;">正在处理中，请稍候~~</div>\
 			</div></div>', 'CKstyling~~~');
 		$("html, body").scrollTop(0);
