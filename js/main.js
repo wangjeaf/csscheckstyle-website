@@ -136,21 +136,21 @@ $(function() {
 			if (!result.errors && !result.warnings && !result.logs) {
 				type = 'ckstyle_noerror';
 			} else {
-				if (result.errors) {
+				if (result.errors && result.errors.length != 0) {
 					result.hasError = true;
 					result.totalError = result.errors.length;
 					if (result.totalError > 1) {
 						result.manyErrors = true;
 					}
 				}
-				if (result.warnings) {
+				if (result.warnings && result.warnings.length != 0) {
 					result.hasWarning = true;
 					result.totalWarning = result.warnings.length;
 					if (result.totalWarning > 1) {
 						result.manyWarnings = true;
 					}
 				}
-				if (result.logs) {
+				if (result.logs && result.logs.length != 0) {
 					result.hasLog = true;
 					result.totalLog = result.logs.length;
 					if (result.totalLog > 1) {
@@ -252,8 +252,11 @@ $(function() {
 	var prefix = document.location.href.toLowerCase().indexOf('fed.d.xiaonei.com') != -1 ? '/ckstyle' : '';
 	function handleResponse(e, opType) {
 		var resultContainer = $('.' + opType + '-result');
-		if (!$('.options-container').is(':hidden')) {
+		if ($('.options-container').is(':visible')) {
 			$('.options-trigger').trigger('click');
+		}
+		if ($('.tools-container').is(':visible')) {
+			$('.tools-trigger').trigger('click');
 		}
 		$('.result').hide();
 		resultContainer.find('.content').html(improve(opType, $('#editor').val(), e.result)).end().show();
@@ -342,25 +345,37 @@ $(function() {
 		options.find('input').attr('checked', !!$(this).find('input').attr('checked'));
 	});
 
-	if (supportLocalStorage) {
-		options.click(function() {
-			var selects = [], counter = 0;
-			options.each(function(i, ele) {
-				var input = $(ele).find('input');
-				if (exIds.indexOf(input.attr('id')) != -1) {
-					return;
-				}
-				if (!!input.attr('checked')) {
-					counter ++;
-				}
-			});
-			selectAll.find('input').attr('checked', counter === options.length - 1);
-			options.each(function(i, ele) {
-				var input = $(ele).find('input');
-				selects[selects.length] = {id:input.attr('id'), checked:!!input.attr('checked')};
-			});
-			window.localStorage.setItem('ckstyle-options', JSON.stringify(selects));
+	// reset rules
+	$('.reset-rules').click(function() {
+		var rules = CKSTYLE_RULES.rules, i, l, rule;
+		for(var i = 0, l = rules.length; i < l; i++) {
+			rule = rules[i];
+			$('#' + rule.id).attr('checked', rule.checked);
+		}
+		saveToLocalStorage();
+	});
+
+	function saveToLocalStorage() {
+		var selects = [], counter = 0;
+		options.each(function(i, ele) {
+			var input = $(ele).find('input');
+			if (exIds.indexOf(input.attr('id')) != -1) {
+				return;
+			}
+			if (!!input.attr('checked')) {
+				counter ++;
+			}
 		});
+		selectAll.find('input').attr('checked', counter === options.length - 1);
+		options.each(function(i, ele) {
+			var input = $(ele).find('input');
+			selects[selects.length] = {id:input.attr('id'), checked:!!input.attr('checked')};
+		});
+		window.localStorage.setItem('ckstyle-options', JSON.stringify(selects));
+	}
+
+	if (supportLocalStorage) {
+		options.click(saveToLocalStorage);
 
 		selectedOptions = window.localStorage.getItem('ckstyle-options');
 		if (selectedOptions) {

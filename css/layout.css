@@ -10,6 +10,7 @@ body {
 
 .fl {float: left}
 .fr {float: right}
+.mb0 {margin-bottom: 0;}
 .mt10 {margin-top: 10px;}
 .mr10 {margin-right: 10px;}
 .mt20 {margin-top: 20px;}
@@ -149,7 +150,18 @@ body {
 	padding: 10px;
 	padding-left: 34px;
 }
-
+.tools-container {
+	background-color: #EEE;
+	padding: 5px;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+.tools-container ul {
+	margin: 0;
+}
+.tools .checkbox.nopl {
+	padding-left: 0;
+}
 .CodeMirror {
 	font-size: 14px;
 	height: 400px;
