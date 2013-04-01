@@ -59,7 +59,7 @@ $(function() {
 
 // init editor
 $(function() {
-	var textarea = $('#editor')[0], 
+	var textarea = $('#editor')[0], top,
 	Editor = CodeMirror.fromTextArea(textarea, {
 	    theme: 'default',
 	    lineNumbers: true,
@@ -70,6 +70,31 @@ $(function() {
 		textarea.value = Editor.getValue();
 	})
 	Editor.setSelection({line: 0,ch: 0}, {line: 4, ch: textarea.value.length});
+
+	// locate to error pos 
+	top = $(textarea).next('.CodeMirror').position().top - 10;
+
+	function focusToLine(selector) {
+		var css = Editor.getValue(),
+			reg = new RegExp('\\s*' + selector + '\\s*{'),
+			matched = reg.exec(css);
+		if (matched) {
+			index = matched.index;
+			lineNo = css.substring(0, index).split('\n').length;
+			Editor.setSelection({ line: lineNo, ch: 0 }, { line: lineNo, ch:selector.length});
+			scrollTo(0, top);
+		}
+	}
+
+	$('.ckstyle-result').delegate('li[data-pos]', 'click', function() {
+		var pos = $(this).data('pos');
+		if (!pos) {
+			Editor.setSelection({ line: 0, ch: 0 }, { line: 0, ch: textarea.value.split('\n')[0].length });
+		    scrollTo(0, top);
+		    return;
+		}
+		focusToLine(pos);
+	});
 });
 
 // handle ajax requests
@@ -77,17 +102,17 @@ $(function() {
 	var templates = {
 		ckstyle: '{{#hasError}}<h4 class="text-error">{{totalError}} error{{#manyErrors}}s{{/manyErrors}}</h4>{{/hasError}}\
 			      {{#hasError}}<ol>{{/hasError}}\
-				  	  {{#errors}}<li class="text-error">{{.}}</li>{{/errors}}\
+				  	  {{#errors}}<li class="text-error" data-pos="{{selector}}">{{errorMsg}}</li>{{/errors}}\
 				  {{#hasError}}</ol>{{/hasError}}\
 				  {{#hasWarning}}<hr style="margin:10px 0;">\
 				  	  <h4 class="text-warning">{{totalWarning}} warning{{#manyWarnings}}s{{/manyWarnings}}</h4>{{/hasWarning}}\
 				  {{#hasWarning}}<ol>{{/hasWarning}}\
-				  	  {{#warnings}}<li class="text-warning">{{.}}</li>{{/warnings}}\
+				  	  {{#warnings}}<li class="text-warning" data-pos="{{selector}}">{{errorMsg}}</li>{{/warnings}}\
 				  {{#hasWarning}}</ol>{{/hasWarning}}\
 				  {{#hasLog}}<hr style="margin:10px 0;">\
 				  	  <h4 class="muted">{{totalLog}} suggest{{#manyLogs}}s{{/manyLogs}}</h4>{{/hasLog}}\
 				  {{#hasLog}}<ol>{{/hasLog}}\
-				      {{#logs}}<li class="muted">{{.}}</li>{{/logs}}\
+				      {{#logs}}<li class="muted" data-pos="{{selector}}">{{errorMsg}}</li>{{/logs}}\
 				  {{#hasLog}}</ol>{{/hasLog}}',
 		ckstyle_noerror: '<p class="text-success">CKstyle没有找到问题，牛逼！</p>',
 		fixstyle: '<textarea class="compressed">{{fixed}}</textarea>',

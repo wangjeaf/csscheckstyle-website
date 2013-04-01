@@ -228,3 +228,9 @@ body {
 .stumb {
 	margin-left: 80px;
 }
+.ckstyle-result li {
+	cursor: pointer;
+}
+.ckstyle-result li:hover {
+	text-decoration: underline;
+}
