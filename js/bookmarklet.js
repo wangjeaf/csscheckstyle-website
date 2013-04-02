@@ -1,1 +1,3 @@
 javascript:(function(win,doc){if(win.location.href==''){return;} var s = doc.createElement('script');s.async=true;s.defer=true;s.src='http://csscheckstyle.com/js/webservice.js';doc.body.appendChild(s);})(this, document);
+
+//javascript:(function(win,doc){if(win.location.href==''){return;} var s = doc.createElement('script');s.async=true;s.defer=true;s.src='http://fed.d.xiaonei.com/ckstyle/js/webservice.js';doc.body.appendChild(s);})(this, document);

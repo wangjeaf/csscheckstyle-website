@@ -1,11 +1,27 @@
 (function(win) {
 	var styles = document.getElementsByTagName('link'),
 		i, l = styles.length, link, url, code, inputed;
+	var domain = 'http://csscheckstyle.com/';
+	// var domain = 'http://fed.d.xiaonei.com/ckstyle/'   // for fed.d.xiaonei.com
+
+	function getDownloadUrl(url) {
+		return domain + 'handler/' + url;
+	}
+
+	if (win.ckstyle_inited) {
+		if ($('ckstyle-placeholder')) {
+			var p = $('ckstyle-placeholder').parentNode.parentNode;
+			p.removeChild($('ckstyle-placeholder').parentNode);
+		}
+	}
+
+	win.ckstyle_inited = true;
 
 	function showInviteCodeInputer() {
-		var inputed = prompt('请输入ckstyle的邀请码 (localStorage不能跨域，见谅)');
+		var inputed = prompt('please input your CKstyle Invite Code here... \n\n\
+			localStorage can not cross domain, sorry ~~~');
 		if (inputed) {
-			var flag = confirm('请确认您的邀请码为 ' + inputed);
+			var flag = confirm('please confirm your invite code: \n\n' + inputed);
 			if (flag) {
 				win.localStorage.setItem('ckstyle-invite-code', inputed);
 				return inputed;
@@ -82,9 +98,7 @@
 		}
 		return url;
 	}
-	function getDownloadUrl(url) {
-		return 'http://csscheckstyle.com/handler/' + url;
-	}
+	
 	function buildContent(array) {
 		var result = ['<table width="100%" style="text-align:left;"><thead><tr><th width="40%">URL</th>\
 			<th>before</th><th>after</th><th>delta</th><th>% (delta/before)</th><th>约每千万PV节省</th><th>压缩后代码下载</th><th>替换</th></tr></thead><tbody>'], current;
@@ -101,7 +115,7 @@
 				'<td>\
 					<a href="javascript:;" \
 						onclick="ckstyleReplaceUrl(this, \'' + encodeURIComponent(trim(current.url)) + '\', \'' + 
-							encodeURIComponent(trim(current.download)) + '\')">替换页面CSS</a></td>' + 
+							encodeURIComponent(trim(current.download)) + '\')">替换CSS</a></td>' + 
 				'<tr>');
 		}
 		result.push('</tbody></table>');
@@ -110,19 +124,27 @@
 	function returnFalse() {
 		return false;
 	}
-	var prefix = 'http://www.csscheckstyle.com/'
+
 	win['ckstyleReplaceUrl'] = function(node, from, to) {
 		from = decodeURIComponent(from);
-		to = decodeURIComponent(to);
+		to = getDownloadUrl(decodeURIComponent(to));
+		if (node.innerHTML == '恢复') {
+			var tmp = to;
+			to = from;
+			from = tmp;
+		}
 		container.style.display = 'none';
 		setTimeout(function() {
 			var links = document.getElementsByTagName('link');
 			for (var i = 0, l = links.length; i < l; i++) {
 				if (links[i].href == from) {
-					links[i].href = getDownloadUrl(to);
+					links[i].href = to;
 					setTimeout(function() {
-						node.innerHTML = '已替换';
-						node.onclick = returnFalse;
+						if (node.innerHTML == '恢复') {
+							node.innerHTML = '替换CSS'
+						} else {
+							node.innerHTML = '恢复';
+						}
 						container.style.display = 'block';
 					}, 1000);
 					return;
@@ -142,10 +164,11 @@
 		content.innerHTML = buildContent(res.files);
 		content.style.display = 'block';
 	};
+	
 	var optype = 'ckstyle';
 	var script = document.createElement('script');
 	script.async = true;
 	script.type = 'text/javascript';
-	script.src = 'http://csscheckstyle.com/handler/service.php?invitecode=' + code + '&ckcallback=' + cbName + '&optype=' + optype + '&cssurls=' + urls.join('__seperator__');
+	script.src = domain + 'handler/service.php?invitecode=' + code + '&ckcallback=' + cbName + '&optype=' + optype + '&cssurls=' + urls.join('__seperator__');
 	document.body.appendChild(script);
 })(this);
