@@ -3,7 +3,7 @@
 		i, l = styles.length, link, url, code, inputed;
 
 	function showInviteCodeInputer() {
-		var inputed = prompt('请输入ckstyle的邀请码');
+		var inputed = prompt('请输入ckstyle的邀请码 (localStorage不能跨域，见谅)');
 		if (inputed) {
 			var flag = confirm('请确认您的邀请码为 ' + inputed);
 			if (flag) {
