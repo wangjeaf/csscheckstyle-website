@@ -101,7 +101,7 @@
 	
 	function buildContent(array) {
 		var result = ['<table width="100%" style="text-align:left;"><thead><tr><th width="40%">URL</th>\
-			<th>before</th><th>after</th><th>delta</th><th>% (delta/before)</th><th>约每千万PV节省</th><th>压缩后代码下载</th><th>替换</th></tr></thead><tbody>'], current;
+			<th>before</th><th>after</th><th>delta</th><th>% (delta/before)</th><th>Saved Per Ten Million PVs</th><th>compressed CSS</th><th>Replace</th></tr></thead><tbody>'], current;
 		for (var i = 0, l = array.length; i < l; i ++) {
 			current = array[i];
 			current.delta = current.before - current.after;
@@ -115,7 +115,7 @@
 				'<td>\
 					<a href="javascript:;" \
 						onclick="ckstyleReplaceUrl(this, \'' + encodeURIComponent(trim(current.url)) + '\', \'' + 
-							encodeURIComponent(trim(current.download)) + '\')">替换CSS</a></td>' + 
+							encodeURIComponent(trim(current.download)) + '\')">Replace CSS</a></td>' + 
 				'<tr>');
 		}
 		result.push('</tbody></table>');
@@ -128,7 +128,7 @@
 	win['ckstyleReplaceUrl'] = function(node, from, to) {
 		from = decodeURIComponent(from);
 		to = getDownloadUrl(decodeURIComponent(to));
-		if (node.innerHTML == '恢复') {
+		if (node.innerHTML == 'Recover') {
 			var tmp = to;
 			to = from;
 			from = tmp;
@@ -140,10 +140,10 @@
 				if (links[i].href == from) {
 					links[i].href = to;
 					setTimeout(function() {
-						if (node.innerHTML == '恢复') {
-							node.innerHTML = '替换CSS'
+						if (node.innerHTML == 'Recover') {
+							node.innerHTML = 'Replace CSS'
 						} else {
-							node.innerHTML = '恢复';
+							node.innerHTML = 'Recover';
 						}
 						container.style.display = 'block';
 					}, 1000);
