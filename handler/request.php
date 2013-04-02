@@ -53,6 +53,13 @@
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];
 
+	// safemode
+	$safeMode = $_POST['safeMode'];
+	if ($safeMode == 'true') {
+		$safeMode = ' --safeMode ';
+	} else {
+		$safeMode = '';
+	}
 	
 	// rule included
 	$ruleIds = '';
@@ -68,11 +75,11 @@
 
 	// format as commandline option
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
-	$include = '';
+	$command_options = '';
 	if (strlen($ruleIds) != 0) {
-		$include = '--include '.$ruleIds;
+		$command_options = '--include '.$ruleIds.$safeMode;
 	} else {
-		$include = '--include none ';
+		$command_options = '--include none '.$safeMode;
 	}
 
 	// temp css file
@@ -108,7 +115,7 @@
 
 	if ($optype == 'fixstyle') {
 		// fixstyle
-		$result = exec_command('fixstyle -p '.$include.' '.$filename);
+		$result = exec_command('fixstyle -p '.$command_options.' '.$filename);
 		
 		// make download file
 		$result_file = $dir.'/fixstyle-result.css';
@@ -124,7 +131,7 @@
 		echo(json_encode($json));
 	} else if ($optype == 'ckstyle') {
 		// ckstyle
-		$result = exec_command('ckstyle -p --json '.$include.' '.$filename);
+		$result = exec_command('ckstyle -p --json '.$command_options.' '.$filename);
 		$result = str_replace('\n', '', $result);
 		$result = str_replace($filename, 'THIS FILE', $result);
 
@@ -136,7 +143,7 @@
 		echo(json_encode($json));
 	} else if ($optype == 'csscompress') {
 		// csscompress
-		$result = exec_command('csscompress -p '.$include.' '.$filename);
+		$result = exec_command('csscompress -p '.$command_options.' '.$filename);
 
 		// make download file
 		$result_file = $dir.'/compress-ckstyle.min.css';
@@ -151,7 +158,7 @@
 		echo(json_encode($json));
 	} else if ($optype == 'yuicompressor') {
 		// csscompress
-		$result_ckstyle = exec_command('csscompress -p '.$include.' '.$filename);
+		$result_ckstyle = exec_command('csscompress -p '.$command_options.' '.$filename);
 
 		// make csscompress download file
 		$result_file = $dir.'/compress-ckstyle.min.css';

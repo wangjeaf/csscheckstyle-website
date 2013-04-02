@@ -123,9 +123,14 @@ body {
 .tools, .options {
 	margin-top: 20px;
 }
-.tools li {
+.tools .label {
 	float: left;
-	width: 220px;
+	width: 170px;
+	margin: 2px;
+}
+.tools li {
+	width: 170px;
+	float: left;
 	margin: 2px;
 }
 .options li {

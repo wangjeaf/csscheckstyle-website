@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<title>CKstyle——CSS美容院，让你的CSS更漂亮！</title>
+		<title>CKstyle——让你的CSS更漂亮！</title>
 		<link rel="stylesheet" href="tools/bootstrap/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="tools/codemirror/lib/codemirror.css"/>
 		<link rel="stylesheet" href="css/layout.css"/>
@@ -30,7 +30,7 @@
 		<form method="post" onsubmit="return false;">
 			<div class="main">
 				<div class="editor-container">
-					<textarea id="editor" name="csscode">http://s.xnimg.cn/a54534/n/apps/login/v6/login-all-min.css</textarea>
+					<textarea id="editor" name="csscode">/* 在此编辑 CSS 或 粘贴 CSS 的链接地址 */</textarea>
 				</div>
 				<div>
 					<input type="submit" data-type="ckstyle" class="btn btn-info btn-large expand" value="CKstyle"/>
@@ -44,8 +44,15 @@
 			<div class="tools-container hide pr">
 				<ul class="unstyled clearfix tools">
 					<li>
-						<label class="checkbox nopl mb0" id="1">
+						<label class="checkbox nopl mb0" data-content="将重置当前的规则选择，按照系统默认来选择" data-original-title="重置所有规则">
 							<a type="button"  class="btn btn-info btn-large expand reset-rules">重置规则<i class="icon-wrench icon-white ml5"></i></a>
+						</label>
+						
+					</li>
+					<li>
+						<label class="checkbox nopl mb0" data-content="点击即可切换模式，目前，安全模式下将不会进行 <code>合并两个完全相同的规则集</code>" data-original-title="安全模式">
+							<input type="hidden" id="safeModeInput" name="safeMode" value="false"/>
+							<button type="button" class="btn btn-success btn-large expand safe-mode-btn" data-toggle="button">安全模式<i class="icon-remove icon-white ml5"></i></button>
 						</label>
 					</li>
 				</ul>

@@ -288,7 +288,7 @@ $(function() {
 	function trim(str) {
 		return str.replace('/^\s+|\s+$/g', '');
 	}
-	
+
 	$('form input[type=submit]').click(function() {
 		var jqThis = $(this),
 			form = jqThis.parents('form'),
@@ -349,7 +349,7 @@ $(function() {
 
 	$(Mustache.to_html(CKSTYLE_RULES.template, {rules:CKSTYLE_RULES.rules})).appendTo('.options-container .options');
 
-	options = $('.options .checkbox');
+	options = $('.tools .checkbox, .options .checkbox');
 	options.popover({
 		trigger: 'hover',
 		delay: 300,
@@ -363,6 +363,10 @@ $(function() {
 		options.find('input').attr('checked', !!$(this).find('input').attr('checked'));
 	});
 
+	$('.safe-mode-btn').click(function() {
+		$('#safeModeInput').val(!$(this).hasClass('active'));
+		$(this).find('i').toggleClass('icon-remove').toggleClass('icon-ok');
+	});
 	// reset rules
 	$('.reset-rules').click(function() {
 		var rules = CKSTYLE_RULES.rules, i, l, rule;
