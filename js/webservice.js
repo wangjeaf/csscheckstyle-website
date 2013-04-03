@@ -7,16 +7,6 @@
 	function getDownloadUrl(url) {
 		return domain + 'handler/' + url;
 	}
-
-	if (win.ckstyle_inited) {
-		if ($('ckstyle-placeholder')) {
-			var p = $('ckstyle-placeholder').parentNode.parentNode;
-			p.removeChild($('ckstyle-placeholder').parentNode);
-		}
-	}
-
-	win.ckstyle_inited = true;
-
 	function showInviteCodeInputer() {
 		var inputed = prompt('please input your CKstyle Invite Code here... \n\n\
 			localStorage can not cross domain, sorry ~~~');
@@ -32,6 +22,58 @@
 			return false;
 		}
 	}
+	function getUrl(src) {
+		var a = document.createElement('a');
+		a.href = src;
+		return encodeURIComponent(a.href);
+	}
+	function $(id) {
+		return document.getElementById(id);
+	}
+	function trim(str) {
+		return str.replace(/^\s+|\s+$/g, '');
+	}
+	function cut(url) {
+		if (url.length > 80) {
+			url = url.substring(0, 80) + '...';
+		}
+		return url;
+	}
+	function buildContent(array) {
+		var result = ['<table width="100%" style="text-align:left;"><thead><tr><th width="40%">URL</th>\
+			<th>before</th><th>after</th><th>delta</th><th>% (delta/before)</th><th>Saved Per 10,000,000 PVs</th><th>compressed CSS</th><th>Replace/Recover CSS</th></tr></thead><tbody>'], current;
+		for (var i = 0, l = array.length; i < l; i ++) {
+			current = array[i];
+			current.delta = current.before - current.after;
+			result.push('<tr><td><a target="_blank" href="' + current.url + '">' + cut(current.url) + '</a></td><td>' + 
+				current.before + '</td><td>' + 
+				current.after + '</td><td>' + 
+				current.delta + 
+				'</td><td>' + ((current.delta / current.before) * 100).toFixed(4) + 
+				'</td><td>' + (current.delta * 2 * 1000 * 10000 / 1024 / 1024 / 1024).toFixed(4) + 'G' +  
+				'</td><td><a target="_blank" href="' + getDownloadUrl(current.download) + '">compressed</a></td>' + 
+				'<td>\
+					<a href="javascript:;" \
+						onclick="ckstyleReplaceUrl(this, \'' + encodeURIComponent(trim(current.url)) + '\', \'' + 
+							encodeURIComponent(trim(current.download)) + '\')">Replace</a></td>' + 
+				'<tr>');
+		}
+		result.push('</tbody></table>');
+		return result.join('');
+	}
+
+	function returnFalse() {
+		return false;
+	}
+
+	if (win.ckstyle_inited) {
+		if ($('ckstyle-placeholder')) {
+			var p = $('ckstyle-placeholder').parentNode.parentNode;
+			p.removeChild($('ckstyle-placeholder').parentNode);
+		}
+	}
+
+	win.ckstyle_inited = true;
 
 	win.showInviteCodeInputer = showInviteCodeInputer;
 
@@ -44,11 +86,7 @@
 			}
 		}
 	}
-	function getUrl(src) {
-		var a = document.createElement('a');
-		a.href = src;
-		return encodeURIComponent(a.href);
-	}
+	
 	var urls = [];
 	for (i = 0; i < l; i++) {
 		link = styles[i];
@@ -66,7 +104,7 @@
 			position:fixed;top:0;right:0;z-index:10000;border:1px solid #000;box-shadow: 1px 1px 10px #000;opacity:0.9;">\
 			<span id="ckstyle-close" style="float:right;margin-right:10px;font-size:20px;margin-top:3px;cursor:pointer;">&times;</span>\
 			<h3 style="padding:5px;margin:0;font-size:16px;line-height:22px;border-bottom:1px solid #000;">CKStyle Service</h3>\
-			<p id="ckstyle-loading" style="padding:5px;margin:0;">CKstyling...</p>\
+			<p id="ckstyle-loading" style="padding:5px;margin:0;">CKstyling <span id="ckstyle-file-count"></span> CSS Files ...</p>\
 			<div id="ckstyle-content" style="padding:5px;display:none;">321321</div>\
 		</div><div id="ckstyle-trigger" style="border:1px solid #000; box-shadow:1px 1px 2px #000;\
 			display:none;top:0;right:0;position:fixed;z-index:10000;background-color:#EEE;padding:5px;cursor:pointer;">CKstyle</div>';
@@ -75,10 +113,9 @@
 	document.body.appendChild(div);
 
 	var container = $('ckstyle-placeholder');
-	function $(id) {
-		return document.getElementById(id);
-	}
+	
 
+	$('ckstyle-file-count').innerHTML = urls.length;
 	$('ckstyle-close').onclick = function() {
 		this.parentNode.style.display = 'none';
 		$('ckstyle-trigger').style.display = 'block';
@@ -88,42 +125,10 @@
 		container.style.display = 'block';
 	};
 	var cbName = 'ckstyleCallback';
-
-	function trim(str) {
-		return str.replace(/^\s+|\s+$/g, '');
-	}
-	function cut(url) {
-		if (url.length > 80) {
-			url = url.substring(0, 80) + '...';
-		}
-		return url;
-	}
+	var optype = 'ckstyle';
 	
-	function buildContent(array) {
-		var result = ['<table width="100%" style="text-align:left;"><thead><tr><th width="40%">URL</th>\
-			<th>before</th><th>after</th><th>delta</th><th>% (delta/before)</th><th>Saved Per Ten Million PVs</th><th>compressed CSS</th><th>Replace</th></tr></thead><tbody>'], current;
-		for (var i = 0, l = array.length; i < l; i ++) {
-			current = array[i];
-			current.delta = current.before - current.after;
-			result.push('<tr><td><a target="_blank" href="' + current.url + '">' + cut(current.url) + '</a></td><td>' + 
-				current.before + '</td><td>' + 
-				current.after + '</td><td>' + 
-				current.delta + 
-				'</td><td>' + ((current.delta / current.before) * 100).toFixed(4) + 
-				'</td><td>' + (current.delta * 2 * 1000 * 10000 / 1024 / 1024 / 1024).toFixed(4) + 'G' +  
-				'</td><td><a target="_blank" href="' + getDownloadUrl(current.download) + '">compressed</a></td>' + 
-				'<td>\
-					<a href="javascript:;" \
-						onclick="ckstyleReplaceUrl(this, \'' + encodeURIComponent(trim(current.url)) + '\', \'' + 
-							encodeURIComponent(trim(current.download)) + '\')">Replace CSS</a></td>' + 
-				'<tr>');
-		}
-		result.push('</tbody></table>');
-		return result.join('');
-	}
-	function returnFalse() {
-		return false;
-	}
+	
+	
 
 	win['ckstyleReplaceUrl'] = function(node, from, to) {
 		from = decodeURIComponent(from);
@@ -141,7 +146,7 @@
 					links[i].href = to;
 					setTimeout(function() {
 						if (node.innerHTML == 'Recover') {
-							node.innerHTML = 'Replace CSS'
+							node.innerHTML = 'Replace'
 						} else {
 							node.innerHTML = 'Recover';
 						}
@@ -152,8 +157,7 @@
 			}
 			container.style.display = 'block';
 		}, 500)
-		
-	}
+	};
 	win[cbName] = function(res) {
 		if (res.status != 'ok') {
 			$('ckstyle-loading').innerHTML = res.msg;
@@ -165,7 +169,7 @@
 		content.style.display = 'block';
 	};
 	
-	var optype = 'ckstyle';
+	
 	var script = document.createElement('script');
 	script.async = true;
 	script.type = 'text/javascript';
