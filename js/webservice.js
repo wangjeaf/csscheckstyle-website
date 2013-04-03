@@ -1,8 +1,8 @@
 (function(win) {
 	var styles = document.getElementsByTagName('link'),
 		i, l = styles.length, link, url, code, inputed;
-	var domain = 'http://csscheckstyle.com/';
-	// var domain = 'http://fed.d.xiaonei.com/ckstyle/'   // for fed.d.xiaonei.com
+	// var domain = 'http://csscheckstyle.com/';
+	var domain = 'http://fed.d.xiaonei.com/ckstyle/'   // for fed.d.xiaonei.com
 
 	function getDownloadUrl(url) {
 		return domain + 'handler/' + url;
@@ -41,7 +41,8 @@
 	}
 	function buildContent(array) {
 		var result = ['<table width="100%" style="text-align:left;"><thead><tr><th width="40%">URL</th>\
-			<th>before</th><th>after</th><th>delta</th><th>% (delta/before)</th><th>Saved Per 10,000,000 PVs</th><th>compressed CSS</th><th>Replace/Recover CSS</th></tr></thead><tbody>'], current;
+			<th>before</th><th>after</th><th>delta</th><th>% (delta/before)</th><th>Saved Per 10,000,000 PVs</th><th>compressed CSS</th><th>Replace/Recover CSS \
+				<a href="javascript:;" style="color:red;" title="Because compressed CSS is in CKstyle server, so background image using Relative Url will become invalid.">(...)</a></th></tr></thead><tbody>'], current;
 		for (var i = 0, l = array.length; i < l; i ++) {
 			current = array[i];
 			current.delta = current.before - current.after;
