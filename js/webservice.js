@@ -1,8 +1,8 @@
 (function(win) {
 	var styles = document.getElementsByTagName('link'),
 		i, l = styles.length, link, url, code, inputed;
-	var domain = 'http://csscheckstyle.com/';
-	// var domain = 'http://fed.d.xiaonei.com/ckstyle/'   // for fed.d.xiaonei.com
+	// var domain = 'http://csscheckstyle.com/';
+	var domain = 'http://fed.d.xiaonei.com/ckstyle/'   // for fed.d.xiaonei.com
 
 	function getDownloadUrl(url) {
 		return domain + 'handler/' + url;
@@ -53,7 +53,7 @@
 				'</td><td>' + (current.delta * 2 * 1000 * 10000 / 1024 / 1024 / 1024).toFixed(4) + ' GB' +  
 				'</td><td><a target="_blank" href="' + getDownloadUrl(current.download) + '">compressed</a></td>' + 
 				'<td>\
-					<a href="javascript:;" \
+					<a href="javascript:;"\
 						onclick="ckstyle.replaceUrl(this, \'' + encodeURIComponent(trim(current.url)) + '\', \'' + 
 							encodeURIComponent(trim(current.download)) + '\')">Replace CSS</a></td>' + 
 				'<tr>');
@@ -135,7 +135,7 @@
 	win.ckstyle.replaceUrl = function(node, from, to) {
 		from = decodeURIComponent(from);
 		to = getDownloadUrl(decodeURIComponent(to));
-		if (node.innerHTML == 'Recover CSS') {
+		if (node.innerHTML != 'Replace CSS') {
 			var tmp = to;
 			to = from;
 			from = tmp;
@@ -145,15 +145,19 @@
 			var links = document.getElementsByTagName('link');
 			for (var i = 0, l = links.length; i < l; i++) {
 				if (links[i].href == from) {
-					links[i].href = to;
-					setTimeout(function() {
-						if (node.innerHTML == 'Recover CSS') {
-							node.innerHTML = 'Replace CSS';
-						} else {
-							node.innerHTML = 'Recover CSS';
-						}
-						container.style.display = 'block';
-					}, 1000);
+					//links[i].href = 'undefined';
+					//setTimeout(function() {
+						links[i].href = to;
+						setTimeout(function() {
+							if (node.innerHTML != 'Replace CSS') {
+								node.innerHTML = 'Replace CSS';
+							} else {
+								node.innerHTML = '&radic; Recover CSS';
+							}
+							container.style.display = 'block';
+						}, 500);
+					//}, 500);
+					
 					return;
 				}
 			}
