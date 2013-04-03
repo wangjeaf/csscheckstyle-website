@@ -50,12 +50,12 @@
 				current.after + '</td><td>' + 
 				current.delta + 
 				'</td><td>' + ((current.delta / current.before) * 100).toFixed(4) + 
-				'</td><td>' + (current.delta * 2 * 1000 * 10000 / 1024 / 1024 / 1024).toFixed(4) + 'G' +  
+				'</td><td>' + (current.delta * 2 * 1000 * 10000 / 1024 / 1024 / 1024).toFixed(4) + ' GB' +  
 				'</td><td><a target="_blank" href="' + getDownloadUrl(current.download) + '">compressed</a></td>' + 
 				'<td>\
 					<a href="javascript:;" \
-						onclick="ckstyleReplaceUrl(this, \'' + encodeURIComponent(trim(current.url)) + '\', \'' + 
-							encodeURIComponent(trim(current.download)) + '\')">Replace</a></td>' + 
+						onclick="ckstyle.replaceUrl(this, \'' + encodeURIComponent(trim(current.url)) + '\', \'' + 
+							encodeURIComponent(trim(current.download)) + '\')">Replace CSS</a></td>' + 
 				'<tr>');
 		}
 		result.push('</tbody></table>');
@@ -66,16 +66,20 @@
 		return false;
 	}
 
-	if (win.ckstyle_inited) {
+	if (win.ckstyle) {
 		if ($('ckstyle-placeholder')) {
 			var p = $('ckstyle-placeholder').parentNode.parentNode;
 			p.removeChild($('ckstyle-placeholder').parentNode);
 		}
 	}
 
-	win.ckstyle_inited = true;
+	win.ckstyle = {};
 
-	win.showInviteCodeInputer = showInviteCodeInputer;
+	var urls = [],
+		cbName = 'ckstyleCallback',
+		optype = 'ckstyle';
+
+	win.ckstyle.showInviteCodeInputer = showInviteCodeInputer;
 
 	if (win.localStorage) {
 		code = win.localStorage.getItem('ckstyle-invite-code');
@@ -87,7 +91,7 @@
 		}
 	}
 	
-	var urls = [];
+	
 	for (i = 0; i < l; i++) {
 		link = styles[i];
 		if (link.getAttribute('rel') != 'stylesheet') {
@@ -95,6 +99,9 @@
 		}
 		url = link.getAttribute('href');
 		if (!url) {
+			continue;
+		}
+		if (getUrl(trim(url)).indexOf('http') != 0) {
 			continue;
 		}
 		urls.push(getUrl(url));
@@ -124,16 +131,11 @@
 		this.style.display = 'none';
 		container.style.display = 'block';
 	};
-	var cbName = 'ckstyleCallback';
-	var optype = 'ckstyle';
 	
-	
-	
-
-	win['ckstyleReplaceUrl'] = function(node, from, to) {
+	win.ckstyle.replaceUrl = function(node, from, to) {
 		from = decodeURIComponent(from);
 		to = getDownloadUrl(decodeURIComponent(to));
-		if (node.innerHTML == 'Recover') {
+		if (node.innerHTML == 'Recover CSS') {
 			var tmp = to;
 			to = from;
 			from = tmp;
@@ -145,10 +147,10 @@
 				if (links[i].href == from) {
 					links[i].href = to;
 					setTimeout(function() {
-						if (node.innerHTML == 'Recover') {
-							node.innerHTML = 'Replace'
+						if (node.innerHTML == 'Recover CSS') {
+							node.innerHTML = 'Replace CSS';
 						} else {
-							node.innerHTML = 'Recover';
+							node.innerHTML = 'Recover CSS';
 						}
 						container.style.display = 'block';
 					}, 1000);
@@ -158,7 +160,7 @@
 			container.style.display = 'block';
 		}, 500)
 	};
-	win[cbName] = function(res) {
+	win.ckstyle[cbName] = function(res) {
 		if (res.status != 'ok') {
 			$('ckstyle-loading').innerHTML = res.msg;
 			return;
@@ -173,6 +175,6 @@
 	var script = document.createElement('script');
 	script.async = true;
 	script.type = 'text/javascript';
-	script.src = domain + 'handler/service.php?invitecode=' + code + '&ckcallback=' + cbName + '&optype=' + optype + '&cssurls=' + urls.join('__seperator__');
+	script.src = domain + 'handler/service.php?invitecode=' + code + '&ckcallback=ckstyle.' + cbName + '&optype=' + optype + '&cssurls=' + urls.join('__seperator__');
 	document.body.appendChild(script);
 })(this);

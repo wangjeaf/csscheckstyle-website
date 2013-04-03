@@ -9,7 +9,7 @@
 	$cssurls = $_GET['cssurls'];
 	$code = $_GET['invitecode'];
 	if (!$code || !is_valid_invitecode($code, get_ip())) {
-		echo $callback.'({"status":"error", "msg":"由于服务器资源有限，目前只对部分用户开放，请<a href=\"javascript:;\" onclick=\"showInviteCodeInputer()\">输入您的邀请码</a>后再操作."})';
+		echo $callback.'({"status":"error", "msg":"由于服务器资源有限，目前只对部分用户开放，请<a href=\"javascript:;\" onclick=\"ckstyle.showInviteCodeInputer()\">输入您的正确的邀请码</a>后再操作."})';
 		return;
 	}
 	if ($cssurls == '') {
@@ -38,7 +38,7 @@
 		$filename = '__ckstyle_web_tmp_'.time().'.css';
 		$remote_css = '';
 		if (!preg_match('/^http(s)?:/', $url)) {
-			echo '<p>对不起，请输入正确的CSS文件URL地址</p>';
+			echo '<p>sorry~ '.$url.' is not correct for me~~~</p>';
 			return;
 		}
 		$md5_url = md5($url);
@@ -54,13 +54,13 @@
 			$csspath = $url;
 			$remote = fopen($csspath, "r");
 			if (!$remote) {
-				echo $csspath.'对应的网络文件不存在';
+				echo $csspath.' file is not exist';
 				return;
 			}
 
 	        $csscode = read_remote_file($remote);
 	        if (!isCSS($csscode)) {
-	        	echo '<p>对不起，请输入正确的CSS文件URL地址</p>';
+	        	echo '<p>sorry~ '.$url.' is not correct CSS for me ~~~</p>';
 				return;
 	        }
 	        
