@@ -35,10 +35,11 @@
 	array_walk($urls, function($url) {
 		global $dir;
 		global $total;
+		global $callback;
 		$filename = '__ckstyle_web_tmp_'.time().'.css';
 		$remote_css = '';
 		if (!preg_match('/^http(s)?:/', $url)) {
-			echo '<p>sorry~ '.$url.' is not correct for me~~~</p>';
+			echo $callback.'({"status":"error", "msg":"sorry~ '.$url.' is not correct for me."})';
 			return;
 		}
 		$md5_url = md5($url);
@@ -54,14 +55,14 @@
 			$csspath = $url;
 			$remote = fopen($csspath, "r");
 			if (!$remote) {
-				echo $csspath.' file is not exist';
-				return;
+				echo $callback.'({"status":"error", "msg":"sorry~ '.$url.' file is not exist."})';
+				exit;
 			}
 
 	        $csscode = read_remote_file($remote);
 	        if (!isCSS($csscode)) {
-	        	echo '<p>sorry~ '.$url.' is not correct CSS for me ~~~</p>';
-				return;
+	        	echo $callback.'({"status":"error", "msg":"sorry~ '.$url.' is not correct CSS for me."})';
+				exit;
 	        }
 	        
 	        write_to_file($filename, $csscode);

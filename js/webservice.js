@@ -1,8 +1,8 @@
 (function(win) {
 	var styles = document.getElementsByTagName('link'),
 		i, l = styles.length, link, url, code, inputed;
-	// var domain = 'http://csscheckstyle.com/';
-	var domain = 'http://fed.d.xiaonei.com/ckstyle/'   // for fed.d.xiaonei.com
+	var domain = 'http://csscheckstyle.com/';
+	// var domain = 'http://fed.d.xiaonei.com/ckstyle/'   // for fed.d.xiaonei.com
 
 	function getDownloadUrl(url) {
 		return domain + 'handler/' + url;
