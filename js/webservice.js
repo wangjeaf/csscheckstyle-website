@@ -11,13 +11,8 @@
 		var inputed = prompt('please input your CKstyle Invite Code here... \n\n\
 			localStorage can not cross domain, sorry ~~~');
 		if (inputed) {
-			var flag = confirm('please confirm your invite code: \n\n' + inputed);
-			if (flag) {
-				win.localStorage.setItem('ckstyle-invite-code', inputed);
-				return inputed;
-			} else {
-				return false;
-			}
+			win.localStorage.setItem('ckstyle-invite-code', inputed);
+			return inputed;
 		} else {
 			return false;
 		}
@@ -111,7 +106,8 @@
 		'<div id="ckstyle-placeholder" style="width:100%;background-color:#EEE;\
 			position:fixed;top:0;right:0;z-index:10000;border:1px solid #000;box-shadow: 1px 1px 10px #000;opacity:0.9;">\
 			<span id="ckstyle-close" style="float:right;margin-right:10px;font-size:20px;margin-top:3px;cursor:pointer;">&times;</span>\
-			<h3 style="padding:5px;margin:0;font-size:16px;line-height:22px;border-bottom:1px solid #000;">CKStyle Service</h3>\
+			<h3 style="padding:5px;margin:0;font-size:16px;line-height:22px;border-bottom:1px solid #000;">CKStyle Service\
+				<a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank"><img width="15" style="vertical-align:middle" src="https://a248.e.akamai.net/assets.github.com/images/modules/dashboard/octofication.png?d11794be" /></a></h3>\
 			<p id="ckstyle-loading" style="padding:5px;margin:0;">CKstyling <span id="ckstyle-file-count"></span> CSS Files ...</p>\
 			<div id="ckstyle-content" style="padding:5px;display:none;">321321</div>\
 		</div><div id="ckstyle-trigger" style="border:1px solid #000; box-shadow:1px 1px 2px #000;\
