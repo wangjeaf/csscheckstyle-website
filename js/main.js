@@ -58,6 +58,9 @@ $(function() {
 	$('.browsers-trigger').tooltip({
 		placement: 'top'
 	});
+	$('.replace').tooltip({
+		placement: 'top'
+	});
 });
 
 // init editor
