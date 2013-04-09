@@ -54,7 +54,7 @@
 	if (preg_match('/^http(s)?:/', $csscode)) {
 		$csspath = $csscode;
 		$remote = fopen($csspath, "r");
-        $csscode = fread($remote, 2*1024*1024);
+		$csscode = read_remote_file($remote);
         if (!isCSS($csscode)) {
         	echo '<p>对不起，请输入正确的CSS文件URL地址</p>';
 			return;
