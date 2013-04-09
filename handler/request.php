@@ -4,11 +4,15 @@
 	if (!need_referer()) {
 		return;
 	}
-
+	$max = 2000;
 	// params
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];
-
+	if (strlen($csscode) > $max) {
+		echo '<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理(目前为 '.strlen($csscode).' 个)</p>'.
+			'<p>如需使用更强大的CKstyle，请 <a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装到您的机器上</a> 吧~</p>';
+		return;
+	}
 	// safemode
 	$safeMode = $_POST['safeMode'];
 	$browsers = $_POST['browsers'];
@@ -44,10 +48,8 @@
 		$command_options = '--include none '.$safeMode.$browsers;
 	}
 
-	
 	// temp css file
 	$filename = '__ckstyle_web_tmp_'.time().'.css';
-
 	$remote_css = '';
 	if (preg_match('/^http(s)?:/', $csscode)) {
 		$csspath = $csscode;
@@ -57,7 +59,11 @@
         	echo '<p>对不起，请输入正确的CSS文件URL地址</p>';
 			return;
         }
-        
+        if (strlen($csscode) > $max) {
+			echo '<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理(目前为 '.strlen($csscode).' 个)</p>'.
+				'<p>如需使用更强大的CKstyle，请 <a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装到您的机器上</a> 吧~</p>';
+			return;
+		}
         fclose($remote);
         write_to_file($filename, $csscode);
         $remote_css = '/* CSS FROM: '.$csspath.' */'.PHP_EOL.$csscode;
