@@ -55,6 +55,9 @@ $(function() {
 	$('.guideline-tooltip').tooltip({
 		placement: 'top'
 	});
+	$('.browsers-trigger').tooltip({
+		placement: 'top'
+	});
 });
 
 // init editor
@@ -69,7 +72,7 @@ $(function() {
 	Editor.on('change', function() {
 		textarea.value = Editor.getValue();
 	})
-	Editor.setSelection({line: 0,ch: 0}, {line: 4, ch: textarea.value.length});
+	Editor.setSelection({line: 0,ch: 0}, {line: 100, ch: textarea.value.length});
 
 	// locate to error pos 
 	top = $(textarea).next('.CodeMirror').position().top - 10;
@@ -126,7 +129,7 @@ $(function() {
 						</h4>\
 						<textarea>{{compressed}}</textarea>\
 						<hr style="margin:10px 0;">\
-					    <h4>by <a href="http://yui.github.com/yuicompressor/" target="_blank">YUICompressor</a> [节省空间: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
+					    <h4>by YUICompressor [节省空间: {{after2}}/{{before2}}=<span class="CK">{{rate2}}</span>%]</h4>\
 					    <textarea>{{yuimin}}</textarea>\
 					    <hr style="margin:10px 0;">\
 					    <div id="highchart-container" style="width: 600px; height: 300px; margin: 0 auto;box-shadow: 1px 1px 2px #ccc;"></div>'
@@ -264,6 +267,9 @@ $(function() {
 		if ($('.tools-container').is(':visible')) {
 			$('.tools-trigger').trigger('click');
 		}
+		//if ($('.browsers-container').is(':visible')) {
+			//$('.browsers-trigger').trigger('click');
+		//}
 		$('.result').hide();
 		resultContainer.find('.content').html(improve(opType, $('#editor').val(), e.result)).end().show();
 		resultContainer.find('.download').attr('href', prefix + '/handler/' + e.result.download)
@@ -299,7 +305,7 @@ $(function() {
 		}
 		$.errorMsg('<div><div class="progress progress-striped active"><div class="bar" style="width: 100%;font-size:14px;">正在处理中，请稍候~~</div>\
 			</div></div>', 'CKstyling~~~');
-		$("html, body").scrollTop(0);
+		//$("html, body").scrollTop(0);
 		$.ajax({
 			type: 'post',
 			url: './handler/request.php', 
@@ -329,6 +335,8 @@ $(function() {
 $(function() {
 	var optionsContainer = $('.options-container'),
 		toolsContainer = $('.tools-container'),
+		browsersContainer = $('.browsers-container'),
+		browserHidden = $('.browsers-hidden'),
 		supportLocalStorage = Modernizr.localstorage,
 		selectedOptions, options,
 		i, current, l,
@@ -346,6 +354,15 @@ $(function() {
 		$(this).find('i').toggleClass('icon-chevron-down').toggleClass('icon-chevron-up');
 	});
 
+	$('.browsers-trigger').click(function() {
+		browsersContainer.toggle();
+		$(this).find('i').toggleClass('icon-chevron-down').toggleClass('icon-chevron-up');
+	});
+
+	browsersContainer.find('button').click(function() {
+		var jqThis = $(this);
+		browserHidden.val(jqThis.data('value'));
+	});
 
 	$(Mustache.to_html(CKSTYLE_RULES.template, {rules:CKSTYLE_RULES.rules})).appendTo('.options-container .options');
 
@@ -388,7 +405,7 @@ $(function() {
 				counter ++;
 			}
 		});
-		selectAll.find('input').attr('checked', counter === options.length - 1);
+		selectAll.find('input').attr('checked', counter === options.length - 2);
 		options.each(function(i, ele) {
 			var input = $(ele).find('input');
 			selects[selects.length] = {id:input.attr('id'), checked:!!input.attr('checked')};
@@ -406,6 +423,62 @@ $(function() {
 				current = selectedOptions[i];
 				$('#' + current.id).attr('checked', current.checked);
 			}
+		}
+	}
+});
+
+$(function() {
+	var prefix = '', 
+		supportHistory = !!window.history.pushState;
+
+	if (window.location.href.indexOf('fed.d.xiaonei.com') != -1) {
+		prefix = '/ckstyle/';
+	}
+	$('.img').each(function(_, node) {
+		var img = $(node);
+		img.attr('src', prefix + img.data('src'));
+	});
+
+	// support html5 history
+	if (supportHistory) {
+		if (!window.location.hash) {
+			window.history.pushState({
+				href: '#index'
+			}, document.title, window.location.href);
+		}
+		window.addEventListener('popstate', function(e) {
+			if (e.state) {
+				handleHash(e.state.href);
+			}
+		});
+	}
+
+	function handleHash(href) {
+		items.removeClass('current');
+		wrappers.hide();
+		$(href).show();
+		$('.menu a[href=' + href+']').addClass('current');
+		$(window.location.hash).show();
+	}
+
+	var wrappers = $('.wrapper'),
+		items = $('.menu a[href^=#]');
+	items.click(function(e) {
+		items.removeClass('current');
+		e.preventDefault();
+		wrappers.hide();
+		var href = $(this).addClass('current').attr('href');
+		if (supportHistory) {
+			window.history.pushState({
+				href: href
+			}, document.title, window.location.href.split('#')[0] + href);
+		}
+		$(href).show();
+	});
+
+	if (window.location.hash) {
+		if (window.location.hash != '#index') {
+			handleHash(window.location.hash);
 		}
 	}
 });

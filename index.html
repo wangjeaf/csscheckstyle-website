@@ -11,97 +11,256 @@
 	<body>
 		<div class="header clearfix mt20 mb20">
 			<div class="logo fl">
-				<a href="javascript:;"><span class="CK">CK</span><span class="style">style</span></a>
+				<a href="/"><span class="CK">CK</span><span class="style">style</span></a>
 			</div>
 			<div class="fl ver">alpha</div>
 			<ul class="unstyled menu fr mt30 fs16">
-				<li><a href="/" class="current"><i class="mr3 icon-home"></i>首页</a></li>
-				<li><a href="/usage.html"><i class="mr3 icon-user"></i>使用</a></li>
-				<li><a href="/ckservice.html"><i class="mr3 icon-gift"></i>服务</a></li>
-				<li><a href="/installation.html"><i class="mr3 icon-download-alt"></i>安装</a></li>
-				<li><a href="/plugin-development.html"><i class="mr3 icon-wrench"></i>扩展</a></li>
+				<li><a href="#index" class="current"><i class="mr3 icon-home"></i>首页</a></li>
+				<li><a href="#install"><i class="mr3 icon-download-alt"></i>安装使用</a></li>
+				<li><a href="#service"><i class="mr3 icon-gift"></i>开放服务</a></li>
+				<li><a href="#document"><i class="mr3 icon-list"></i>文档</a></li>
 				<!--<li><a href="#nogo" target="_blank"><i class="mr3 icon-th-list"></i>历史</a></li>-->
-				<li><a href="/report-bug.html"><i class="mr3 icon-eye-open"></i>报bug</a></li>
+				<li><a href="#history"><i class="mr3 icon-time"></i>历史</a></li>
+				<li><a href="#bug" target="_blank"><i class="mr3 icon-eye-open"></i>报bug</a></li>
 			</ul>
 		</div>
-		<p class="block tac">
-			CKstyle(CSSCheckStyle)是一个插件式的CSS工具集，通过CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>与<strong>压缩</strong>，确保<a href="http://fed.renren.com/archives/1212" class="guideline-tooltip" target="_blank" data-original-title="人人FED CSS编码规范" data-container="body">CSS编码规范</a>的完整实施。
-			<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" class="fork-mask" data-original-title="点击进入GitHub工程" data-container="body"><img src="img/github.png"/></a>
-		</p>
-		<form method="post" onsubmit="return false;">
-			<div class="main">
-				<div class="editor-container">
-					<textarea id="editor" name="csscode">/* 在此编辑 CSS 或 粘贴 CSS 的链接地址 */</textarea>
+		<div id="index" class="wrapper">
+			<p class="block tac">
+				CKstyle(CSSCheckStyle)是一个插件式的CSS工具集，通过CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>与<strong>压缩</strong>，让“你”的CSS更“漂亮”！
+				<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" class="fork-mask" data-original-title="点击进入GitHub工程" data-container="body"><img src="img/github.png"/></a>
+			</p>
+			<form method="post" onsubmit="return false;">
+				<div class="main">
+					<div class="editor-container">
+						<textarea id="editor" name="csscode">/* 在此编辑 CSS 或 粘贴 CSS 的链接地址 */
+*html .selector-hack {
+    width: 200px;
+ }
+
+.test {
+	width: 100px;
+    _width: 200px;
+
+	-webkit-transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    transition: 1s;
+    
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+</textarea>
+					</div>
+					<div>
+						<input type="submit" data-type="ckstyle" class="btn btn-info btn-large" value="CKstyle"/>
+						<input type="submit" data-type="fixstyle" class="btn btn-info btn-large" value="FixStyle"/>
+						<input type="submit" data-type="csscompress" class="btn btn-info btn-large" value="CssCompress"/>
+						<input type="submit" data-type="yuicompressor" class="btn btn-info btn-large" value="vs YUICompressor"/>
+						<a href="javascript:;" class="btn btn-link btn-large fr options-trigger">规则<i class="icon-chevron-down ml5"></i></a>
+						<a href="javascript:;" class="btn btn-link btn-large fr browsers-trigger" data-original-title="只在压缩时生效，另外，请确保规则中与浏览器相关规则被选中~" data-container="body">分浏览器压缩<i class="icon-chevron-down ml5"></i></a>
+						<a href="javascript:;" class="btn btn-link btn-large fr tools-trigger">工具箱<i class="icon-chevron-down ml5"></i></a>
+					</div>
 				</div>
-				<div>
-					<input type="submit" data-type="ckstyle" class="btn btn-info btn-large expand" value="CKstyle"/>
-					<input type="submit" data-type="fixstyle" class="btn btn-info btn-large expand" value="FixStyle"/>
-					<input type="submit" data-type="csscompress" class="btn btn-info btn-large expand" value="CssCompress"/>
-					<input type="submit" data-type="yuicompressor" class="btn btn-info btn-large expand" value="vs YUICompressor"/>
-					<a href="javascript:;" class="btn btn-link btn-large fr options-trigger">规则<i class="icon-chevron-down ml5"></i></a>
-					<a href="javascript:;" class="btn btn-link btn-large fr tools-trigger">工具箱<i class="icon-chevron-down ml5"></i></a>
+				<div class="tools-container hide pr">
+					<ul class="unstyled clearfix tools">
+						<li>
+							<label class="checkbox nopl mb0" data-content="将重置当前的规则选择，按照系统默认来选择" data-original-title="重置所有规则">
+								<a type="button"  class="btn btn-info btn-large expand reset-rules">重置规则<i class="icon-wrench icon-white ml5"></i></a>
+							</label>
+							
+						</li>
+						<li>
+							<label class="checkbox nopl mb0" data-content="点击即可切换模式，目前，安全模式下将不会进行 <code>合并两个完全相同的规则集</code>" data-original-title="安全模式">
+								<input type="hidden" id="safeModeInput" name="safeMode" value="false"/>
+								<button type="button" class="btn btn-success btn-large expand safe-mode-btn" data-toggle="button">安全模式<i class="icon-remove icon-white ml5"></i></button>
+							</label>
+						</li>
+					</ul>
+				</div>
+				<div class="browsers-container tac hide pr">
+					<input type="hidden" name="browsers" class="browsers-hidden" value="" />
+					<div class="btn-group" data-toggle="buttons-radio">
+					  <button type="button" class="btn btn-success btn-large seperator-right" data-value="">All</button>
+					  <button type="button" class="btn btn-primary btn-large seperator-left" data-value="ie6">IE6</button>
+					  <button type="button" class="btn btn-primary btn-large" data-value="ie7">IE7</button>
+					  <button type="button" class="btn btn-primary btn-large" data-value="ie8">IE8</button>
+					  <button type="button" class="btn btn-primary btn-large" data-value="ie9">IE9+</button>
+					  <button type="button" class="btn btn-primary btn-large seperator-right" data-value="ie">IE</button>
+					  <button type="button" class="btn btn-success btn-large seperator-left" data-value="chrome">Chrome</button>
+					  <button type="button" class="btn btn-success btn-large" data-value="safari">Safari</button>
+					  <button type="button" class="btn btn-success btn-large" data-value="firefox">Firefox</button>
+					  <button type="button" class="btn btn-success btn-large" data-value="opera">Opera</button>
+					  <button type="button" class="btn btn-success btn-large" data-value="std">STD</button>
+					</div>
+				</div>
+				
+				<div class="options-container hide pr">
+					<ul class="unstyled clearfix options">
+						<li id="option-tools">
+							<label class="checkbox" id="select-all-wrapper">
+								<input type="checkbox" id="select-all"/>全选
+							</label>
+						</li>
+					</ul>
+				</div>
+			</form>
+			<div class="result-container">
+				<div class="result ckstyle-result hide">
+					<h3 class="title">CKstyle
+						<button type="button" class="close">×</button>
+					</h3>
+					<div class="content">321321</div>
+				</div>
+				<div class="result fixstyle-result hide">
+					<a href="javascript:;" target="_blank" class="btn btn-link download">下载 <i class="icon-download mt4"></i></a>
+					<h3 class="title">FixStyle
+						<button type="button" class="close">×</button>
+					</h3>
+					<div class="content"></div>
+				</div>
+				<div class="result csscompress-result hide">
+					<a href="javascript:;" target="_blank" class="btn btn-link download">下载 <i class="icon-download mt4"></i></a>
+					<h3 class="title">CssCompress
+						<button type="button" class="close">×</button>
+					</h3>
+					<div class="content"></div>
+				</div>
+				<div class="result yuicompressor-result hide">
+					<a href="javascript:;" target="_blank" class="btn btn-link download">下载 <i class="icon-download mt4"></i></a>
+					<a href="javascript:;" target="_blank" class="btn btn-link download extra">下载 <i class="icon-download mt4"></i></a>
+					<h3 class="title">CKstyle vs YUICompressor
+						<button type="button" class="close">×</button>
+					</h3>
+					<div class="content"></div>
 				</div>
 			</div>
-			<div class="tools-container hide pr">
-				<ul class="unstyled clearfix tools">
-					<li>
-						<label class="checkbox nopl mb0" data-content="将重置当前的规则选择，按照系统默认来选择" data-original-title="重置所有规则">
-							<a type="button"  class="btn btn-info btn-large expand reset-rules">重置规则<i class="icon-wrench icon-white ml5"></i></a>
-						</label>
-						
-					</li>
-					<li>
-						<label class="checkbox nopl mb0" data-content="点击即可切换模式，目前，安全模式下将不会进行 <code>合并两个完全相同的规则集</code>" data-original-title="安全模式">
-							<input type="hidden" id="safeModeInput" name="safeMode" value="false"/>
-							<button type="button" class="btn btn-success btn-large expand safe-mode-btn" data-toggle="button">安全模式<i class="icon-remove icon-white ml5"></i></button>
-						</label>
-					</li>
+		</div>
+		<div id="install" class="wrapper hide">
+			<p class="block tac">
+				CKstyle 利用 Python 的 <code class="fs14">easy_install</code>，<strong class="text-success">一键安装与更新</strong>
+			</p>
+			<div class="result">
+				<h3 class="title relax">详细的安装流程</h3>
+				<div class="content clearfix">
+					<ol class="large">
+						<li>下载并安装 <a href="http://www.activestate.com/activepython/downloads" target="_blank">ActivePython</a></li>
+						<li>运行 <code class="fs14">easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code> 自动安装</li>
+						<li>再次运行即可更新</li>
+					</ol>
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">命令行工具</h3>
+				<div class="content clearfix">
+					<p> 请移步 <a href="https://github.com/wangjeaf/CSSCheckStyle#usage">github</a> ，或在安装后通过 <code class="fs14">ckstyle/fixstyle/csscompress --help</code> 查看帮助~~ </p>
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">编辑器插件</h3>
+				<div class="content clearfix">
+					目前 CKstyle 支持 <code class="fs14">VIM</code> <code class="fs14">Sublime Text 2</code> <code class="fs14">EditPlus</code> <code class="fs14">Notepad++</code> 等一系列编辑器插件，详情请移步 <a href="https://github.com/wangjeaf/CSSCheckStyle#editor-plugins">github</a>  相关章节
+				</div>
+			</div>
+		</div>
+		<div id="service" class="wrapper hide">
+			<p class="block tac">
+				CKService 让您在不需要安装 Python 和 CKstyle的情况下，<strong>一键分析</strong>网站 CSS 的压缩情况和优化空间
+			</p>
+			<div class="result">
+				<h3 class="title relax">CKService</h3>
+				<div class="content clearfix">
+					<p>目前，CKStyle已经做成了一个开放的服务CKService，通过访问服务的URL，并给出特定的参数，即可实时获悉CSS代码处理以后的结果</p>
+					<p>有了CKService，通过一次点击，即可知道：</p>
+					<ul>
+						<li>本网站的所有CSS能被压缩到多小，压缩百分比</li>
+						<li>一千万次PV时能够节省多少 <strong>流量</strong></li>
+						<li>在页面上 <strong>实时替换和恢复</strong> 压缩后的CSS文件，查看压缩后对页面的影响（轻松无压力的试用吧！）</li>
+					</ul>
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">Bookmarklet</h3>
+				<div class="content clearfix">
+					<p>将此链接：<a href="javascript:(function(win,doc){if(win.location.href==''){return;} var s = doc.createElement('script');s.async=true;s.defer=true;s.src='http://www.csscheckstyle.com/js/webservice.js';doc.body.appendChild(s);})(this, document);" title="拖动到书签栏生成bookmarklet">CKservice</a> 拖动到书签栏，即可生成bookmarklet</p>
+					<p>目前，CKService的资源有限，所以使用CKService需要输入正确的邀请码，同时，由于本地存储跨域有局限性，因此每一个域都需要重复输入，敬请见谅~</p>
+					<div class="tac"><img class="img" data-src="img/invite.jpg" /></div>
+					<p class="mt20">如要申请邀请码，请通过邮件 <a href="mailto:wangjeaf@gmail.com">wangjeaf@gmail.com</a> 与我联系</p>
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">部分网站的CKservice使用效果</h3>
+				<div class="content clearfix">
+					<p class="fwb">人人网</p>
+					<div><img class="img" data-src="img/ckservice-show.jpg" alt="ckservice 人人"/></div>
+					<hr>
+					<p class="fwb">淘宝网</p>
+					<div><img class="img" data-src="img/ckservice-taobao.jpg" alt="ckservice 淘宝"/></div>
+					<hr>
+					<p class="fwb">一淘网</p>
+					<div><img class="img" data-src="img/ckservice-etao.jpg" alt="ckservice 一淘"/></div>
+					<hr>
+					<p class="fwb">优酷网</p>
+					<div><img class="img" data-src="img/ckservice-youku.jpg" alt="ckservice 优酷"/></div>
+				</div>
+			</div>
+		</div>
+		<div id="document" class="wrapper hide clearfix">
+			<div class="fl">
+				<h2>使用</h2>
+				<ul class="unstyled">
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#description">简介</a></li>
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装</a></li>
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#usage">使用</a></li>
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#editor-plugins">编辑器插件</a></li>
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#config-file">配置文件</a></li>
 				</ul>
 			</div>
-			<div class="options-container hide pr">
-				<ul class="unstyled clearfix options">
-					<li id="option-tools">
-						<label class="checkbox" id="select-all-wrapper">
-							<input type="checkbox" id="select-all"/>全选
-						</label>
-					</li>
+			<div class="fl ml20">
+				<h2>参与</h2>
+				<ul class="unstyled">
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#plugin-development">插件开发</a></li>
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#rulesplugins">现有插件</a></li>
+					<li><a href="https://github.com/wangjeaf/CSSCheckStyle#unit-test">单元测试</a></li>
 				</ul>
 			</div>
-		</form>
-		<div class="result-container">
-			<div class="result ckstyle-result hide">
-				<h3 class="title">CKstyle
-					<button type="button" class="close">×</button>
-				</h3>
-				<div class="content">321321</div>
+			<div class="fl ml20">
+				<h2>贡献</h2>
+				<ul class="unstyled">
+					<li><a href="#nogo">你！</a></li>
+				</ul>
 			</div>
-			<div class="result fixstyle-result hide">
-				<a href="javascript:;" target="_blank" class="btn btn-link download">下载 <i class="icon-download mt4"></i></a>
-				<h3 class="title">FixStyle
-					<button type="button" class="close">×</button>
-				</h3>
-				<div class="content"></div>
-			</div>
-			<div class="result csscompress-result hide">
-				<a href="javascript:;" target="_blank" class="btn btn-link download">下载 <i class="icon-download mt4"></i></a>
-				<h3 class="title">CssCompress
-					<button type="button" class="close">×</button>
-				</h3>
-				<div class="content"></div>
-			</div>
-			<div class="result yuicompressor-result hide">
-				<a href="javascript:;" target="_blank" class="btn btn-link download">下载 <i class="icon-download mt4"></i></a>
-				<a href="javascript:;" target="_blank" class="btn btn-link download extra">下载 <i class="icon-download mt4"></i></a>
-				<h3 class="title">CKstyle vs YUICompressor
-					<button type="button" class="close">×</button>
-				</h3>
-				<div class="content"></div>
+		</div>
+		<div id="history" class="wrapper hide clearfix">
+			<img class="img fr" data-src="img/born.jpg" width="400" alt="CKstyle官网诞生"/>
+			<h2>历史</h2>
+			<p class="mt20">CKstyle还比较年轻，但是它具有强劲的生命力</p>
+			<p class="mt20">目前，CKstyle在压缩率上已经超过了YUICompressor</p>
+			<p class="mt20">或许，经过我们的共同努力</p>
+			<p>CKstyle 能够像UglifyJS取代Google Closure一样</p>
+			<p>对 YUICompressor/CSSComb/CSSLint 等业内知名工具造成一定的冲击</p>
+			<p class="mt20">让我们一起，打造一款业内领先的CSS工具吧！</p>
+		</div>
+		<div id="bug" class="wrapper hide">
+			<div class="result">
+				<h3 class="title relax">感谢您为CKstyle报bug，为了更好的了解CKstyle在您使用过程中遇到的问题，请您：</h3>
+				<div class="content clearfix">
+					<ol class="large">
+						<li>描述您电脑上的 <strong>Python</strong> 版本</li>
+						<li>给出您测试时使用的<strong> CSS 源代码</strong></li>
+						<li>给出您<strong>期望</strong>的 CKstyle 处理结果</li>
+						<li>给出您觉得<strong>有问题</strong>的 CKstyle 处理后的结果</li>
+						<li>其他您想说的~~~</li>
+					</ol>
+					<div class="mt20">我(们)将会<strong >竭尽全力</strong>在收到 bug 的 <strong>一个小时内</strong> 解决之，尽力！</div>
+					<div class="mt20">;-)</div>
+					<hr>
+					<div class="fr"><a href="https://github.com/wangjeaf/CSSCheckStyle/issues/new" target="_blank" class="btn btn-danger p10"><i class="icon-screenshot icon-white mt5 mr5"></i>欢天喜地上 github 报 bug 去咯~~~</a></div>
+				</div>
 			</div>
 		</div>
 		<div class="footer">
-			<p>此工具目前由 <a href="https://github.com/wangjeaf/">wangjeaf</a> 维护，欢迎加入，也欢迎大家在 <a href="https://github.com/wangjeaf/csscheckstyle">GitHub</a> 上交流探讨</p>
-			<p>Copyright 2012 @ <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>.</p>
-			<!-- <p>License @ MIT.</p> -->
+			<p>© 2013 CSSCheckStyle.com by <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>.</p>
 		</div>
 		<script src="js/lib/jquery.js"></script>
 		<script src="tools/bootstrap/js/bootstrap.min.js"></script>
@@ -117,6 +276,5 @@
 		<!--[if lte IE 8]>
 		<script type="text/javascript" data-main="./js/old-browser.js" src="js/lib/sea-debug.js"></script>
 		<!--<![endif]-->
-		<script src="js/base.js"></script>
 	</body>
 </html>

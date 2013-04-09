@@ -89,7 +89,7 @@ body {
 	font-family: 'Microsoft Yahei',tahoma,serif;
 	background-color: #EEE;
 	border-radius: 5px;
-	box-shadow: 1px 1px 2px #888;
+	box-shadow: 0 0 10px #df482b;
 	margin-bottom: 30px;
 	text-shadow: 2px 2px 1px #FFF;
 }
@@ -115,10 +115,6 @@ body {
 	text-align: center;
 	color: #888;
 	border-top: 1px solid #EEE;
-}
-.options-trigger, .tools-trigger {
-	padding-left: 5px;
-	padding-right: 5px;
 }
 .tools, .options {
 	margin-top: 20px;
@@ -155,13 +151,25 @@ body {
 	padding: 10px;
 	padding-left: 34px;
 }
-.tools-container {
+.browsers-trigger, .tools-trigger, .options-trigger {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+.browsers-container .seperator-right{
+	border-radius: 0 4px 4px 0;
+	margin-right: 15px;
+}
+.browsers-container .seperator-left{
+	border-radius: 4px 0 0 4px;
+	margin-left: 15px;
+}
+.tools-container, .browsers-container {
 	background-color: #EEE;
 	padding: 5px;
 	margin-top: 10px;
 	border-radius: 5px;
 }
-.tools-container ul {
+.tools-container ul, .browsers-container ul{
 	margin: 0;
 }
 .tools .checkbox.nopl {
@@ -194,6 +202,7 @@ body {
 	padding: 5px;
 	font-family: 'Microsoft Yahei',tahoma,serif;
 	margin-bottom: 20px;
+	box-shadow: 0 0 22px rgba(0,0,0,.3);
 }
 
 .result .title {
@@ -239,9 +248,6 @@ body {
 .result .content .large li {
 	padding: 5px;
 }
-.result .content .large {
-	font-size: 16px;
-}
 .stumb {
 	margin-left: 80px;
 }
@@ -250,4 +256,26 @@ body {
 }
 .ckstyle-result li:hover {
 	text-decoration: underline;
+}
+
+h2, h3 {
+	font-weight: normal;
+}
+
+#document ul {
+	font-size: 18px;
+}
+
+#document li {
+	margin: 8px;
+}
+
+#document ul a {
+	display: inline-block;
+	width: 240px;
+	padding: 10px;
+	background-color: #20b7d4;
+	color: white;
+	border-radius: 5px;
+	box-shadow: 2px 2px 4px rgba(0,0,0,.3);
 }

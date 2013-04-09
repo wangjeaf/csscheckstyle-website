@@ -11,6 +11,11 @@
 
 	// safemode
 	$safeMode = $_POST['safeMode'];
+	$browsers = $_POST['browsers'];
+
+	if ($browsers != '') {
+		$browsers = ' --browsers="'.$browsers.'" ';
+	}
 
 	if ($safeMode == 'true') {
 		$safeMode = ' --safeMode ';
@@ -34,9 +39,9 @@
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
 	$command_options = '';
 	if (strlen($ruleIds) != 0) {
-		$command_options = '--include '.$ruleIds.$safeMode;
+		$command_options = '--include '.$ruleIds.$safeMode.$browsers;
 	} else {
-		$command_options = '--include none '.$safeMode;
+		$command_options = '--include none '.$safeMode.$browsers;
 	}
 
 	
