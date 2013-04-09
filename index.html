@@ -19,20 +19,38 @@
 				<li><a href="#install"><i class="mr3 icon-download-alt"></i>安装使用</a></li>
 				<li><a href="#service"><i class="mr3 icon-gift"></i>CKservice</a></li>
 				<li><a href="#document"><i class="mr3 icon-list"></i>文档</a></li>
-				<!--<li><a href="#nogo" target="_blank"><i class="mr3 icon-th-list"></i>历史</a></li>-->
-				<li><a href="#history"><i class="mr3 icon-time"></i>历史</a></li>
+				<li><a href="#history"><i class="mr3 icon-time"></i>关于</a></li>
 				<li><a href="#bug" target="_blank"><i class="mr3 icon-eye-open"></i>报bug</a></li>
 			</ul>
 		</div>
 		<div id="index" class="wrapper">
 			<p class="block tac">
-				CKstyle(CSSCheckStyle)是一个插件式的CSS工具集，通过CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>与<strong>压缩</strong>，让“你”的CSS更“漂亮”！
+				CKstyle，沿着CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>、<strong>压缩</strong>之路前行，<strong>极致优化</strong>，让“你”的CSS更“漂亮”！
 				<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" class="fork-mask" data-original-title="点击进入GitHub工程" data-container="body"><img src="img/github.png"/></a>
 			</p>
 			<form method="post" onsubmit="return false;">
 				<div class="main">
 					<div class="editor-container">
-						<textarea id="editor" name="csscode">/* 在此编辑 CSS 或 粘贴 CSS 的链接地址 */</textarea>
+						<textarea id="editor" name="csscode" placeholder="/* 在此编辑 CSS 或 粘贴 CSS 的链接地址 */">
+.demo {
+	-webkit-transition: 1s;
+	-moz-transition: 1s;
+	padding: 0;
+	padding-top: 5px;
+	padding-bottom: 3px;
+	_width: 100px;
+	*width: 200px;
+}
+
+/* CKstyle子属性合并、属性重排、分浏览器压缩的最终结果
+.demo{_width:100px;*width:200px;padding:5px 0 3px}		// IE6
+.demo{*width:200px;padding:5px 0 3px}					// IE7
+.demo{padding:5px 0 3px}								// IE8
+.demo{padding:5px 0 3px}								// IE9+
+.demo{padding:5px 0 3px;-webkit-transition:1s}			// Chrome/Safari
+.demo{padding:5px 0 3px;-moz-transition:1s}				// Firefox
+.demo{padding:5px 0 3px}								// Opera
+*/</textarea>
 					</div>
 					<div>
 						<input type="submit" data-type="ckstyle" class="btn btn-info btn-large" value="CKstyle"/>
@@ -63,7 +81,7 @@
 				<div class="browsers-container tac hide pr">
 					<input type="hidden" name="browsers" class="browsers-hidden" value="" />
 					<div class="btn-group" data-toggle="buttons-radio">
-					  <button type="button" class="btn btn-success btn-large active seperator-right" data-value="">All</button>
+					  <button type="button" class="btn btn-success btn-large active seperator-right" data-value="">All<i class="icon-ok icon-white"></i></button>
 					  <button type="button" class="btn btn-primary btn-large seperator-left" data-value="ie6">IE6</button>
 					  <button type="button" class="btn btn-primary btn-large" data-value="ie7">IE7</button>
 					  <button type="button" class="btn btn-primary btn-large" data-value="ie8">IE8</button>
@@ -141,43 +159,50 @@
 			<div class="result">
 				<h3 class="title relax">编辑器插件</h3>
 				<div class="content clearfix">
-					目前 CKstyle 支持 <code class="fs14">VIM</code> <code class="fs14">Sublime Text 2</code> <code class="fs14">EditPlus</code> <code class="fs14">Notepad++</code> 等一系列编辑器插件，详情请移步 <a href="https://github.com/wangjeaf/CSSCheckStyle#editor-plugins">github</a>  相关章节
+					CKstyle 支持 <code class="fs14">VIM</code> <code class="fs14">Sublime Text 2</code> <code class="fs14">EditPlus</code> <code class="fs14">Notepad++</code> 等一系列编辑器插件，详情请移步 <a href="https://github.com/wangjeaf/CSSCheckStyle#editor-plugins">github</a>  相关章节
 				</div>
 			</div>
 		</div>
 		<div id="service" class="wrapper hide">
 			<p class="block tac">
-				CKService 让您在不需要安装 Python 和 CKstyle的情况下，<strong>一键分析</strong>网站 CSS 的压缩情况和优化空间
+				CKService 让您在不需要安装 Python 和 CKstyle的 <strong>0成本</strong> 的情况下，<strong>一键分析</strong>任何一个可见网站的CSS
 			</p>
 			<div class="result">
-				<h3 class="title relax">针对本站的CKService结果</h3>
+				<h3 class="title relax">什么是CKService</h3>
+				<div class="content clearfix">
+					<p>CKStyle的代码压缩功能，已经做成了一个 <strong class="text-error">开放的服务CKService</strong>，无需安装任何额外的软件，轻松点击，即可完成页面CSS<strong>性能评估</strong>，并<strong>实时的体验</strong>优化后的网页效果</p>
+					<p>有了CKService，通过一次点击，即可知道：</p>
+					<ul>
+						<li>该网站的所有外链CSS的进一步优化的空间（包括字符数、百分比等）</li>
+						<li>一千万次 PV 能够节省多少GB <strong>流量</strong></li>
+						<li>在页面上 <strong>实时替换和恢复</strong> 压缩后的CSS文件，查看压缩后对页面的影响</li>
+					</ul>
+					<p>CKService让您 <strong class="text-error">0成本</strong> 的完成CSS代码的<strong>预压缩</strong>，而对线上实际代码不产生任何影响，轻松无压力的试用吧！</p>
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">CKService的使用：Bookmarklet</h3>
+				<div class="content clearfix">
+					<p>将此链接：<a href="javascript:(function(win,doc){if(win.location.href==''){return;} var s = doc.createElement('script');s.async=true;s.defer=true;s.src='http://www.csscheckstyle.com/js/webservice.js';doc.body.appendChild(s);})(this, document);" title="拖动到书签栏生成bookmarklet">CKservice</a> 拖动到书签栏，即可生成bookmarklet</p>
+					<p>目前，CKService的资源有限，所以使用CKService需要输入正确的邀请码，同时，由于本地存储跨域有局限性，因此每一个域都需要重复输入，敬请见谅~</p>
+					<div class="tac"><img class="img" data-src="img/invite.jpg" /></div>
+					<p class="mt20">如要申请邀请码，请通过邮件 <a href="mailto:wangjeaf@gmail.com" target="_blank">wangjeaf@gmail.com</a> 与我联系</p>
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">针对本站的CKService结果（优化前）</h3>
 				<div class="content clearfix">
 					<img class="img" data-src="img/ckservice-self.jpg" alt="ckservice CKstyle"/>
 				</div>
 			</div>
 			<div class="result">
-				<h3 class="title relax">什么是CKService</h3>
+				<h3 class="title relax">针对本站的CKService结果（优化后）</h3>
 				<div class="content clearfix">
-					<p>目前，CKStyle已经做成了一个开放的服务CKService，通过访问服务的URL，并给出特定的参数，即可实时获悉CSS代码处理以后的结果</p>
-					<p>有了CKService，通过一次点击，即可知道：</p>
-					<ul>
-						<li>本网站的所有CSS能被压缩到多小，压缩百分比</li>
-						<li>一千万次PV时能够节省多少 <strong>流量</strong></li>
-						<li>在页面上 <strong>实时替换和恢复</strong> 压缩后的CSS文件，查看压缩后对页面的影响（轻松无压力的试用吧！）</li>
-					</ul>
+					<img class="img" data-src="img/ckservice-self-after.jpg" alt="ckservice CKstyle after"/>
 				</div>
 			</div>
 			<div class="result">
-				<h3 class="title relax">Bookmarklet</h3>
-				<div class="content clearfix">
-					<p>将此链接：<a href="javascript:(function(win,doc){if(win.location.href==''){return;} var s = doc.createElement('script');s.async=true;s.defer=true;s.src='http://www.csscheckstyle.com/js/webservice.js';doc.body.appendChild(s);})(this, document);" title="拖动到书签栏生成bookmarklet">CKservice</a> 拖动到书签栏，即可生成bookmarklet</p>
-					<p>目前，CKService的资源有限，所以使用CKService需要输入正确的邀请码，同时，由于本地存储跨域有局限性，因此每一个域都需要重复输入，敬请见谅~</p>
-					<div class="tac"><img class="img" data-src="img/invite.jpg" /></div>
-					<p class="mt20">如要申请邀请码，请通过邮件 <a href="mailto:wangjeaf@gmail.com">wangjeaf@gmail.com</a> 与我联系</p>
-				</div>
-			</div>
-			<div class="result">
-				<h3 class="title relax">部分网站的CKservice使用效果</h3>
+				<h3 class="title relax">部分网站的CKService使用结果</h3>
 				<div class="content clearfix">
 					<p class="fwb">人人网</p>
 					<div><img class="img" data-src="img/ckservice-show.jpg" alt="ckservice 人人"/></div>
@@ -221,8 +246,8 @@
 		</div>
 		<div id="history" class="wrapper hide clearfix">
 			<img class="img fr mt20" data-src="img/born.jpg" width="400" alt="CKstyle官网诞生"/>
-			<h2>历史</h2>
-			<p class="mt20">CKstyle还比较年轻，但是它具有强劲的生命力</p>
+			<h2>关于</h2>
+			<p class="mt20">CKstyle还比较年轻，但是它具有超级强劲的生命力和潜力</p>
 			<p class="mt20">目前，CKstyle在压缩率和压缩后代码的性能上，已经超过了YUICompressor</p>
 			<p class="mt20">两年前，jQuery团队用UglifyJS<a class="replace" href="http://bugs.jquery.com/ticket/7973" target="_blank" data-original-title="We should switch to UglifyJS, it's much better than Closure Compiler.">取代</a>了Google Closure Compiler</p>
 			<p>而现在，CSS压缩工具已经严重落后于专业前端开发者的实际要求</p>

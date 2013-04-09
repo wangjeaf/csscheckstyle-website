@@ -76,8 +76,8 @@ $(function() {
 	Editor.on('change', function() {
 		textarea.value = Editor.getValue();
 	})
-	Editor.setSelection({line: 0,ch: 0}, {line: 100, ch: textarea.value.length});
-	jqTextarea.attr('placeholder', jqTextarea.val());
+	//Editor.setSelection({line: 0,ch: 0}, {line: 100, ch: textarea.value.length});
+	//jqTextarea.attr('placeholder', jqTextarea.val());
 	// locate to error pos 
 	top = $(textarea).next('.CodeMirror').position().top - 10;
 
@@ -368,6 +368,11 @@ $(function() {
 
 	browsersContainer.find('button').click(function() {
 		var jqThis = $(this);
+		browsersContainer.find('i').hide();
+		if (jqThis.find('i').length == 0) {
+			$('<i class="icon-ok icon-white"></i>').appendTo(jqThis);
+		}
+		jqThis.find('i').show();
 		browserHidden.val(jqThis.data('value'));
 	});
 
@@ -393,12 +398,30 @@ $(function() {
 	});
 	// reset rules
 	$('.reset-rules').click(function() {
-		var rules = CKSTYLE_RULES.rules, i, l, rule;
+		if ($('.options-container').is(':hidden')) {
+			$('.options-trigger').trigger('click');
+		}
+		$("html, body").scrollTop(10000);
+		var rules = CKSTYLE_RULES.rules, i, l, rule, current;
 		for(var i = 0, l = rules.length; i < l; i++) {
 			rule = rules[i];
-			$('#' + rule.id).attr('checked', rule.checked);
+			current = $('#' + rule.id);
+			if (!!current.attr('checked') != rule.checked) {
+				current.attr('checked', rule.checked);
+				blinkElement(current);
+			} else {
+				current.attr('checked', rule.checked);
+			}
 		}
+
 		saveToLocalStorage();
+
+		function blinkElement(current) {
+			return current.parents('li')
+				.animate({opacity: 0.1}, 400).animate({opacity: 1}, 100)
+				.animate({opacity: 0.1}, 400).animate({opacity: 1}, 100)
+				.animate({opacity: 0.1}, 400).animate({opacity: 1}, 100);
+		}
 	});
 
 	function saveToLocalStorage() {
