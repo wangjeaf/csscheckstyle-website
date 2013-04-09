@@ -401,7 +401,8 @@ $(function() {
 		if ($('.options-container').is(':hidden')) {
 			$('.options-trigger').trigger('click');
 		}
-		$("html, body").scrollTop(10000);
+		var top = $('.tools-container').position().top;
+		$("html, body").animate({scrollTop: top + "px" }, 500);
 		var rules = CKSTYLE_RULES.rules, i, l, rule, current;
 		for(var i = 0, l = rules.length; i < l; i++) {
 			rule = rules[i];
