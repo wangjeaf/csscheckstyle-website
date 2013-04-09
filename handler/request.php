@@ -4,7 +4,7 @@
 	if (!need_referer()) {
 		return;
 	}
-	$max = 3000;
+	$max = 10000;
 	// params
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];
@@ -31,7 +31,8 @@
 	$ruleIds = '';
 	foreach($_POST as $key => $value) {
 		if ($value == 'on') {
-			$ruleIds = $ruleIds . $key . ',';
+			$key_rep = str_replace(' ', '', $key);
+			$ruleIds = $ruleIds . $key_rep . ',';
 		}
 	}
 
@@ -54,6 +55,10 @@
 	if (preg_match('/^http(s)?:/', $csscode)) {
 		$csspath = $csscode;
 		$remote = fopen($csspath, "r");
+		if (!$remote) {
+			echo '<p>无法下载此文件，请输入正确的CSS文件URL地址</p>';
+			return;
+		}
 		$csscode = read_remote_file($remote);
         if (!isCSS($csscode)) {
         	echo '<p>对不起，请输入正确的CSS文件URL地址</p>';

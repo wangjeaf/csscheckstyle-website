@@ -62,7 +62,8 @@ $(function() {
 
 // init editor
 $(function() {
-	var textarea = $('#editor')[0], top,
+	var jqTextarea = $('#editor'),
+		textarea = jqTextarea[0], top,
 	Editor = CodeMirror.fromTextArea(textarea, {
 	    theme: 'default',
 	    lineNumbers: true,
@@ -73,7 +74,7 @@ $(function() {
 		textarea.value = Editor.getValue();
 	})
 	Editor.setSelection({line: 0,ch: 0}, {line: 100, ch: textarea.value.length});
-
+	jqTextarea.attr('placeholder', jqTextarea.val());
 	// locate to error pos 
 	top = $(textarea).next('.CodeMirror').position().top - 10;
 
@@ -300,7 +301,8 @@ $(function() {
 			form = jqThis.parents('form'),
 			opType = jqThis.data('type'),
 			scrollTop = $(window).scrollTop();
-		if (trim(textarea.value) == '') {
+		if (trim(textarea.value) == '' || 
+			jqTextarea.val() == jqTextarea.attr('placeholder')) {
 			return;
 		}
 		$.errorMsg('<div><div class="progress progress-striped active"><div class="bar" style="width: 100%;font-size:14px;">正在处理中，请稍候~~</div>\
