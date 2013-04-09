@@ -303,6 +303,8 @@ $(function() {
 			scrollTop = $(window).scrollTop();
 		if (trim(textarea.value) == '' || 
 			jqTextarea.val() == jqTextarea.attr('placeholder')) {
+			Editor.setSelection({line: 0,ch: 0}, {line: 100, ch: textarea.value.length});
+			Editor.focus();
 			return;
 		}
 		$.errorMsg('<div><div class="progress progress-striped active"><div class="bar" style="width: 100%;font-size:14px;">正在处理中，请稍候~~</div>\
