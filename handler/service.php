@@ -1,6 +1,8 @@
 <?php include 'helper.php'; ?>
 <?php
 
+	$bin_dir = '';
+
 	// params
 	//$optype = $_POST['optype'];
 	//$csscode = $_POST['csscode'];
@@ -9,7 +11,7 @@
 	$cssurls = $_GET['cssurls'];
 	$code = $_GET['invitecode'];
 	if (!$code || !is_valid_invitecode($code, get_ip())) {
-		echo $callback.'({"status":"error", "msg":"由于服务器资源有限，目前只对部分用户开放，请<a href=\"javascript:;\" onclick=\"ckstyle.showInviteCodeInputer()\">输入您的正确的邀请码</a>后再操作."})';
+		echo $callback.'({"status":"error", "msg":"由于服务器资源有限，目前只对部分用户开放，您的邀请码不正确，请<a href=\"javascript:;\" onclick=\"ckstyle.showInviteCodeInputer()\">输入您的正确的邀请码</a>后再操作."})';
 		return;
 	}
 	if ($cssurls == '') {
@@ -19,23 +21,17 @@
 
 	$urls = explode('__seperator__', $cssurls);
 
-	// make download dir 
-	$ip = md5(get_ip());
-	$dir = 'download/'.$ip;
-	if (!is_dir('cache')) {
-		mkdir('cache');
-	}
-	if (!is_dir('download')) {
-		mkdir('download');
-	}
-	if (!is_dir($dir)) {
-		mkdir($dir);
+	$service_dir = '../ckservice';
+
+	if (!is_dir($service_dir)) {
+		mkdir($service_dir);
 	}
 	$total = array();
 	array_walk($urls, function($url) {
-		global $dir;
 		global $total;
 		global $callback;
+		global $bin_dir;
+		global $service_dir;
 		$filename = '__ckstyle_web_tmp_'.time().'.css';
 		$remote_css = '';
 		if (!preg_match('/^http(s)?:/', $url)) {
@@ -43,8 +39,9 @@
 			return;
 		}
 		$md5_url = md5($url);
-		$cache_file = 'cache/'.$md5_url.'.json';
-		$cache_css = 'cache/'.$md5_url.'.css';
+
+		$cache_file = $service_dir.'/'.$md5_url.'.json';
+		$cache_css = $service_dir.'/'.$md5_url.'.css';
 		// load from cache, 需要考虑url不变，文件内容改变的情况
 		if (is_file($cache_file)) {
 			$result_content = file_get_contents($cache_file);
@@ -59,7 +56,7 @@
 				exit;
 			}
 
-	        $csscode = read_remote_file($remote);
+	        $csscode = read_remote_file_nolimit($remote);
 	        if (!isCSS($csscode)) {
 	        	echo $callback.'({"status":"error", "msg":"sorry~ '.$url.' is not correct CSS for me."})';
 				exit;
@@ -69,7 +66,7 @@
 	        fclose($remote);
 
 	        $before = strlen($csscode);
-	        $result = exec_command('csscompress -p '.$filename);
+	        $result = exec_command($bin_dir.'csscompress -p '.$filename);
 
 			// make download file
 			write_to_file($cache_css, str_replace('\n', PHP_EOL, $result));

@@ -1,4 +1,7 @@
 <?php
+
+$max = 10000;
+
 // referer
 function is_from_ckstyle_blog($referer) {
 	return preg_match('/^http:\/\/.*csscheckstyle\.com/', $referer) 
@@ -61,7 +64,23 @@ function isCSS($content) {
 }
 
 function read_remote_file($remote) {
+	global $max;
 	$lines = array();
+	$counter = 0;
+	while (!feof ($remote)) {
+    	$line = fgets ($remote, 1024);
+    	$counter = $counter + strlen($line);
+    	if ($counter > $max) {
+    		return -1;
+    	}
+    	array_push($lines, $line);
+    }
+    return join('', $lines);
+}
+
+function read_remote_file_nolimit($remote) {
+	$lines = array();
+	$counter = 0;
 	while (!feof ($remote)) {
     	$line = fgets ($remote, 1024);
     	array_push($lines, $line);
@@ -83,5 +102,5 @@ function is_valid_invitecode($code, $ip) {
 	}
 }
 
-//var_dump(is_valid_invitecode('fdafda', '10.2.74.100')) ;
+//var_dump(read_remote_file(fopen('http://s.xnimg.cn/a54813/n/core/home-frame2-all-min.css', 'r')));
 ?>

@@ -76,7 +76,7 @@ $(function() {
 	Editor.on('change', function() {
 		textarea.value = Editor.getValue();
 	})
-	//Editor.setSelection({line: 0,ch: 0}, {line: 100, ch: textarea.value.length});
+	Editor.setSelection({line: 0,ch: 0}, {line: 100, ch: textarea.value.length});
 	//jqTextarea.attr('placeholder', jqTextarea.val());
 	// locate to error pos 
 	top = $(textarea).next('.CodeMirror').position().top - 10;
@@ -465,10 +465,6 @@ $(function() {
 	if (window.location.href.indexOf('fed.d.xiaonei.com') != -1) {
 		prefix = '/ckstyle/';
 	}
-	$('.img').each(function(_, node) {
-		var img = $(node);
-		img.attr('src', prefix + img.data('src'));
-	});
 
 	// support html5 history
 	if (supportHistory) {
@@ -484,12 +480,24 @@ $(function() {
 		});
 	}
 
+	function activeImg(element) {
+		if (!element.data('inited')) {
+			element.data('inited', true);
+		}
+		element.find('.img[data-src]').each(function(_, node) {
+			var img = $(node);
+			img.attr('src', prefix + img.data('src'));
+			img.removeData('src');
+		});
+	}
 	function handleHash(href) {
 		items.removeClass('current');
 		wrappers.hide();
 		$(href).show();
 		$('.menu a[href=' + href+']').addClass('current');
-		$(window.location.hash).show();
+		var ele = $(window.location.hash)
+		ele.show();
+		activeImg(ele);
 	}
 
 	var wrappers = $('.wrapper'),
@@ -504,7 +512,9 @@ $(function() {
 				href: href
 			}, document.title, window.location.href.split('#')[0] + href);
 		}
-		$(href).show();
+		var ele = $(href);
+		ele.show();
+		activeImg(ele);
 	});
 
 	if (window.location.hash) {
