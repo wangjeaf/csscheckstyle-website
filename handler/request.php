@@ -82,10 +82,13 @@
 
 	// make download dir 
 	$ip = md5(get_ip());
-	$dir = '../cache/'.$ip;
+	$dir = '../cache/tmp/'.$ip;
 
 	if (!is_dir('../cache')) {
 		mkdir('../cache');
+	}
+	if (!is_dir('../cache/tmp')) {
+		mkdir('../cache/tmp');
 	}
 	if (!is_dir($dir)) {
 		mkdir($dir);

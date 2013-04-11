@@ -21,11 +21,16 @@
 
 	$urls = explode('__seperator__', $cssurls);
 
-	$service_dir = '../ckservice';
+	$service_dir = '../cache';
 
 	if (!is_dir($service_dir)) {
 		mkdir($service_dir);
 	}
+	$service_dir = $service_dir.'/ckservice';
+	if (!is_dir($service_dir)) {
+		mkdir($service_dir);
+	}
+	
 	$total = array();
 	array_walk($urls, function($url) {
 		global $total;
