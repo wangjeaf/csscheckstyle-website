@@ -1,11 +1,5 @@
 <?php include 'helper.php'; ?>
 <?php
-
-	$bin_dir = '';
-
-	// params
-	//$optype = $_POST['optype'];
-	//$csscode = $_POST['csscode'];
 	$optype = $_GET['optype'];
 	$callback = $_GET['ckcallback'];
 	$cssurls = $_GET['cssurls'];
@@ -30,7 +24,7 @@
 	if (!is_dir($service_dir)) {
 		mkdir($service_dir);
 	}
-	
+
 	$total = array();
 	array_walk($urls, function($url) {
 		global $total;

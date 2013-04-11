@@ -1,13 +1,9 @@
 <?php include 'helper.php'; ?>
 <?php
 
-	$bin_dir = '';
-
-	
 	if (!need_referer()) {
 		return;
 	}
-	$max = 10000;
 	// params
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];

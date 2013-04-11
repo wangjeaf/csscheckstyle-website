@@ -1,6 +1,7 @@
 <?php
 
 $max = 10000;
+$bin_dir = '';
 
 // referer
 function is_from_ckstyle_blog($referer) {
