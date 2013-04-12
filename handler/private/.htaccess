@@ -1,0 +1,5 @@
+# This folder does not require access over HTTP
+# (the following directive denies access by default)
+Order deny,allow
+Deny from all
+#Allow from www.csscheckstyle.com

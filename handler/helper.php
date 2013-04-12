@@ -1,7 +1,13 @@
 <?php
 
 $max = 10000;
-$bin_dir = '';
+if (is_file('dev')) {
+	$bin_dir = '';
+	$debug = false;
+} else {
+	$bin_dir = '~/bin/';
+	$debug = false;
+}
 
 // referer
 function is_from_ckstyle_blog($referer) {
@@ -90,7 +96,7 @@ function read_remote_file_nolimit($remote) {
 }
 
 function is_valid_invitecode($code, $ip) {
-	$filename = '.ckstyle_invitecode';
+	$filename = 'private/.ckstyle_invitecode';
 	if (!is_file($filename)) {
 		write_to_file($filename, '');
 	}
@@ -103,5 +109,37 @@ function is_valid_invitecode($code, $ip) {
 	}
 }
 
+$last_ = -1;
+function log_start() {
+	global $debug;
+	if (!$debug) {
+		return;
+	}
+	global $last_;
+	$last_ = microtime(true)*1000;
+}
+
+$log_times = array();
+function loghere($text) {
+	global $debug;
+	if (!$debug) {
+		return;
+	}
+	global $last_;
+	global $log_times;
+	$current = microtime(true)*1000;
+	array_push($log_times, $text.' : '.($current - $last_));
+	$last_ = $current;
+}
+
+function log_end($text) {
+	global $debug;
+	if (!$debug) {
+		return;
+	}
+	global $log_times;
+	loghere($text);
+	echo '<br>----------<br>'.join('<br>', $log_times);
+}
 //var_dump(read_remote_file(fopen('http://s.xnimg.cn/a54813/n/core/home-frame2-all-min.css', 'r')));
 ?>

@@ -1,0 +1,9 @@
+# This folder does not require access over HTTP
+# (the following directive denies access by default)
+#Order deny,allow
+#Deny from all
+#Allow from www.csscheckstyle.com
+ErrorDocument 401 /error/401.php
+ErrorDocument 403 /error/403.php
+ErrorDocument 404 /error/404.php
+ErrorDocument 500 /error/500.php

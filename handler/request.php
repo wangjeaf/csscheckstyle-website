@@ -1,9 +1,12 @@
 <?php include 'helper.php'; ?>
 <?php
+	log_start();
 
 	if (!need_referer()) {
 		return;
 	}
+	loghere('referer');
+
 	// params
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];
@@ -47,7 +50,7 @@
 	} else {
 		$command_options = '--include none '.$safeMode;
 	}
-
+	loghere('params');
 	// temp css file
 	$filename = '__ckstyle_web_tmp_'.time().'.css';
 	$remote_css = '';
@@ -76,8 +79,10 @@
 		write_to_file($filename, $csscode);
 	}
 
+	loghere('write_to_file');
+
 	// make download dir 
-	$ip = md5(get_ip());
+	$ip = str_replace('.', '_', get_ip());
 	$dir = '../cache/tmp/'.$ip;
 
 	if (!is_dir('../cache')) {
@@ -106,8 +111,10 @@
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'ckstyle') {
+		loghere('start ckstyle');
 		// ckstyle
 		$result = exec_command($bin_dir.'ckstyle -p --json '.$command_options.' '.$filename);
+		loghere('end ckstyle');
 		$result = str_replace('\n', '', $result);
 		$result = str_replace($filename, 'THIS FILE', $result);
 
@@ -116,6 +123,7 @@
 			"checkresult" => json_decode($result),
 			"css" => $remote_css
 		));
+
 		echo(json_encode($json));
 	} else if ($optype == 'csscompress') {
 		// csscompress
@@ -172,4 +180,5 @@
 	
 	// remove temp file
 	unlink($filename);
+	log_end('finish');
 ?>

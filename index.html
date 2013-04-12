@@ -16,8 +16,8 @@
 			<div class="fl ver">alpha</div>
 			<ul class="unstyled menu fr mt30 fs16">
 				<li><a href="#index" class="current"><i class="mr3 icon-home"></i>首页</a></li>
-				<li><a href="#install"><i class="mr3 icon-download-alt"></i>安装使用</a></li>
-				<li><a href="#service"><i class="mr3 icon-gift"></i>CKservice</a></li>
+				<li><a href="#install"><i class="mr3 icon-download-alt"></i>五步上手</a></li>
+				<li><a href="#service"><i class="mr3 icon-gift"></i>CKService</a></li>
 				<li><a href="#document"><i class="mr3 icon-list"></i>文档</a></li>
 				<li><a href="#history"><i class="mr3 icon-time"></i>关于</a></li>
 				<li><a href="#bug" target="_blank"><i class="mr3 icon-eye-open"></i>报bug</a></li>
@@ -84,8 +84,6 @@ border-radius:3px
 						</li>
 					</ul>
 				</div>
-				
-				
 				<div class="options-container hide pr">
 					<ul class="unstyled clearfix options">
 						<li id="option-tools">
@@ -128,30 +126,66 @@ border-radius:3px
 			</div>
 		</div>
 		<div id="install" class="wrapper hide">
-			<p class="block tac">
-				CKstyle 利用 Python 的 <code class="fs14">easy_install</code>，<strong class="text-success">一键安装与更新</strong>
-			</p>
 			<div class="result">
-				<h3 class="title relax">详细的安装流程</h3>
+				<h3 class="title relax" style="border-bottom:none;">第一步：下载并安装 <a href="http://www.activestate.com/activepython/downloads" target="_blank">ActivePython</a> (如已安装请忽略此步)</h3>
+			</div>
+			<div class="result">
+				<h3 class="title relax" style="border-bottom:none;">第二步：打开命令行工具</h3>
+			</div>
+			<div class="result">
+				<h3 class="title relax">第三步：安装 CKStyle </h3>
 				<div class="content clearfix">
-					<ol class="large">
-						<li>下载并安装 <a href="http://www.activestate.com/activepython/downloads" target="_blank">ActivePython</a></li>
-						<li>运行 <code class="fs14">easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code> 自动安装</li>
-						<li>再次运行即可更新</li>
-					</ol>
-					<p class="mt20">也可自行<a href="https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz" target="_blank">下载压缩包</a>，解压缩后，运行 <code class="fs14">python setup.py install</code> 进行安装 </p>
+					<code>easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code>
 				</div>
 			</div>
 			<div class="result">
-				<h3 class="title relax">命令行工具</h3>
+				<h3 class="title relax">第四步：新建test.css文件，内容如下： </h3>
 				<div class="content clearfix">
-					<p> 请移步 <a href="https://github.com/wangjeaf/CSSCheckStyle#usage">github</a> ，或在安装后通过 <code class="fs14">ckstyle/fixstyle/csscompress --help</code> 查看帮助~~ </p>
+<pre>
+/* 示例 */
+.test {-webkit-transition: 1s; -moz-transition: 1s; _width:10px; *color:#ffffff; padding:0; 
+padding-top: 20px }</pre>
 				</div>
 			</div>
 			<div class="result">
-				<h3 class="title relax">编辑器插件</h3>
+				<h3 class="title relax">第五步：试试~</h3>
 				<div class="content clearfix">
-					CKstyle 支持 <code class="fs14">VIM</code> <code class="fs14">Sublime Text 2</code> <code class="fs14">EditPlus</code> <code class="fs14">Notepad++</code> 等一系列编辑器插件，详情请移步 <a href="https://github.com/wangjeaf/CSSCheckStyle#editor-plugins">github</a>  相关章节
+					<div>
+					<code>fixstyle -p ./test.css</code> <code class="ml20"> ======> </code>
+<pre class="mt10">
+/* 示例 */
+.test {
+    _width: 10px;
+    padding: 20px 0 0;
+    *color: #FFF;
+    -webkit-transition: 1s;
+       -moz-transition: 1s;
+}
+</pre>
+					</div>
+					<hr>
+					<div>
+					<code>csscompress -p ./test.css</code> <code class="ml20">======></code>
+<pre class="mt10">
+.test{_width:10px;padding:20px 0 0;*color:#FFF;-webkit-transition:1s;-moz-transition:1s}
+</pre>
+					</div>
+					<hr>
+					<div>
+					<code>csscompress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10">
+firefox : .test{padding:20px 0 0;-moz-transition:1s}
+chrome  : .test{padding:20px 0 0;-webkit-transition:1s}
+ie7     : .test{padding:20px 0 0;*color:#FFF}
+ie6     : .test{_width:10px;padding:20px 0 0;*color:#FFF}
+opera   : .test{padding:20px 0 0}
+safari  : .test{padding:20px 0 0;-webkit-transition:1s}
+ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
+</pre>
+					</div>
+					<hr>
+					<div class="fr"><a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank" class="btn btn-success p10"><i class="icon-screenshot icon-white mt5 mr5"></i>更多使用，请上github瞅瞅吧~</a></div>
 				</div>
 			</div>
 		</div>
@@ -175,7 +209,7 @@ border-radius:3px
 			<div class="result">
 				<h3 class="title relax">CKService的使用：Bookmarklet</h3>
 				<div class="content clearfix">
-					<p>将此链接：<a href="javascript:(function(win,doc){if(win.location.href==''){return;} var s = doc.createElement('script');s.async=true;s.defer=true;s.src='http://www.csscheckstyle.com/js/webservice.js';doc.body.appendChild(s);})(this, document);" title="拖动到书签栏生成bookmarklet">CKservice</a> 拖动到书签栏，即可生成bookmarklet</p>
+					<p>将此链接：<a href="javascript:(function(win,doc){if(win.location.href==''){return;} var div=doc.createElement('div');div.id = 'ckservice-loading';div.style.cssText = 'position:fixed;left:1px;top:1px;border:1px solid black;box-shadow:1px 1px 3px rgba(0,0,0,.3);padding:5px 20px;font-size:16px;';div.innerHTML = 'Loading CKService...';doc.body.appendChild(div);var s = doc.createElement('script');s.async=true;s.defer=true;s.src='http://www.csscheckstyle.com/js/webservice.min.js';doc.body.appendChild(s);})(this, document);" title="拖动到书签栏生成bookmarklet">CKservice</a> 拖动到书签栏，即可生成bookmarklet</p>
 					<p>目前，CKService的资源有限，所以使用CKService需要输入正确的邀请码，同时，由于本地存储跨域有局限性，因此每一个域都需要重复输入，敬请见谅~</p>
 					<div class="tac"><img class="img" src="img/a.gif" data-src="img/invite.jpg" /></div>
 					<p class="mt20">如要申请邀请码，请通过邮件 <a href="mailto:wangjeaf@gmail.com" target="_blank">wangjeaf@gmail.com</a> 与我联系</p>
