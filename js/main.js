@@ -487,7 +487,7 @@ $(function() {
 		element.find('.img[data-src]').each(function(_, node) {
 			var img = $(node);
 			img.attr('src', prefix + img.data('src'));
-			img.removeData('src');
+			img.removeAttr('data-src');
 		});
 	}
 	function handleHash(href) {
