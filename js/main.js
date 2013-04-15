@@ -274,7 +274,7 @@ $(function() {
 		//if ($('.browsers-container').is(':visible')) {
 			//$('.browsers-trigger').trigger('click');
 		//}
-		$('.result').hide();
+		$('.result-container .result').hide();
 		resultContainer.find('.content').html(improve(opType, $('#editor').val(), e.result)).end().show();
 		resultContainer.find('.download').attr('href', prefix + '/handler/' + e.result.download)
 		if (opType == 'ckstyle') {

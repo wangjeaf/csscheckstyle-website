@@ -14,8 +14,12 @@
 				<a href="/"><span class="CK">CK</span><span class="style">style</span></a>
 			</div>
 			<div class="fl ver">alpha</div>
+			<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank">
+			  <img style="position: fixed; _position:absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub">
+			</a>
 			<ul class="unstyled menu fr mt30 fs16">
 				<li><a href="#index" class="current"><i class="mr3 icon-home"></i>首页</a></li>
+				<li><a href="#pk"><i class="mr3 icon-flag"></i>PK</a></li>
 				<li><a href="#install"><i class="mr3 icon-download-alt"></i>五步上手</a></li>
 				<li><a href="#service"><i class="mr3 icon-gift"></i>CKService</a></li>
 				<li><a href="#document"><i class="mr3 icon-list"></i>文档</a></li>
@@ -25,7 +29,7 @@
 		</div>
 		<div id="index" class="wrapper">
 			<p class="block tac">
-				CKstyle，沿着CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>、<strong>压缩</strong>之路前行，<strong>极致优化</strong>，让“你”的CSS更“漂亮”！
+				CKstyle，沿着CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>、<strong>压缩</strong>之路前行，<strong>极致优化</strong>，让你的CSS更漂亮！
 				<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" class="fork-mask" data-original-title="点击进入GitHub工程" data-container="body"><img src="img/github.png"/></a>
 			</p>
 			<form method="post" onsubmit="return false;">
@@ -125,6 +129,247 @@ border-radius:3px
 				</div>
 			</div>
 		</div>
+		<div id="pk" class="wrapper hide">
+			<div class="result">
+				<h3 class="title relax" style="border-bottom:none;text-align:center;color:#DF482B;font-size:22px;padding:3px;">CKstyle工具集与业内CSS工具的PK大战，网页版现场直播中...</h3>
+			</div>
+			<div class="result">
+				<div class="content clearfix" style="border-top:none;">
+					<p class="text-success">[解说] 观众朋友们，大家好，欢迎收看CSS(channel)V，我们在CKstyle CSS工具PK场为您做现场直播。</p>
+					<p class="text-success">[解说] 今天，我们将以下面的代码为擂台，将CKstyle工具集与业内领先的一些CSS工具进行比较。</p>
+					<div>
+<pre class="mt10">
+.test {
+-webkit-transition:1s; 
+-o-transition:1s;
+-moz-transition: 1s;
+width:10px;
+color:#ffffff; 
+_width: 20px;
+*color: #dddddd;
+padding:0; 
+padding-top: 20px
+}
+</pre>
+					</div>
+					<p class="text-success">[解说] 这些业内领先的工具来自五湖四海，分别用Nodejs/PHP/Java等语言实现。</p>
+					<p class="text-success">[解说] 而CKstyle用Python坐镇，派出了强大的成员 CKStyle/FixStyle/CssCompress 来应对挑战。</p>
+					<p class="text-success">[解说] 今天的PK内容非常丰富：<code>CKStyle vs CSSLint</code> <code class="ml5">FixStyle vs CSScomb</code> <code class="ml5">FixStyle vs CSStidy</code> <code class="ml5">CssCompress vs YUICompressor</code> ，请大家继续锁定此频道~</p>
+					
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">Round 1 —— CKStyle vs <a href="http://csslint.net/" target="_blank">CSSLint</a></h3>
+				<div class="content clearfix">
+					<div>
+					<code>CSSLint 检查结果</code>
+<pre class="mt10">
+1. Property with underscore prefix found.  _width: 20px;
+2. Property with star prefix found.        *color: #dddddd;
+</pre>
+					<code>CKstyle 检查结果</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10">
+[ERROR] 1. should add @author in the head of ".\test.css"
+[ERROR] 2. css3 prop "-webkit-transition" missing some of "-webkit-,-moz-,-o-,std" in ".test"
+[ERROR] 3. css3 prop "-o-transition" missing some of "-webkit-,-moz-,-o-,std" in ".test"
+[ERROR] 4. css3 prop "-moz-transition" missing some of "-webkit-,-moz-,-o-,std" in ".test"
+ [WARN] 5. should combine "padding,padding-top" to "padding" in ".test"
+ [WARN] 6. "-o-transition" should after "-moz-transition" in ".test" (order: display/box/text/other/css3)
+ [WARN] 7. color should in upper case in ".test"
+ [WARN] 8. color should in upper case in ".test"
+ [WARN] 9. each rule in ".test" need semicolon in the end, "padding-top" has not
+  [LOG] 10. css3 prop "-webkit-transition" should align to right in ".test"
+  [LOG] 11. css3 prop "-o-transition" should align to right in ".test"
+  [LOG] 12. css3 prop "-moz-transition" should align to right in ".test"
+  [LOG] 13. should have (only) one "space" before value of "-webkit-transition" in ".test"
+  [LOG] 14. should have (only) one "space" before value of "-o-transition" in ".test"
+  [LOG] 15. should have 4 spaces before "width" in ".test"
+  [LOG] 16. should have 4 spaces before "color" in ".test"
+  [LOG] 17. should have 4 spaces before "_width" in ".test"
+  [LOG] 18. should have 4 spaces before "*color" in ".test"
+  [LOG] 19. should have 4 spaces before "padding" in ".test"
+  [LOG] 20. should have 4 spaces before "padding-top" in ".test"
+</pre>
+					</div>
+				</div>
+				<div>
+					<p class="text-success">[解说] (⊙o⊙)…，CSSLint看上去是睡着了，直接被CKStyle KO，不过没有关系，接下来的这一场比赛将会异常精彩！</p>
+				</div>
+				<div>
+					<p class="muted">[广告] 当你看到一大堆的检查结果时，<strong class="text-error">完全不用担心</strong>，因为FixStyle能够为你<strong class="text-error">自动修复</strong>大量的问题，疗效显著，用过都说好，请接着往下看。</p>
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">Round 2 —— FixStyle vs <a href="http://csscomb.com/online/" target="_blank">CSScomb</a></h3>
+				<div class="content clearfix">
+					<div class="fl" style="width:420px">
+					<code>CSScomb 整理后的结果</code>
+<pre class="mt10">
+.test {
+padding:0; 
+padding-top: 20px;
+width:10px;
+color:#ffffff;
+-webkit-transition:1s;
+-moz-transition: 1s; 
+-o-transition:1s; 
+_width: 20px;
+*color: #dddddd;
+}
+</pre>
+					</div>
+					<div class="fr" style="width:420px">
+					<code>FixStyle 整理后的结果 (fixstyle -p ./test.css)</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10">
+.test {
+    width: 10px;
+    _width: 20px;
+    padding: 20px 0 0;
+    color: #FFF;
+    *color: #DDD;
+    -webkit-transition: 1s;
+       -moz-transition: 1s;
+         -o-transition: 1s;
+}
+</pre>
+					</div>
+				</div>
+				<div>
+					<p class="text-success">[解说] 乍一看，两者是势均力敌，可是外行看热闹，内行看门道，请专家站出来拍砖~</p>
+					<p class="text-success">[解说] 不过，CSScomb把hack放到最后面，看上去对FixStyle是一种致命威胁！</p>
+				</div>
+				<hr>
+				<div class="clearfix">
+					<p class="text-success">[解说] FixStyle感觉到了危机的临近，可是就在此时，FixStyle似乎发现了什么，一记左勾拳，CSScomb应声倒地，昏厥过去。</p>
+					<p class="text-success">[解说] 只听FixStyle走到CSScomb身边，小声呻吟道：老弟，你太不把IE用户当回事了！</p>
+					<p class="text-success">[解说] 到底发生了什么事情？原来：</p>
+					<div>
+<pre class="mt10">
+.test {
+*padding: 20px;
+padding-top: 5px;
+}
+</pre>
+					</div>
+					<div class="fl" style="width:420px">
+					<code>CSScomb 整理后的结果</code>
+<pre class="mt10">
+.test {
+padding-top: 5px;
+*padding: 20px; //这让IE情何以堪!
+}
+</pre>
+					</div>
+					<div class="fr" style="width:420px">
+					<code>FixStyle 整理后的结果</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10">
+.test {
+    *padding: 20px;
+    padding-top: 5px;
+}
+</pre>
+					</div>
+				</div>
+				<p class="text-success">[解说] 第二局仍以FixStyle的敏锐洞察力艰难取胜，CKstyle 2:0 领先。 </p>
+				<p class="text-success">[解说] 让我们稍事休息，马上进行第三局的比赛。</p>
+			</div>
+			<div class="result">
+				<h3 class="title relax">Round 3 —— FixStyle vs <a href="http://csscomb.com/online/" target="_blank">CSStidy</a></h3>
+				<div class="content clearfix">
+					<div class="fl" style="width:420px">
+					<code>CSStidy 整理后的结果</code>
+<pre class="mt10">
+.test {
+-webkit-transition:1s;
+-o-transition:1s;
+-moz-transition:1s;
+width:10px;
+color:#fff;
+_width:20px;
+color:#ddd; // where is *?
+padding:0;
+padding-top:20px;
+}
+</pre>
+					</div>
+					<div class="fr" style="width:420px">
+					<code>FixStyle 整理后的结果 (fixstyle -p ./test.css)</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10">
+.test {
+    width: 10px;
+    _width: 20px;
+    padding: 20px 0 0;
+    color: #FFF;
+    *color: #DDD;
+    -webkit-transition: 1s;
+       -moz-transition: 1s;
+         -o-transition: 1s;
+}
+</pre>
+					</div>
+				</div>
+				<p class="text-success">[解说] FixStyle从上一局中取得了丰富的战斗经验，第三局，FixStyle故技重施，加上自身过硬的战斗素质，轻松将CSStidy拿下。 </p>
+				<p class="text-success">[解说] 一杯茶都还没喝完就打完了，真快。马上进入决胜第四局！</p>
+				<p class="text-success">[解说] 所谓初生牛犊不怕虎，CssCompress很早以前就发愤图强，试图跟老牌劲旅 Yahoo 旗下的YUICompressor一较高下，今天终于得偿所愿，同时也让我们大饱眼福。</p>
+				<p class="text-success">[解说] 请大家不要眨眼，比赛马上开始。</p>
+			</div>
+			<div class="result">
+				<h3 class="title relax">Round 4 —— CssCompress vs <a href="http://refresh-sf.com/yui/" target="_blank">YUICompressor</a></h3>
+				<div class="content clearfix">
+					<div>
+					<p class="text-success">[解说] YUICompressor一上来，就以其老道的作战经验，给了年轻的CssCompress一记 <strong class="text-error">亢龙有悔</strong> </p>
+					<code>YUICompressor压缩结果</code>
+<pre class="mt10">
+.test{-webkit-transition:1s;-o-transition:1s;-moz-transition:1s;width:10px;color:#fff;_width:20px;*color:#ddd;padding:0;padding-top:20px}  //137 chars
+</pre>
+					<p class="text-success">[解说] 哪知，CssCompress对老将的招数早有防范，一招 <strong class="text-error">降龙十八掌</strong>，把老将YUICompressor打翻在地。</p>
+					</div>
+					<div>
+					<code>CssCompress 普通压缩结果 (csscompress -p ./test.css)</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10">
+.test{width:10px;_width:20px;padding:20px 0 0;color:#FFF;*color:#DDD;-webkit-transition:1s;-moz-transition:1s;-o-transition:1s}   //127 chars
+</pre>
+					</div>
+					<div>
+					<p class="text-success mt20"></p>
+					<p class="text-success mt20">CKstyle使出暴走组合必杀技： <strong class="text-error">CSS压缩之终极奥义：分浏览器压缩</strong> 。</p>
+					<code>CssCompress 分浏览器压缩结果 (csscompress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css)</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10">
+.test{width:10px;padding:20px 0 0;color:#FFF;-moz-transition:1s}         //firefox (64 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;-webkit-transition:1s}      //chrome  (67 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;*color:#DDD}                //ie7     (57 chars)
+.test{width:10px;_width:20px;padding:20px 0 0;color:#FFF;*color:#DDD}    //ie6     (69 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;-o-transition:1s}           //opera   (62 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;-webkit-transition:1s}      //safari  (67 chars)
+.test{width:10px;_width:20px;padding:20px 0 0;color:#FFF;*color:#DDD}    //ie      (69 chars)
+</pre>
+					<p class="text-success">[解说] 只听YUICompressor一声长叹：廉颇老矣，真不能饭否？话音刚落，鲜血从嘴内喷涌而出。。。</p>
+					<p class="text-success">[解说] 医护人员赶紧把老将抬下擂台，让我们对YUICompressor的“老骥伏枥志在千里”的志气深深鞠一躬。</p>
+					<p class="text-success">[解说] 毫无疑问，CssCompress成功击败对手，获得胜利，CKstyle 4:0</p>
+					<p class="text-success mt20">[解说] 赛后，CssCompress对我们透露，其实目前最后一招他还没有完全领悟到。他表示：如果配合上nginx的css请求自动转发秘籍，或者后端脚本的userAgent判断大法，方可真正实现终极奥义：<strong class="text-error">CSS极限压缩</strong>。</p>
+					<p class="text-success">这一切的种种，请各位观众朋友自行研究。</p>
+					</div>
+
+				</div>
+			</div>
+			<div class="result">
+				<h3 class="title relax">结束语</h3>
+				<div class="content clearfix">
+					<div class="clearfix fl">
+						<p class="mt10 text-success">[解说] CKStyle以 <strong class="text-error">4:0</strong> 的优势轻松完爆对手。这一刻，CKStyle，你不是一个人在战斗！</p>
+						<p class="text-success">[解说] 艾玛，我太激动了。</p>
+						<p class="mt10 text-success">[解说] 今天的直播到此结束，谢谢大家的观看，如果大家对CKstyle感兴趣，请把目光投向最右边 -->_--> </p>
+					</div>
+					<a href="javascript:;" onclick="window.scrollTo(0,0);$('[href=#install]').trigger('click')" target="_blank" class="btn btn-danger p10 fr mt30"><i class="icon-screenshot icon-white mt5 mr5"></i>通过简单5步，尝试CKstyle</a>
+				</div>
+			</div>
+		</div>
 		<div id="install" class="wrapper hide">
 			<div class="result">
 				<h3 class="title relax" style="border-bottom:none;font-size:16px;">第一步：下载并安装 <a href="http://www.activestate.com/activepython/downloads" target="_blank">Python</a> （如已安装请忽略此步，请确保有 <a href="https://pypi.python.org/pypi/setuptools" target="_blank">easy_install</a>）</h3>
@@ -139,7 +384,7 @@ border-radius:3px
 				</div>
 			</div>
 			<div class="result">
-				<h3 class="title relax" style="font-size:16px;">第四步：新建test.css文件，内容如下： </h3>
+				<h3 class="title relax" style="font-size:16px;">第四步：新建一个CSS文件，例如test.css，内容如下： </h3>
 				<div class="content clearfix">
 <pre>
 /* 示例 */
@@ -272,7 +517,7 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 			</div>
 		</div>
 		<div id="history" class="wrapper hide clearfix">
-			<img class="img fr mt20" src="img/a.gif" data-src="img/born.jpg" width="400" alt="CKstyle官网诞生"/>
+			<img class="img fr mt20" src="img/a.gif" data-src="img/born.jpg" width="400" alt="CKstyle官网诞生" style="width:400px"/>
 			<h2>关于</h2>
 			<p class="mt20">CKstyle还比较年轻，但是它具有超级强劲的生命力和潜力</p>
 			<p class="mt20">目前，CKstyle在压缩率和压缩后代码的性能上，已经超过了YUICompressor</p>
