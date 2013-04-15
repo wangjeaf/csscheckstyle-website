@@ -3,7 +3,7 @@ define(function() {
 	.version-tip-top {border-bottom:2px solid #ccc;padding:10px 10px 10px 0;}\
 	.version-tip-bottom {border-top:2px solid #ccc;padding:10px 10px 0 0;margin-top:10px;}\
 </style>\
-<div class="modal hide fade" id="too-old-version">\
+<div class="modal hide fade" id="too-old-version" style="_position:absolute;">\
   <div class="modal-body">\
     <p class="version-tip-top">为了获得更好的互联网使用体验，建议您使用最新的浏览器，比如：</p>\
     <div class="clearfix browser-list">\
