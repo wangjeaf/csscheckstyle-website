@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:wb="http://open.weibo.com/wb">
 	<head>
 		<meta charset="utf-8"/>
 		<title>CKstyle——让你的CSS更漂亮！</title>
@@ -14,8 +14,8 @@
 				<a href="/"><span class="CK">CK</span><span class="style">style</span></a>
 			</div>
 			<div class="fl ver">alpha</div>
-			<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank">
-			  <img style="position: fixed; _position:absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub">
+			<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" id="forkme-img-container">
+			  
 			</a>
 			<ul class="unstyled menu fr mt30 fs16">
 				<li><a href="#index" class="current"><i class="mr3 icon-home"></i>首页</a></li>
@@ -36,14 +36,7 @@
 				<div class="main">
 					<div class="editor-container">
 						<textarea id="editor" name="csscode" placeholder="/* 请在此编辑您 CSS 或 粘贴 CSS 的链接地址 */">
-/* 请在此编辑您 CSS 或 粘贴 CSS 的链接地址 */
-.test1 ul li a {
-width:10px;
-color:#ffffff;
-    -webkit-border-radius:3px;
--moz-border-radius : 3px;
-border-radius:3px
-}</textarea>
+/* 请在此编辑您 CSS 或 粘贴 CSS 的链接地址 */</textarea>
 					</div>
 					<div>
 						<input type="submit" data-type="ckstyle" class="btn btn-info btn-large" value="CKstyle"/>
@@ -565,10 +558,29 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 				</div>
 			</div>
 		</div>
-		<div class="footer">
-			<p>© 2013 CSSCheckStyle.com by <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>.</p>
+		<div class="footer clearfix">
+			<p class="fr">© 2013 CSSCheckStyle.com by <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>. </p>
+			<!-- JiaThis Button BEGIN -->
+			<div class="jiathis_style fl">
+				<span class="jiathis_txt">分享到：</span>
+				<a class="jiathis_button_tools_1"></a>
+				<a class="jiathis_button_tools_2"></a>
+				<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+			</div>
 		</div>
+		<!-- weibo BEGIN -->
+		
+		<span id="wb_follow_btn" style="position:fixed;_position:absolute;bottom:50px;right:90px;"></span>
+		<!-- weibo END -->
+
 		<script src="http://s.xnimg.cn/a55241/test/ckstyle.min.js"></script>
+		<script>
+			$(function() {
+				$('<scri' + 'pt type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1344392941912374" charset="utf-8"></scr' + 'ipt>' + '<scr' + 'ipt src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" charset="utf-8"></scr' + 'ipt>').appendTo('body');
+			});
+			$('<img style="position: fixed; _position:absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub">').appendTo($('#forkme-img-container'));
+			$('<wb:follow-button uid="1822956823" type="red_1" width="22" height="24"></wb:follow-button>').appendTo($('#wb_follow_btn'));
+		</script>
 		<!--
 		<script src="tools/bootstrap/js/bootstrap.min.js"></script>
 		<script src="tools/codemirror/lib/codemirror.js"></script>
