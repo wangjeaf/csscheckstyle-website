@@ -30,7 +30,7 @@
 		</div>
 		<div id="index" class="wrapper">
 			<p class="block tac">
-				CKstyle，沿着CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>、<strong>压缩</strong>之路前行，<strong>极致优化</strong>，让你的CSS更漂亮！
+				CKstyle，严格遵循<a href="http://fed.renren.com/archives/1212" target="_blank">CSS编码规范</a>，沿着CSS的<strong>解析</strong>、<strong>检查</strong>、<strong>修复</strong>、<strong>压缩</strong>之路前行，<strong>极致优化</strong>，让你的CSS更漂亮！
 				<a href="https://github.com/wangjeaf/csscheckstyle" target="_blank" class="fork-mask" data-original-title="点击进入GitHub工程" data-container="body"><img src="img/github.png"/></a>
 			</p>
 			<form method="post" onsubmit="return false;">
@@ -124,10 +124,93 @@
 			</div>
 		</div>
 		<div id="pk" class="wrapper hide">
-			<div class="result">
+			<a href="javascript:;" class="fr toggle-trigger replace" data-original-title="鉴于有同学提出卖萌版简介太长，难以抓住重点，因此这里给出正式版和卖萌版两个版本，点击即可切换" style="margin-right:-80px;margin-top:50px;padding:5px;background-color:#EEE;border-radius:4px;box-shadow:1px 1px 3px rgba(0,0,0,.1)"><i class="icon-book"></i> 换口味</a>
+			<div class="result normal hide">
+				<div class="content" style="border-top:none;">
+					<p style="text-indent:2em;">CKstyle是一款致力于解析、检查、修复、压缩CSS的工具。它的诞生，源于对CSS编码规范严格实施的追求，也是针对目前业内CSS工具百花齐放现状的一种总结和整理。详情请参见：<a href="http://fed.renren.com/archives/1427#anchor-1" target="_blank">CSSCheckStyle简介</a></p>
+					
+					<p style="text-indent:2em;" class="mt20">CKstyle的主要组成部分，以及业内类似工具的对应如下表所示：</p>
+					<table class="table table-bordered table-hover" style="width:80%;margin:0 auto;border-width:2px;">
+						<thead><tr><th></th><th>功能</th><th>实现语言</th><th>业内类似工具</th><th>业内工具的实现语言</th></tr></thead>
+						<tbody>
+							<tr>
+								<td>CKStyle</td><td>CSS代码功能和风格检查</td><td>Python</td><td>CSSLint</td><td>Nodejs</td>
+							</tr>
+							<tr>
+								<td>FixStyle</td><td>CSS代码自动修复</td><td>Python</td><td>CSScomb/CSStidy</td><td>PHP等</td>
+							</tr>
+							<tr>
+								<td>CssCompress</td><td>CSS极致压缩</td><td>Python</td><td>YUICompressor</td><td>Java</td>
+							</tr>
+							<tr>
+								<td>CKService</td><td>CSS代码压缩情况在线分析</td><td>Python</td><td>无</td><td>无</td>
+							</tr>
+						</tbody>
+					</table>
+					<p style="text-indent:2em;" class="mt20">由于CSS的检查、修复、压缩等一系列操作过程是一脉相承的，并不是相互孤立的，而现有工具采用各种各样的语言和工具来实现，明显不利于工具的有机整合。详情请参见：<a href="http://fed.renren.com/archives/1427#anchor-2" target="_blank">部分已有工具的分析</a></p>
+					<p style="text-indent:2em;" class="mt20">CKstyle将这些功能有机的整合在一起，自主完成CSS的解析，并且以插件的方式完成CSS编码规范中各项约束内容的检查和自动修复。比如：
+						<ul style="margin-left:70px;">
+							<li>FEDHexColorShouldUpper.py中完成16进制颜色相关的规则</li>
+							<li>FEDHighPerformanceSelector.py中完成与选择器性能相关的规则</li>
+							<li><a href="https://github.com/wangjeaf/CSSCheckStyle#rulesplugins" target="_blank">更多...</a></li>
+						</ul>
+					</p>
+					<p style="text-indent:2em;" class="mt20">CKstyle的每一个插件中都包含check方法和fix方法，check用于检查，fix用于修复。所有的CKstyle操作基本上都是由这两个方法实现的。由于两个方法实际上非常类似，因此放置在同一个类中是最合适不过的了。具体内容请参见 <a href="http://fed.renren.com/archives/1427#anchor-6" target="_blank">基于插件的检查和修复机制</a>。</p>
+					<p style="text-indent:2em;" class="mt20">正是由于经历了解析、检查和修复的过程，CSS的代码逐步完善，最终才能够做到最优的压缩效果。</p>
+					<p style="text-indent:2em;" class="mt20">比如，针对如下代码：</p>
+<pre class="ml20">
+.test {
+-webkit-transition:1s; 
+-o-transition:1s;
+-moz-transition: 1s;
+width:10px;
+color:#ffffff; 
+_width: 20px;
+*color: #dddddd;
+padding:0; 
+padding-top: 20px
+}
+</pre>
+					<p style="text-indent:2em;">经过CKstyle的解析，以及所有插件的fix方法修复以后，<strong>FixStyle</strong>最终导出的CSS代码如下：</p>
+<pre class="ml20">
+.test {                          // 属性缩进与格式化
+    width: 10px;                 // 属性重排
+    _width: 20px;
+    padding: 20px 0 0;           // padding和padding-top的合并
+    color: #FFF;                 // 颜色值压缩，颜色值大写
+    *color: #DDD;
+    -webkit-transition: 1s;      // css3属性缩进和对齐
+       -moz-transition: 1s;
+         -o-transition: 1s;      // 属性后的分号自动补齐
+}
+</pre>
+					<p style="text-indent:2em;">此时的CSS，已经经过了CSS属性的压缩、合并、重排、格式化等一系列优化处理，处理的效果取决于使用的插件的数目和功能。</p>
+					<p style="text-indent:2em;" class="mt20">在此代码的基础上，<strong>CssCompress</strong>再进行一些格式微调，就可以得到压缩后的代码：</p>
+<pre class="ml20">
+.test{width:10px;_width:20px;padding:20px 0 0;color:#FFF;*color:#DDD;-webkit-transition:1s;-moz-transition:1s;-o-transition:1s}   //127 chars
+</pre>
+					<p style="text-indent:2em;" class="mt20">如果需要<strong>针对不同的浏览器生成不同的CSS文件</strong>，<strong>CssCompress</strong>提供了<code>--browsers</code>参数，允许调用者提供特定的浏览器名称，则CssCompress能够为浏览器生成特定的CSS内容。</p>
+					<p style="text-indent:2em;" class="mt20">举个例子：<code>*width: 100px</code> 只有<code>IE6</code>和<code>IE7</code>支持，所以当为 IE6 或 IE7 生成CSS文件时，应该要加上此属性，而当为Chrome生成CSS文件时，则可以舍弃此属性，节省字节数。</p>
+					<p style="text-indent:2em;" class="mt20">针对上面给出的代码，分浏览器压缩的命令和结果示例如下：</p>
+					<code class="ml20">csscompress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css</code>
+					<code class="ml20"> ======> </code>
+<pre class="mt10 ml20">
+.test{width:10px;padding:20px 0 0;color:#FFF;-moz-transition:1s}         //firefox (64 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;-webkit-transition:1s}      //chrome  (67 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;*color:#DDD}                //ie7     (57 chars)
+.test{width:10px;_width:20px;padding:20px 0 0;color:#FFF;*color:#DDD}    //ie6     (69 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;-o-transition:1s}           //opera   (62 chars)
+.test{width:10px;padding:20px 0 0;color:#FFF;-webkit-transition:1s}      //safari  (67 chars)
+.test{width:10px;_width:20px;padding:20px 0 0;color:#FFF;*color:#DDD}    //ie      (69 chars)
+</pre>
+					<p style="text-indent:2em;" class="mt20">在此基础上，如果在nginx中针对浏览器userAgent配置css文件的请求转发，或者在后端php/jsp等代码中判断一下浏览器的类型和版本，即可实现不同浏览器访问不同的CSS文件，最终达到CSS的极致压缩。此方案，移动端也同样适用。</p>
+					<p style="text-indent:2em;" class="mt20">如果您对CKstyle感兴趣，欢迎您来到 <a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank">github</a> 上与我们交流，强烈欢迎您参与到CKstyle的建设当中来，欢迎！</p>
+				</div>
+			</div>
+			<div class="result story">
 				<h3 class="title relax" style="border-bottom:none;text-align:center;color:#DF482B;font-size:22px;padding:3px;">CKstyle工具集与业内流行CSS工具的 1v4 PK大战，网页版现场直播中...</h3>
 			</div>
-			<div class="result">
+			<div class="result story">
 				<div class="content clearfix" style="border-top:none;">
 					<p class="text-success">[解说] 观众朋友们，大家好，欢迎收看CSS(channel)V，我们现在是在“CKstyle CSS工具PK场”为您做现场直播。</p>
 					<p class="text-success">[解说] 今天，我们将以下面的代码为擂台，将CKstyle工具集与业内领先的一些CSS工具进行比较。</p>
@@ -153,7 +236,7 @@ padding-top: 20px
 					
 				</div>
 			</div>
-			<div class="result">
+			<div class="result story">
 				<h3 class="title relax">Round 1 —— CKStyle vs <a href="http://csslint.net/" target="_blank">CSSLint</a></h3>
 				<div class="content clearfix">
 					<div>
@@ -196,7 +279,7 @@ padding-top: 20px
 					<p class="text-info">[广告] 今年过节不收礼，不收礼呀不收礼，收礼只收<strong class="text-error">CKstyle插件</strong>，收插件！</p>
 				</div>
 			</div>
-			<div class="result">
+			<div class="result story">
 				<h3 class="title relax">Round 2 —— FixStyle vs <a href="http://csscomb.com/online/" target="_blank">CSScomb</a></h3>
 				<div class="content clearfix">
 					<div class="fl" style="width:420px">
@@ -272,7 +355,7 @@ padding-top: 5px;
 				<p class="text-success">[解说] 第二局仍以FixStyle的敏锐洞察力轻松取胜，CKstyle 2:0 领先。 </p>
 				<p class="text-success">[解说] 让我们稍事休息，马上进行第三局的比赛。</p>
 			</div>
-			<div class="result">
+			<div class="result story">
 				<h3 class="title relax">Round 3 —— FixStyle vs <a href="http://www.css88.com/tool/csstidy/" target="_blank">CSStidy</a></h3>
 				<div class="content clearfix">
 					<div class="fl" style="width:420px">
@@ -315,7 +398,7 @@ padding-top:20px;
 				<p class="text-success">[解说] 请大家不要眨眼，比赛马上开始，先进一段广告。</p>
 				<p class="text-info">[广告] CKstyle是人人网前端经过多年苦心研究，用蜂蜜、川贝、桔梗，加上天山雪莲，最后用Python经过近4个月时间熬制而成，无色无味、清热解毒、息气养神，是前端游历、居家旅行之必备良品。</p>
 			</div>
-			<div class="result">
+			<div class="result story">
 				<h3 class="title relax">Round 4 —— CssCompress vs <a href="http://refresh-sf.com/yui/" target="_blank">YUICompressor</a></h3>
 				<div class="content clearfix">
 					<div>
@@ -360,7 +443,7 @@ padding-top:20px;
 					</div>
 				</div>
 			</div>
-			<div class="result">
+			<div class="result story">
 				<h3 class="title relax">专家点评</h3>
 				<div class="content clearfix">
 					<div class="clearfix fl">
@@ -370,7 +453,7 @@ padding-top:20px;
 					</div>
 				</div>
 			</div>
-			<div class="result">
+			<div class="result story">
 				<h3 class="title relax">结束语</h3>
 				<div class="content clearfix">
 					<div class="clearfix fl">
@@ -392,9 +475,9 @@ padding-top:20px;
 			<div class="result">
 				<h3 class="title relax" style="font-size:16px;">第三步：安装 CKStyle </h3>
 				<div class="content clearfix">
-					<p>方式1. 自动安装</p>
+					<p>方式1. 自动安装(linux用户可能需要sudo)</p>
 					<code>easy_install https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code>
-					<p class="mt20">方式2. 手动安装</p>
+					<p class="mt20">方式2. 手动安装(linux用户可能需要sudo)</p>
 					<p>请访问 <code>https://github.com/wangjeaf/CSSCheckStyle/archive/master.tar.gz</code> 下载安装包，然后通过 <code>easy_install xxx.tar.gz</code>安装</p>
 				</div>
 			</div>
@@ -585,6 +668,10 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 			});
 			$('<img style="position: fixed; _position:absolute; top: 0; right: 0; border: 0;" src="img/forkme.png" alt="Fork me on GitHub">').appendTo($('#forkme-img-container'));
 			$('<wb:follow-button uid="1822956823" type="red_1" width="22" height="24"></wb:follow-button>').appendTo($('#wb_follow_btn'));
+			$('#pk .toggle-trigger').click(function() {
+				$('#pk').find('.normal').toggle();
+				$('#pk').find('.story').toggle();
+			});
 		</script>
 		<!--[if lte IE 8]>
 		<script type="text/javascript" data-main="./js/old-browser.js" src="js/lib/sea-debug.js"></script>
