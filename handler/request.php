@@ -46,9 +46,9 @@
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
 	$command_options = '';
 	if (strlen($ruleIds) != 0) {
-		$command_options = '--include '.$ruleIds.$safeMode;
+		$command_options = '--include='.$ruleIds.$safeMode;
 	} else {
-		$command_options = '--include none '.$safeMode;
+		$command_options = '--include=none '.$safeMode;
 	}
 	loghere('params');
 	// temp css file
