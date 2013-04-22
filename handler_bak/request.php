@@ -2,21 +2,17 @@
 <?php
 	log_start();
 
-	#if (!need_referer()) {
-	#	return;
-	#}
+	if (!need_referer()) {
+		return;
+	}
 	loghere('referer');
 
 	// params
 	$optype = $_POST['optype'];
 	$csscode = $_POST['csscode'];
-	if (strlen($csscode) == 0) {
-		echo('<p>请输入CSS再进行此操作</p>');
-		return;
-	}
 	if (strlen($csscode) > $max) {
-		echo('<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理(目前为 '.strlen($csscode).' 个)</p>'.
-			'<p>如需使用更强大无限制有节操的CKstyle，请 <a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装到您的机器上</a> 吧~</p>');
+		echo '<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理(目前为 '.strlen($csscode).' 个)</p>'.
+			'<p>如需使用更强大无限制有节操的CKstyle，请 <a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装到您的机器上</a> 吧~</p>';
 		return;
 	}
 	// safemode
@@ -50,52 +46,30 @@
 	$ruleIds = substr($ruleIds, 0, strlen($ruleIds) - 1);
 	$command_options = '';
 	if (strlen($ruleIds) != 0) {
-		$command_options = '--include='.$ruleIds.$safeMode;
+		$command_options = '--include '.$ruleIds.$safeMode;
 	} else {
-		$command_options = '--include=none '.$safeMode;
+		$command_options = '--include none '.$safeMode;
 	}
-	
-	// make download dir 
-	$ip = str_replace('.', '_', get_ip());
-	$ts = time();
-	$dir = '../cache/task/'.$ts;
-	$res_dir = '../cache/result/'.$ts;
-	if (!is_dir('../cache')) {
-		mkdir('../cache');
-	}
-	if (!is_dir('../cache/task')) {
-		mkdir('../cache/task');
-	}
-	if (!is_dir($dir)) {
-		mkdir($dir);
-	}
-	if (!is_dir('../cache/result')) {
-		mkdir('../cache/result');
-	}
-	if (!is_dir($res_dir)) {
-		mkdir($res_dir);
-	}
-
+	loghere('params');
 	// temp css file
-	$filename = $dir.'/task.css';
-	$commandline_file = $dir.'/task.json';
+	$filename = '__ckstyle_web_tmp_'.time().'.css';
 	$remote_css = '';
 	if (preg_match('/^http(s)?:/', $csscode)) {
 		$csspath = $csscode;
 		$remote = fopen($csspath, "r");
 		if (!$remote) {
-			errorMsg('<p>无法下载此文件，请输入正确的CSS文件URL地址</p>');
+			echo '<p>无法下载此文件，请输入正确的CSS文件URL地址</p>';
 			return;
 		}
 		$csscode = read_remote_file($remote);
         if (!isCSS($csscode)) {
-        	errorMsg('<p>对不起，请输入正确的CSS文件URL地址</p>');
+        	echo '<p>对不起，请输入正确的CSS文件URL地址</p>';
 			return;
         }
         if ($csscode == -1 || strlen($csscode) > $max) {
-			errorMsg('<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理。</p>'.
+			echo '<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理。</p>'.
 				'<p>远程文件中包含 '.strlen($csscode).' 个，已超出限制。</p>'.
-				'<p>如需使用更强大无限制有节操的CKstyle，请 <a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装到您的机器上</a> 吧~</p>');
+				'<p>如需使用更强大无限制有节操的CKstyle，请 <a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装到您的机器上</a> 吧~</p>';
 			return;
 		}
         fclose($remote);
@@ -107,12 +81,26 @@
 
 	loghere('write_to_file');
 
+	// make download dir 
+	$ip = str_replace('.', '_', get_ip());
+	$dir = '../cache/tmp/'.$ip;
+
+	if (!is_dir('../cache')) {
+		mkdir('../cache');
+	}
+	if (!is_dir('../cache/tmp')) {
+		mkdir('../cache/tmp');
+	}
+	if (!is_dir($dir)) {
+		mkdir($dir);
+	}
+
 	if ($optype == 'fixstyle') {
 		// fixstyle
-		$result_file = $res_dir.'/result.css';
-		$result = wait_for_exec_command($bin_dir.'ckstyle fix -p '.$command_options.' '.$filename, $commandline_file, $result_file);
+		$result = exec_command($bin_dir.'fixstyle -p '.$command_options.' '.$filename);
 		
 		// make download file
+		$result_file = $dir.'/fixstyle-result.css';
 		write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
 
 		// return json
@@ -125,8 +113,7 @@
 	} else if ($optype == 'ckstyle') {
 		loghere('start ckstyle');
 		// ckstyle
-		$result_file = $res_dir.'/result.css';
-		$result = wait_for_exec_command($bin_dir.'ckstyle check -p --json '.$command_options.' '.$filename, $commandline_file, $result_file);
+		$result = exec_command($bin_dir.'ckstyle -p --json '.$command_options.' '.$filename);
 		loghere('end ckstyle');
 		$result = str_replace('\n', '', $result);
 		$result = str_replace($filename, 'THIS FILE', $result);
@@ -140,10 +127,10 @@
 		echo(json_encode($json));
 	} else if ($optype == 'csscompress') {
 		// csscompress
-		$result_file = $res_dir.'/result.css';
-		$result = wait_for_exec_command($bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, $commandline_file, $result_file);
+		$result = exec_command($bin_dir.'csscompress -p '.$command_options.$browsers.' '.$filename);
 
 		// make download file
+		$result_file = $dir.'/compress-ckstyle.min.css';
 		write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
 
 		// return json
@@ -154,13 +141,11 @@
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'yuicompressor') {
-		echo ('对不起，此功能需要用到java命令，由于资源有限，暂不提供~');
-		return;
 		// csscompress
-		$result_file = $res_dir.'/result.css';
-		$result_ckstyle = wait_for_exec_command($bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, $commandline_file, $result_file);
+		$result_ckstyle = exec_command($bin_dir.'csscompress -p '.$command_options.$browsers.' '.$filename);
 
 		// make csscompress download file
+		$result_file = $dir.'/compress-ckstyle.min.css';
 		write_to_file($result_file, str_replace('\n', PHP_EOL, $result_ckstyle));
 
 		// yuicompressor
@@ -194,6 +179,6 @@
 	}
 	
 	// remove temp file
-	// unlink($filename);
+	unlink($filename);
 	log_end('finish');
 ?>

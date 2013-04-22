@@ -9,28 +9,6 @@ if (is_file('dev')) {
 	$debug = false;
 }
 
-function errorMsg($msg) {
-	echo(json_encode(array("status" => "error", "responseText" => $msg)));
-}
-
-function wait_for_exec_command($command, $file, $res_file) {
-	write_to_file($file, $command);
-	$counter = 0;
-	while(true) {
-		sleep(1);
-		if (file_exists($res_file)) {
-			$f = fopen($res_file, 'r');
-			$content = fread($f,filesize($res_file));
-			fclose($f);
-			return $content;
-		}
-		$counter = $counter + 1;
-		if ($counter > 5) {
-			return 'timeout';
-		}
-	}
-}
-
 // referer
 function is_from_ckstyle_blog($referer) {
 	return preg_match('/^http:\/\/.*csscheckstyle\.com/', $referer) 
