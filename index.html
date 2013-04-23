@@ -36,8 +36,8 @@
 			<form method="post" onsubmit="return false;">
 				<div class="main">
 					<div class="editor-container">
-						<textarea id="editor" name="csscode" placeholder="/* 请先在此编辑您的 CSS 或 粘贴 CSS 的链接地址 */">
-.test{width:100}</textarea>
+						<textarea id="editor" name="csscode" placeholder="/* 请在此编辑您的 CSS */">
+/* 请在此编辑您的 CSS */</textarea>
 					</div>
 					<div>
 						<input type="submit" data-type="ckstyle" class="btn btn-info btn-large" value="CKstyle"/>
@@ -192,7 +192,7 @@ padding-top: 20px
 					<p style="text-indent:2em;" class="mt20">如果需要<strong>针对不同的浏览器生成不同的CSS文件</strong>，<strong>CssCompress</strong>提供了<code>--browsers</code>参数，允许调用者提供特定的浏览器名称，则CssCompress能够为浏览器生成特定的CSS内容。</p>
 					<p style="text-indent:2em;" class="mt20">举个例子：<code>*width: 100px</code> 只有<code>IE6</code>和<code>IE7</code>支持，所以当为 IE6 或 IE7 生成CSS文件时，应该要加上此属性，而当为Chrome生成CSS文件时，则可以舍弃此属性，节省字节数。</p>
 					<p style="text-indent:2em;" class="mt20">针对上面给出的代码，分浏览器压缩的命令和结果示例如下：</p>
-					<code class="ml20">csscompress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css</code>
+					<code class="ml20">ckstyle compress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css</code>
 					<code class="ml20"> ======> </code>
 <pre class="mt10 ml20">
 .test{width:10px;padding:20px 0 0;color:#FFF;-moz-transition:1s}         //firefox (64 chars)
@@ -299,8 +299,8 @@ _width: 20px;
 </pre>
 					</div>
 					<div class="fr" style="width:420px">
-					<code>FixStyle 整理后的结果 (fixstyle -p ./test.css)</code>
-					<code class="ml20"> ======> </code>
+					<code>FixStyle 整理后的结果 (ckstyle fix -p ./test.css)</code>
+					<code class="ml20"> ====> </code>
 <pre class="mt10">
 .test {
     width: 10px;
@@ -375,8 +375,8 @@ padding-top:20px;
 </pre>
 					</div>
 					<div class="fr" style="width:420px">
-					<code>FixStyle 整理后的结果 (fixstyle -p ./test.css)</code>
-					<code class="ml20"> ======> </code>
+					<code>FixStyle 整理后的结果 (ckstyle fix -p ./test.css)</code>
+					<code class="ml20"> ===> </code>
 <pre class="mt10">
 .test {
     width: 10px;
@@ -412,7 +412,7 @@ padding-top:20px;
 					<p class="text-success">[解说] 哪知，CssCompress对老将的招数早有防范，一招 <strong class="text-error">降龙十八掌</strong>，不管亢龙有没有悔，均可破除，此一招，即把老将YUICompressor打翻在地。</p>
 					</div>
 					<div>
-					<code>CssCompress 普通压缩结果 (csscompress -p ./test.css)</code>
+					<code>CssCompress 普通压缩结果 (ckstyle compress -p ./test.css)</code>
 					<code class="ml20"> ======> </code>
 <pre class="mt10">
 .test{width:10px;_width:20px;padding:20px 0 0;color:#FFF;*color:#DDD;-webkit-transition:1s;-moz-transition:1s;-o-transition:1s}   //127 chars
@@ -422,7 +422,7 @@ padding-top:20px;
 					<p class="text-success mt20">[解说] 裁判开始读秒，十、九、八...</p>
 					<p class="text-success">[解说] 当裁判念到三，YUICompressor踉踉跄跄的站了起来，我们对老将的坚韧不屈表示无比尊敬。裁判宣布，比赛继续。</p>
 					<p class="text-success">[解说] 眼看着YUICompressor心有不甘，正屏气凝神，准备下一次攻击。CssCompress决定趁热打铁，使出暴走组合终极无敌必杀技： <strong class="text-error">CSS压缩之终极奥义：分浏览器压缩</strong> 。</p>
-					<code>CssCompress 分浏览器压缩结果 (csscompress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css)</code>
+					<code>CssCompress 分浏览器压缩结果 (ckstyle compress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css)</code>
 					<code class="ml20"> ======> </code>
 <pre class="mt10">
 .test{width:10px;padding:20px 0 0;color:#FFF;-moz-transition:1s}         //firefox (64 chars)
@@ -494,7 +494,7 @@ padding-top: 20px }</pre>
 				<h3 class="title relax" style="font-size:16px;">第五步：试试~</h3>
 				<div class="content clearfix">
 					<div>
-					<code>fixstyle -p ./test.css</code> <code class="ml20"> ======> </code>
+					<code>ckstyle fix -p ./test.css</code> <code class="ml20"> ======> </code>
 <pre class="mt10">
 /* 示例 */
 .test {
@@ -508,14 +508,14 @@ padding-top: 20px }</pre>
 					</div>
 					<hr>
 					<div>
-					<code>csscompress -p ./test.css</code> <code class="ml20">======></code>
+					<code>ckstyle compress -p ./test.css</code> <code class="ml20">======></code>
 <pre class="mt10">
 .test{_width:10px;padding:20px 0 0;*color:#FFF;-webkit-transition:1s;-moz-transition:1s}
 </pre>
 					</div>
 					<hr>
 					<div>
-					<code>csscompress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css</code>
+					<code>ckstyle compress -p --browsers="ie6,ie7,ie,chrome,firefox,safari,opera" ./test.css</code>
 					<code class="ml20"> ======> </code>
 <pre class="mt10">
 firefox : .test{padding:20px 0 0;-moz-transition:1s}
@@ -604,6 +604,7 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 					<li><a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#plugin-development">插件开发</a></li>
 					<li><a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#rulesplugins">现有插件</a></li>
 					<li><a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#unit-test">单元测试</a></li>
+					<li><a target="_blank" href="https://github.com/wangjeaf/ckstyle-pm">插件官网 ckstyle-pm</a></li>
 				</ul>
 			</div>
 			<div class="fl ml20">
@@ -624,6 +625,12 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 			<p class="mt20">或许，经过我们的共同努力</p>
 			<p>CSS压缩工具，也将迎来改朝换代的一天</p>
 			<p class="mt20">让我们一起为这个目标努力吧！<a href="https://github.com/wangjeaf/CSSCheckStyle" target="_blank">加入我们</a>！</p>
+
+			<h2 class="history-title">历史</h2>
+			<ul class="history-list">
+				<li><span style="margin-right:30px;">2013-04-23</span><a href="https://github.com/wangjeaf/CSSCheckStyle/issues/11">1.1.0</a></li>
+				<li><span style="margin-right:30px;">2013-04-17</span><span>1.0.0</span></li>
+			</ul>
 		</div>
 		<div id="bug" class="wrapper hide">
 			<div class="result">
@@ -638,7 +645,7 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 						<li>给出您觉得<strong>有问题</strong>的 CKstyle 处理后的结果</li>
 						<li>其他您想说的~~~</li>
 					</ol>
-					<div class="mt20">我(们)将会<strong >竭尽全力</strong>在收到 bug 的 <strong>一个小时内</strong> 解决之</div>
+					<div class="mt20">我(们)将会<strong >尽快</strong>解决之</div>
 					<div class="mt20">多谢  ;-)</div>
 					<hr>
 					<div class="fr"><a href="https://github.com/wangjeaf/CSSCheckStyle/issues/new" target="_blank" class="btn btn-danger p10"><i class="icon-screenshot icon-white mt5 mr5"></i>欢天喜地上 github 报 bug 去咯~~~</a></div>
@@ -647,11 +654,10 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 		</div>
 		<div class="footer clearfix">
 			<p class="fr">© 2013 CSSCheckStyle.com by <a href="mailto:wangjeaf@gmail.com">wangjeaf</a>. <span>
-			<!--<script type="text/javascript">
+			<script type="text/javascript">
 				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fd2f97fa85d2836bddb50969078f35f8d' type='text/javascript'%3E%3C/script%3E"));
 			</script>
-		-->
 			</span></p>
 			<div class="jiathis_style fl">
 				<span class="jiathis_txt">分享到：</span>
@@ -662,20 +668,7 @@ ie      : .test{_width:10px;padding:20px 0 0;*color:#FFF}
 		</div>
 		
 		<span id="wb_follow_btn" style="position:fixed;_position:absolute;bottom:50px;right:90px;"></span>
-		<!--<script src="http://s.xnimg.cn/a55257/test/ckstyle.min.js"></script>-->
-		
-		<script src="js/lib/jquery.js"></script>
-		<script src="tools/bootstrap/js/bootstrap.min.js"></script>
-		<script src="tools/codemirror/lib/codemirror.js"></script>
-		<script src="tools/codemirror/mode/css/css.js"></script>
-		<script src="js/lib/mustache.js"></script>
-		<script src="js/lib/json2.js"></script>
-		<script src="js/lib/modernizr-2.0.6.js"></script>
-		<script src="js/rules.js"></script>
-		<script src="js/main.js"></script>
-		<script src="js/lib/highcharts.js"></script>
-		<script src="js/lib/exporting.js"></script>
-		
+		<script src="http://s.xnimg.cn/a55499/test/ckstyle.min.js"></script>
 		<script>
 			$(function() {
 				$('<scri' + 'pt type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1344392941912374" charset="utf-8"></scr' + 'ipt>' + '<scr' + 'ipt src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" charset="utf-8"></scr' + 'ipt>').appendTo('body');

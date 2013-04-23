@@ -1,7 +1,7 @@
 <?php
 
 $max = 10000;
-$times = 2;
+$times = 5;
 if (is_file('dev')) {
 	$bin_dir = '';
 	$debug = false;
