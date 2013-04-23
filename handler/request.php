@@ -117,10 +117,11 @@
 			$commandline_file, 
 			$result_file,
 			$res_dir,
-			'');
+			'',
+			get_ip());
 		
 		// make download file
-		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
+		// write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
 
 		// return json
 		$json = array("status" => "ok", "result" => array(
@@ -138,7 +139,8 @@
 			$commandline_file, 
 			$result_file,
 			$res_dir,
-			'');
+			'',
+			get_ip());
 		loghere('end ckstyle');
 		$result = str_replace('\n', '', $result);
 		$result = str_replace($filename, 'THIS FILE', $result);
@@ -158,7 +160,8 @@
 			$commandline_file, 
 			$result_file,
 			$res_dir,
-			'');
+			'',
+			get_ip());
 
 		// make download file
 		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
@@ -181,7 +184,8 @@
 			$commandline_file, 
 			$result_file,
 			$res_dir,
-			$yui_res);
+			$yui_res,
+			get_ip());
 		$result_ckstyle = str_replace(PHP_EOL, '', $result_ckstyle);
 
 		// make csscompress download file

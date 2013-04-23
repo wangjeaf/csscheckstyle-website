@@ -14,13 +14,14 @@ function errorMsg($msg) {
 	echo(json_encode(array("status" => "error", "responseText" => $msg)));
 }
 
-function wait_for_exec_command($type, $command, $file, $res_file, $dir, $yui) {
+function wait_for_exec_command($type, $command, $file, $res_file, $dir, $yui, $ip) {
 	global $times;
 	$timer = 1;
 	if ($yui != '') {
 		$timer = 2;
 	}
-	write_to_file($file, $command);
+	$json = json_encode(array('command' => $command, 'ip' => $ip));
+	write_to_file($file, $json);
 	$counter = 0;
 	while(true) {
 		if (file_exists($res_file)) {

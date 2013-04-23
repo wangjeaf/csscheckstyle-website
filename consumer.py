@@ -4,6 +4,7 @@
 import os
 from ckstyle.command.ConsoleCommandParser import handleFixStyleCmdArgs, handleCkStyleCmdArgs, handleCompressCmdArgs
 import sys
+import json
 from time import sleep
 import shutil
 
@@ -38,7 +39,10 @@ def handleFileRequest(origin, f):
         return
     task = open(configFile, 'r').read()
     task = task.replace('  ', ' ');
-    tasks = task.split(' ')
+    data = json.loads(task)
+    command = data.get('command')
+    
+    tasks = command.split(' ')
     cssfile = realpath(__file__, tasks[-1])
     tasks[-1] = cssfile
     resultDir = realpath(__file__, '../cache/result/')
