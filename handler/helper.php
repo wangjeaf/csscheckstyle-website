@@ -14,8 +14,12 @@ function errorMsg($msg) {
 	echo(json_encode(array("status" => "error", "responseText" => $msg)));
 }
 
-function wait_for_exec_command($type, $command, $file, $res_file, $dir) {
+function wait_for_exec_command($type, $command, $file, $res_file, $dir, $yui) {
 	global $times;
+	$timer = 1;
+	if ($yui != '') {
+		$timer = 2;
+	}
 	write_to_file($file, $command);
 	$counter = 0;
 	while(true) {
@@ -24,14 +28,17 @@ function wait_for_exec_command($type, $command, $file, $res_file, $dir) {
 			$content = fread($f, filesize($res_file));
 			fclose($f);
 			unlink($res_file);
-			if (file_exists($dir)) {
-				rmdir($dir);
+			if ($yui == '') {
+				if (file_exists($dir)) {
+					rmdir($dir);
+				}
 			}
+			
 			return $content;
 		}
 		sleep(1);
 		$counter = $counter + 1;
-		if ($counter > $times) {
+		if ($counter > $times * $timer) {
 			if (file_exists($file)) {
 				unlink($file);
 			}

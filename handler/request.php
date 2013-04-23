@@ -116,7 +116,8 @@
 			$bin_dir.'ckstyle fix -p '.$command_options.' '.$filename, 
 			$commandline_file, 
 			$result_file,
-			$res_dir);
+			$res_dir,
+			'');
 		
 		// make download file
 		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
@@ -136,7 +137,8 @@
 			$bin_dir.'ckstyle check -p --json '.$command_options.' '.$filename, 
 			$commandline_file, 
 			$result_file,
-			$res_dir);
+			$res_dir,
+			'');
 		loghere('end ckstyle');
 		$result = str_replace('\n', '', $result);
 		$result = str_replace($filename, 'THIS FILE', $result);
@@ -155,7 +157,8 @@
 			$bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, 
 			$commandline_file, 
 			$result_file,
-			$res_dir);
+			$res_dir,
+			'');
 
 		// make download file
 		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
@@ -169,42 +172,47 @@
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'yuicompressor') {
-		echo ('对不起，由于资源有限，此功能暂不提供~');
-		return;
+		$yui_res = $res_dir.'/result-yui.css';
+		write_to_file($dir.'/yui.json', 'go');
 		// csscompress
 		$result_file = $res_dir.'/result.css';
 		$result_ckstyle = wait_for_exec_command($optype, 
 			$bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, 
 			$commandline_file, 
 			$result_file,
-			$res_dir);
+			$res_dir,
+			$yui_res);
+		$result_ckstyle = str_replace(PHP_EOL, '', $result_ckstyle);
 
 		// make csscompress download file
 		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result_ckstyle));
 
-		// yuicompressor
-		$yui_output = $filename.'.min.css';
-		exec_command('java -jar yuicompressor-2.4.7.jar '.$filename.' -o '.$yui_output.' --charset utf-8 ');
-
-		// get yui output
-		$file = fopen($yui_output, 'r');
 		$result_yui = '';
-		while(!feof($file)) {
-			$result_yui = $result_yui.fgets($file);
+		// get yui output
+		if (file_exists($yui_res)) {
+			$file = fopen($yui_res, 'r');
+			
+			while(!feof($file)) {
+				$result_yui = $result_yui.fgets($file);
+			}
+			fclose($file);
+			unlink($yui_res);
 		}
-		fclose($file);
-		unlink($yui_output);
+		rmdir($res_dir);
 
+		if ($result_yui == '') {
+			$result_yui = '[CKstyle ERROR] Sorry, yuicompressor failed...';
+		}
 		// make yui download file
-		$yui_result_file = $dir.'/compress-yui.min.css';
-		//write_to_file($yui_result_file, str_replace('\n', PHP_EOL, $result_yui));
+		// $yui_result_file = $dir.'/compress-yui.min.css';
+		// write_to_file($yui_result_file, str_replace('\n', PHP_EOL, $result_yui));
 
 		// return json
 		$json = array("status" => "ok", "result" => array(
 			"compressed" => $result_ckstyle,
 			"yuimin" => $result_yui,
 			"download" => $result_file,
-			"downloadYui" => $yui_result_file,
+			"downloadYui" => $yui_res,
 			"css" => $remote_css
 		));
 		echo(json_encode($json));
