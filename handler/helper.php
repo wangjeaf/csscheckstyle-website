@@ -1,6 +1,7 @@
 <?php
 
 $max = 10000;
+$times = 2;
 if (is_file('dev')) {
 	$bin_dir = '';
 	$debug = false;
@@ -13,20 +14,28 @@ function errorMsg($msg) {
 	echo(json_encode(array("status" => "error", "responseText" => $msg)));
 }
 
-function wait_for_exec_command($command, $file, $res_file) {
+function wait_for_exec_command($type, $command, $file, $res_file, $dir) {
+	global $times;
 	write_to_file($file, $command);
 	$counter = 0;
 	while(true) {
-		sleep(1);
 		if (file_exists($res_file)) {
 			$f = fopen($res_file, 'r');
-			$content = fread($f,filesize($res_file));
+			$content = fread($f, filesize($res_file));
 			fclose($f);
+			unlink($res_file);
+			if (file_exists($dir)) {
+				rmdir($dir);
+			}
 			return $content;
 		}
+		sleep(1);
 		$counter = $counter + 1;
-		if ($counter > 5) {
-			return 'timeout';
+		if ($counter > $times) {
+			if (file_exists($file)) {
+				unlink($file);
+			}
+			return '[ERROR] Sorry, Timeout...';
 		}
 	}
 }

@@ -141,7 +141,9 @@ $(function() {
 
 	function improve(type, before, result) {
 		if (type == 'ckstyle') {
-			result = result.checkresult;
+			result = result.checkresult || {
+				errors: [{errorMsg:'[CKstyle ERROR] Sorry, Timeout...'}]
+			};
 			if (!result.errors && !result.warnings && !result.logs) {
 				type = 'ckstyle_noerror';
 			} else {
@@ -276,7 +278,7 @@ $(function() {
 		//}
 		$('.result-container .result').hide();
 		resultContainer.find('.content').html(improve(opType, $('#editor').val(), e.result)).end().show();
-		resultContainer.find('.download').attr('href', prefix + '/handler/' + e.result.download)
+		resultContainer.find('.download').attr('href', prefix + '/handler/' + e.result.download).hide();
 		if (opType == 'ckstyle') {
 			return;
 		}
@@ -286,7 +288,7 @@ $(function() {
 		if (opType != 'yuicompressor') {
 			return;
 		}
-		resultContainer.find('.download.extra').attr('href', prefix + '/handler/' + e.result.downloadYui)
+		resultContainer.find('.download.extra').attr('href', prefix + '/handler/' + e.result.downloadYui).hide();
 		var mirror2 = makeMirror(textareas[1], true);
 		// you scroll, i scroll
 		mirror1.on('scroll', function(e) {

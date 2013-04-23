@@ -37,6 +37,7 @@ def handleFileRequest(origin, f):
 		shutil.rmtree(f)
 		return
 	task = open(configFile, 'r').read()
+	task = task.replace('  ', ' ');
 	tasks = task.split(' ')
 	cssfile = realpath(__file__, tasks[-1])
 	tasks[-1] = cssfile

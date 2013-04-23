@@ -24,7 +24,7 @@
 	$browsers = $_POST['browsers'];
 
 	if ($browsers != '') {
-		$browsers = ' --browsers="'.$browsers.'" ';
+		$browsers = ' --browsers='.$browsers.' ';
 	}
 
 	if ($safeMode == 'true') {
@@ -81,19 +81,21 @@
 	$commandline_file = $dir.'/task.json';
 	$remote_css = '';
 	if (preg_match('/^http(s)?:/', $csscode)) {
+		echo('<p>资源有限，暂不支持远程文件实时处理</p>');
+		return;
 		$csspath = $csscode;
 		$remote = fopen($csspath, "r");
 		if (!$remote) {
-			errorMsg('<p>无法下载此文件，请输入正确的CSS文件URL地址</p>');
+			echo('<p>无法下载此文件，请输入正确的CSS文件URL地址</p>');
 			return;
 		}
 		$csscode = read_remote_file($remote);
         if (!isCSS($csscode)) {
-        	errorMsg('<p>对不起，请输入正确的CSS文件URL地址</p>');
+        	echo('<p>对不起，请输入正确的CSS文件URL地址</p>');
 			return;
         }
         if ($csscode == -1 || strlen($csscode) > $max) {
-			errorMsg('<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理。</p>'.
+			echo('<p>由于资源的限制，网络在线版只支持 <strong>'.$max.'</strong> 个字符以内的CSS处理。</p>'.
 				'<p>远程文件中包含 '.strlen($csscode).' 个，已超出限制。</p>'.
 				'<p>如需使用更强大无限制有节操的CKstyle，请 <a target="_blank" href="https://github.com/wangjeaf/CSSCheckStyle#installation">安装到您的机器上</a> 吧~</p>');
 			return;
@@ -110,10 +112,14 @@
 	if ($optype == 'fixstyle') {
 		// fixstyle
 		$result_file = $res_dir.'/result.css';
-		$result = wait_for_exec_command($bin_dir.'ckstyle fix -p '.$command_options.' '.$filename, $commandline_file, $result_file);
+		$result = wait_for_exec_command($optype, 
+			$bin_dir.'ckstyle fix -p '.$command_options.' '.$filename, 
+			$commandline_file, 
+			$result_file,
+			$res_dir);
 		
 		// make download file
-		write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
+		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
 
 		// return json
 		$json = array("status" => "ok", "result" => array(
@@ -126,7 +132,11 @@
 		loghere('start ckstyle');
 		// ckstyle
 		$result_file = $res_dir.'/result.css';
-		$result = wait_for_exec_command($bin_dir.'ckstyle check -p --json '.$command_options.' '.$filename, $commandline_file, $result_file);
+		$result = wait_for_exec_command($optype, 
+			$bin_dir.'ckstyle check -p --json '.$command_options.' '.$filename, 
+			$commandline_file, 
+			$result_file,
+			$res_dir);
 		loghere('end ckstyle');
 		$result = str_replace('\n', '', $result);
 		$result = str_replace($filename, 'THIS FILE', $result);
@@ -141,10 +151,15 @@
 	} else if ($optype == 'csscompress') {
 		// csscompress
 		$result_file = $res_dir.'/result.css';
-		$result = wait_for_exec_command($bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, $commandline_file, $result_file);
+		$result = wait_for_exec_command($optype, 
+			$bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, 
+			$commandline_file, 
+			$result_file,
+			$res_dir);
 
 		// make download file
-		write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
+		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result));
+		$result = str_replace(PHP_EOL, '', $result);
 
 		// return json
 		$json = array("status" => "ok", "result" => array(
@@ -154,18 +169,22 @@
 		));
 		echo(json_encode($json));
 	} else if ($optype == 'yuicompressor') {
-		echo ('对不起，此功能需要用到java命令，由于资源有限，暂不提供~');
+		echo ('对不起，由于资源有限，此功能暂不提供~');
 		return;
 		// csscompress
 		$result_file = $res_dir.'/result.css';
-		$result_ckstyle = wait_for_exec_command($bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, $commandline_file, $result_file);
+		$result_ckstyle = wait_for_exec_command($optype, 
+			$bin_dir.'ckstyle compress -p '.$command_options.$browsers.' '.$filename, 
+			$commandline_file, 
+			$result_file,
+			$res_dir);
 
 		// make csscompress download file
-		write_to_file($result_file, str_replace('\n', PHP_EOL, $result_ckstyle));
+		//write_to_file($result_file, str_replace('\n', PHP_EOL, $result_ckstyle));
 
 		// yuicompressor
 		$yui_output = $filename.'.min.css';
-		exec_command('java -Xmx256M -jar yuicompressor-2.4.7.jar '.$filename.' -o '.$yui_output.' --charset utf-8 ');
+		exec_command('java -jar yuicompressor-2.4.7.jar '.$filename.' -o '.$yui_output.' --charset utf-8 ');
 
 		// get yui output
 		$file = fopen($yui_output, 'r');
@@ -178,7 +197,7 @@
 
 		// make yui download file
 		$yui_result_file = $dir.'/compress-yui.min.css';
-		write_to_file($yui_result_file, str_replace('\n', PHP_EOL, $result_yui));
+		//write_to_file($yui_result_file, str_replace('\n', PHP_EOL, $result_yui));
 
 		// return json
 		$json = array("status" => "ok", "result" => array(
